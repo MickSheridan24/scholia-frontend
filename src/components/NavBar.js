@@ -5,6 +5,7 @@ export default class NavBar extends Component {
   render() {
     return (
       <div>
+        <Link to="/home">Home</Link>
         <Link to="/bookContainer">Books!</Link>
         <Link to="/annotations">Annotations!</Link>
       </div>

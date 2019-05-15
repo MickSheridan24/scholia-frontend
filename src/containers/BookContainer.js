@@ -1,34 +1,29 @@
 import React, { Component } from "react";
-import { setBook } from "../redux/actions/bookActions";
+import { fetchBook } from "../redux/actions/libraryActions";
+import { setAnnotations } from "../redux/actions/annotationsActions";
 import { connect } from "react-redux";
 
 class BookContainer extends Component {
   componentDidMount() {
-    this.fetchBook();
+    this.props.fetchBook(2);
   }
-  fetchBook = async () => {
-    const resp = await fetch("http://localhost:3000/api/v1/books/1");
-    const book = await resp.json();
-    const text = JSON.parse(book.temporary_text);
 
-    this.props.setBook({ ...book, text: text.body });
-  };
   render() {
     return (
-      <div>
+      <div onClick={this.props.setAnnotations}>
         <p>{this.props.book.title}</p>
         <p>{this.props.book.author}</p>
-        {this.props.book.text ? <p dangerouslySetInnerHTML={{ __html: this.props.book.text }} /> : null}
+        {this.props.book.text ? <p dangerouslySetInnerHTML={{ __html: this.props.book.text.body }} /> : null}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return { book: state.book };
+  return { book: state.currentBook };
 };
 const mapDispatchToProps = dispatch => {
-  return { setBook: book => dispatch(setBook(book)) };
+  return { fetchBook: id => dispatch(fetchBook(id)), setAnnotations: query => dispatch(setAnnotations(query)) };
 };
 
 export default connect(

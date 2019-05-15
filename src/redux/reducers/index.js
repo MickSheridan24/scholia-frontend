@@ -1,5 +1,13 @@
 import { combineReducers } from "redux";
-import bookReducer from "./bookReducer";
+import currentBookReducer from "./currentBookReducer";
+import { libraryReducer, libraryIndexReducer } from "./libraryReducer";
+import { userAnnotationsReducer, otherAnnotationsReducer } from "./annotationsReducer";
 
-const rootReducer = combineReducers({ book: bookReducer });
+const rootReducer = combineReducers({
+  currentBook: currentBookReducer,
+  library: libraryReducer,
+  libraryIndex: libraryIndexReducer,
+  userAnnotations: userAnnotationsReducer,
+  otherAnnotations: otherAnnotationsReducer,
+});
 export default rootReducer;
