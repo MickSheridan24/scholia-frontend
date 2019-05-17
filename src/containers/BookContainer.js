@@ -13,7 +13,7 @@ class BookContainer extends Component {
       <div onClick={this.props.setAnnotations}>
         <p>{this.props.book.title}</p>
         <p>{this.props.book.author}</p>
-        {this.props.book.text ? <p dangerouslySetInnerHTML={{ __html: this.props.book.text.body }} /> : null}
+        <div id="container">{this.props.book.text ? this.props.book.text : null} </div>
       </div>
     );
   }
