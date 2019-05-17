@@ -5,14 +5,15 @@ import React from "react";
 import AnnotationMarker from "../../components/AnnotationMarker";
 
 function setBook(book) {
-  return async (dispatch, getState) => {
-    await dispatch(fetchAnnotations(book));
-    const annotations = getState().otherAnnotations;
-    const annoIndex = prepAnnotations(annotations);
+  return { type: "SET_BOOK", book: book };
+  // return async (dispatch, getState) => {
+  //   await dispatch(fetchAnnotations(book));
+  //   const annotations = getState().otherAnnotations;
+  //   const annoIndex = prepAnnotations(annotations);
 
-    const annotatedBook = annotate(book, annoIndex);
-    dispatch({ type: "SET_BOOK", book: annotatedBook });
-  };
+  //   const annotatedBook = annotate(book, annoIndex);
+  //   dispatch({ type: "SET_BOOK", book: book });
+  // };
 }
 
 function annotate(book, annoIndex) {

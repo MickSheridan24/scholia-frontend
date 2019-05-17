@@ -5,6 +5,7 @@ import AnnotationsContainter from "./containers/AnnotationsContainter";
 import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import UserHome from "./components/UserHome";
+import "./App.css";
 
 function App() {
   let token = localStorage.getItem("token");

@@ -1,0 +1,17 @@
+.line {
+  line-height: 1.2em;
+  display: block;
+}
+.italicize {
+  line-height: 1.2em;
+  font-style: italic;
+}
+.first-line {
+  line-height: 1.2em;
+  display: block;
+  margin-left: 1.5em;
+}
+.paragraph {
+  margin-top: 1em;
+  margin-left: 1em;
+}
