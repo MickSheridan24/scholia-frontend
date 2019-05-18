@@ -1,12 +1,13 @@
-import { annotate } from "./currentBookActions";
+import { annotate, annotateAndSetBook } from "./currentBookActions";
 
 function setAnnotations(query = {}) {
   return async (dispatch, getState) => {
-    const book = getState().currentBook;
+    const book = findBook(getState);
     await dispatch(fetchAnnotations(book, query));
-    const annotations = getState().otherAnnotations;
-    const annotatedBook = annotate(book, annotations);
-    dispatch({ type: "SET_BOOK", book: annotatedBook });
+    // const annotations = getState().otherAnnotations;
+    // const annotatedBook = annotate(book, annotations);
+    // dispatch({ type: "SET_BOOK", book: annotatedBook });
+    dispatch(annotateAndSetBook(book));
   };
 }
 
@@ -39,12 +40,9 @@ function postAnnotation({ pIndex, charIndex, text }) {
       }),
     });
     const annotation = await resp.json();
-
     dispatch(addAnnotation(annotation));
-    const annotations = getState().otherAnnotations;
-    const originalBook = getState().library.find(b => b.id === book.id);
-    const annotatedBook = annotate(originalBook, annotations);
-    dispatch({ type: "SET_BOOK", book: { ...book, temporary_text: "", text: annotatedBook } });
+    const originalBook = findBook(getState);
+    dispatch(annotateAndSetBook(originalBook));
   };
 }
 
@@ -52,4 +50,9 @@ function addAnnotation(annotation) {
   return { type: "ADD_ANNOTATION", annotation: annotation };
 }
 
+function findBook(getState) {
+  const book = getState().currentBook;
+  const originalBook = getState().library.find(b => b.id === book.id);
+  return originalBook;
+}
 export { fetchAnnotations, setAnnotations, postAnnotation };

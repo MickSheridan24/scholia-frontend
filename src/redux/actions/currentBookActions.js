@@ -5,36 +5,36 @@ import AnnotationMarker from "../../components/AnnotationMarker";
 function setBook(book) {
   return async (dispatch, getState) => {
     const bookToBeAnnotated = { ...book };
-
     await dispatch(fetchAnnotations(bookToBeAnnotated));
+    dispatch(annotateAndSetBook(bookToBeAnnotated));
+  };
+}
+function annotateAndSetBook(book) {
+  return (dispatch, getState) => {
     const annotations = getState().otherAnnotations;
-    const annotatedText = annotate(bookToBeAnnotated, annotations);
-
-    dispatch({ type: "SET_BOOK", book: { ...bookToBeAnnotated, temporary_text: "", text: annotatedText } });
+    const annotatedText = annotate(book, annotations);
+    dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: annotatedText } });
   };
 }
 
-function parseBook(text) {
-  const lines = text.split("\r\n");
-
-  return lines;
-}
-
 function annotate(book, annotations) {
-  book.text = parseBook(book.text);
+  const parsedText = parseBook(book.text);
   const annoIndex = prepAnnotations(annotations);
   for (const key in annoIndex) {
     annoIndex[key].forEach(anno => {
-      book.text[key] =
-        book.text[key].slice(0, anno.location_char_index) +
+      parsedText[key] =
+        parsedText[key].slice(0, anno.location_char_index) +
         `*{${anno.id}}` +
-        book.text[key].slice(anno.location_char_index);
+        parsedText[key].slice(anno.location_char_index);
     });
   }
-
-  const paragraphs = jsxParagraphs(book.text);
+  const paragraphs = jsxParagraphs(parsedText);
 
   return paragraphs;
+}
+function parseBook(text) {
+  const lines = text.split("\r\n");
+  return lines;
 }
 function jsxify(line, index) {
   const segments = [];
@@ -96,4 +96,4 @@ function prepAnnotations(annotations) {
   return index;
 }
 
-export { setBook, annotate };
+export { setBook, annotate, annotateAndSetBook };

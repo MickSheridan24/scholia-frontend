@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 class BookContainer extends Component {
   componentDidMount() {
+    debugger;
     this.props.fetchBook(1);
   }
 
