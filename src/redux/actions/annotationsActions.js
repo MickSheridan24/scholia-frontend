@@ -1,12 +1,9 @@
-import { annotate, annotateAndSetBook } from "./currentBookActions";
+import { annotateAndSetBook } from "./currentBookActions";
 
 function setAnnotations(query = {}) {
   return async (dispatch, getState) => {
     const book = findBook(getState);
     await dispatch(fetchAnnotations(book, query));
-    // const annotations = getState().otherAnnotations;
-    // const annotatedBook = annotate(book, annotations);
-    // dispatch({ type: "SET_BOOK", book: annotatedBook });
     dispatch(annotateAndSetBook(book));
   };
 }

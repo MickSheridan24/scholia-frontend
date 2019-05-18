@@ -33,7 +33,7 @@ function annotate(book, annotations) {
   return paragraphs;
 }
 function parseBook(text) {
-  const lines = text.split("\r\n");
+  const lines = text.split(/\r\n[ \t]*/);
   return lines;
 }
 function jsxify(line, index) {
@@ -59,9 +59,8 @@ function jsxify(line, index) {
   if (currentSegment.length > 0) {
     segments.push(<React.Fragment key={`line-${index}-segment-${segments.length}`}>{currentSegment}</React.Fragment>);
   }
-  if (segments.length > 0) {
-    segments.push(<meta key={`line-${index}-metaSegment`} data-index={index} name="lineIndex" />);
-  }
+
+  segments.push(<meta key={`line-${index}-metaSegment`} data-index={index} name="lineIndex" />);
 
   return segments;
 }
@@ -71,7 +70,7 @@ function jsxParagraphs(lines) {
   let i = 0;
   while (i < lines.length) {
     const jsxLine = jsxify(lines[i], i);
-    if (jsxLine.length > 0) {
+    if (jsxLine.length > 1) {
       currentParagraph.push(jsxLine);
     } else {
       paragraphs.push(currentParagraph);

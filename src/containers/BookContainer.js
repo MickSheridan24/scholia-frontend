@@ -1,24 +1,29 @@
 import React, { Component } from "react";
 import { fetchBook } from "../redux/actions/libraryActions";
-import { setAnnotations } from "../redux/actions/annotationsActions";
-import { postAnnotation } from "../redux/actions/annotationsActions";
-import AnnotationMarker from "../components/AnnotationMarker";
+import { setAnnotations, postAnnotation } from "../redux/actions/annotationsActions";
 import { connect } from "react-redux";
 
 class BookContainer extends Component {
   componentDidMount() {
-    debugger;
-    this.props.fetchBook(1);
+    this.props.fetchBook(0);
   }
 
   handleOnDoubleClick = e => {
-    let line = document.getSelection().focusNode.parentElement.innerText.replace(/\*/g, "");
-    let target = document.getSelection().focusOffset;
-    let lineId = e.target.children.lineIndex.dataset.index;
+    e.persist();
+    if (e.target.classList.contains("line") || e.target.classList.contains("first-line")) {
+      const sel = document.getSelection();
 
-    line = line.slice(0, target) + "*" + line.slice(target);
+      sel.setBaseAndExtent(e.target, 0, sel.focusNode, sel.focusOffset);
+      let targetString = sel.toString().replace("*", "");
+      let target = targetString.length;
+      let actualText = e.target.innerText;
+      while (target < actualText.length && actualText[target] !== " ") {
+        target++;
+      }
 
-    this.props.postAnnotation({ pIndex: lineId, charIndex: target, text: "THIS IS A TEST" });
+      let lineId = e.target.children.lineIndex.dataset.index;
+      this.props.postAnnotation({ pIndex: lineId, charIndex: target, text: "THIS IS A TEST" });
+    }
   };
 
   displayBook = () => {
