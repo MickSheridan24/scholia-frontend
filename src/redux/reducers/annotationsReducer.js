@@ -13,6 +13,8 @@ function otherAnnotationsReducer(state = [], action) {
   switch (action.type) {
     case "SET_OTHER_ANNOTATIONS":
       return action.annotations;
+    case "ADD_ANNOTATION":
+      return [...state, action.annotation];
     default:
       return state;
   }

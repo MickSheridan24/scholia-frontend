@@ -1,78 +1,88 @@
 import { fetchAnnotations } from "./annotationsActions";
-import Parser from "html-react-parser";
-import domToReact from "html-react-parser/lib/dom-to-react";
 import React from "react";
 import AnnotationMarker from "../../components/AnnotationMarker";
 
 function setBook(book) {
-  return { type: "SET_BOOK", book: book };
-  // return async (dispatch, getState) => {
-  //   await dispatch(fetchAnnotations(book));
-  //   const annotations = getState().otherAnnotations;
-  //   const annoIndex = prepAnnotations(annotations);
+  return async (dispatch, getState) => {
+    const bookToBeAnnotated = { ...book };
 
-  //   const annotatedBook = annotate(book, annoIndex);
-  //   dispatch({ type: "SET_BOOK", book: book });
-  // };
+    await dispatch(fetchAnnotations(bookToBeAnnotated));
+    const annotations = getState().otherAnnotations;
+    const annotatedText = annotate(bookToBeAnnotated, annotations);
+
+    dispatch({ type: "SET_BOOK", book: { ...bookToBeAnnotated, temporary_text: "", text: annotatedText } });
+  };
 }
 
-function annotate(book, annoIndex) {
-  let count = 0;
-  let doc = Parser(book.temporary_text, {
-    replace: node => {
-      if (node.name === "p") {
-        node.attribs.key = count;
+function parseBook(text) {
+  const lines = text.split("\r\n");
 
-        if (annoIndex[count]) {
-          count++;
-
-          return <p>ANNOTATED {annotateParagraph(node, annoIndex[count - 1])}</p>;
-        } else {
-          count++;
-          return;
-        }
-      }
-    },
-  });
-  book.text = doc;
-  return book;
+  return lines;
 }
 
-function annotateParagraph(node, annotations) {
-  let betterKids = node.children.length > 1 ? domToReact(node.children) : [domToReact(node.children)];
+function annotate(book, annotations) {
+  book.text = parseBook(book.text);
+  const annoIndex = prepAnnotations(annotations);
+  for (const key in annoIndex) {
+    annoIndex[key].forEach(anno => {
+      book.text[key] =
+        book.text[key].slice(0, anno.location_char_index) +
+        `*{${anno.id}}` +
+        book.text[key].slice(anno.location_char_index);
+    });
+  }
 
-  annotations.forEach(anno => {
-    betterKids = insertAnnotation(anno, betterKids);
-  });
+  const paragraphs = jsxParagraphs(book.text);
 
-  return <p>P{betterKids}P</p>;
+  return paragraphs;
 }
-function insertAnnotation(annotation, betterKids) {
-  let totalLength = 0;
+function jsxify(line, index) {
+  const segments = [];
   let i = 0;
-  let success = false;
-
-  while (i < betterKids.length && !success) {
-    if (typeof betterKids[i] === "string") {
-      if (annotation.location_char_index < totalLength + betterKids[i].length) {
-        const offset = annotation.location_char_index - totalLength;
-
-        let slicedBefore = betterKids[i].slice(0, offset);
-
-        let slicedAfter = betterKids[i].slice(offset);
-        betterKids[i] = (
-          <span>
-            {slicedBefore}
-            <AnnotationMarker /> {slicedAfter}
-          </span>
-        );
-        success = true;
+  let currentSegment = "";
+  while (i < line.length) {
+    if (line[i] === "*" && line[i + 1] === "{") {
+      segments.push(<React.Fragment key={`line-${index}-segment-${segments.length}`}>{currentSegment}</React.Fragment>);
+      let key = "";
+      i += 2;
+      while (line[i] !== "}" && i < line.length) {
+        key += line[i];
+        i++;
       }
-      totalLength += [i].length;
+      segments.push(<AnnotationMarker key={`Annotation-${key}`} />);
+      currentSegment = "";
+    } else {
+      currentSegment += line[i];
     }
     i++;
   }
-  return betterKids;
+  if (currentSegment.length > 0) {
+    segments.push(<React.Fragment key={`line-${index}-segment-${segments.length}`}>{currentSegment}</React.Fragment>);
+  }
+  if (segments.length > 0) {
+    segments.push(<meta key={`line-${index}-metaSegment`} data-index={index} name="lineIndex" />);
+  }
+
+  return segments;
+}
+function jsxParagraphs(lines) {
+  let paragraphs = [];
+  let currentParagraph = [];
+  let i = 0;
+  while (i < lines.length) {
+    const jsxLine = jsxify(lines[i], i);
+    if (jsxLine.length > 0) {
+      currentParagraph.push(jsxLine);
+    } else {
+      paragraphs.push(currentParagraph);
+      currentParagraph = [];
+    }
+    i++;
+  }
+  if (currentParagraph.length > 0) {
+    paragraphs.push(currentParagraph);
+  }
+  return paragraphs;
 }
 function prepAnnotations(annotations) {
   const index = annotations.reduce((memo, annotation) => {

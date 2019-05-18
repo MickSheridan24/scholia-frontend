@@ -1,55 +1,64 @@
 import React, { Component } from "react";
 import { fetchBook } from "../redux/actions/libraryActions";
 import { setAnnotations } from "../redux/actions/annotationsActions";
+import { postAnnotation } from "../redux/actions/annotationsActions";
+import AnnotationMarker from "../components/AnnotationMarker";
 import { connect } from "react-redux";
 
 class BookContainer extends Component {
   componentDidMount() {
-    this.props.fetchBook(0);
+    this.props.fetchBook(1);
   }
 
+  handleOnDoubleClick = e => {
+    let line = document.getSelection().focusNode.parentElement.innerText.replace(/\*/g, "");
+    let target = document.getSelection().focusOffset;
+    let lineId = e.target.children.lineIndex.dataset.index;
+
+    line = line.slice(0, target) + "*" + line.slice(target);
+
+    this.props.postAnnotation({ pIndex: lineId, charIndex: target, text: "THIS IS A TEST" });
+  };
+
   displayBook = () => {
-    return this.props.book.text.map(par => {
-      return <p className="paragraph">{this.interpretParagraph(par)}</p>;
+    return this.props.book.text.map((par, i) => {
+      return this.displayParagraph(par, i);
     });
   };
-
-  interpretParagraph = par => {
-    const lineBreaks = (
-      <React.Fragment>
-        {par.split("\r\n").map((p, i) => (
-          <span className={i === 0 ? "first-line" : "line"}>{this.withEm(p)}</span>
-        ))}
-      </React.Fragment>
-    );
-    return lineBreaks;
-  };
-  withEm = par => {
-    const withEm = (
-      <React.Fragment>
-        {par.split("_").map((par, ind) => {
-          if (ind % 2 === 0) {
-            return <React.Fragment>{par}</React.Fragment>;
-          } else {
-            return <span className="italicize">{par}</span>;
-          }
+  displayParagraph = (par, i) => {
+    return (
+      <p
+        key={`par-${i}`}
+        style={{
+          color: `rgb(${Math.floor(Math.random() * 230)}, ${Math.floor(Math.random() * 230)}, ${Math.floor(
+            Math.random() * 230,
+          )}`,
+        }}
+        className="paragraph">
+        {par.map((line, ii) => {
+          return this.displayLine(line, i, ii);
         })}
-      </React.Fragment>
+      </p>
     );
-
-    // par.replace(/_.*?_/g, substr => {
-    //   return `${<span style={{ color: "red" }}>{substr.replace(/_/g, "")}</span>}`;
-    // });
-
-    return withEm;
+  };
+  displayLine = (line, i, ii) => {
+    return (
+      <span key={`line-${i}-${ii}`} className={ii === 0 ? "first-line" : "line"}>
+        {line.map(segment => {
+          return segment;
+        })}
+      </span>
+    );
   };
 
   render() {
     return (
-      <div onClick={this.props.setAnnotations}>
+      <div>
         <p>{this.props.book.title}</p>
         <p>{this.props.book.author}</p>
-        <div id="container">{this.props.book.text ? this.displayBook() : null} </div>
+        <div onDoubleClick={this.handleOnDoubleClick} id="container">
+          {this.props.book.text ? this.displayBook() : null}{" "}
+        </div>
       </div>
     );
   }
@@ -59,7 +68,11 @@ const mapStateToProps = state => {
   return { book: state.currentBook };
 };
 const mapDispatchToProps = dispatch => {
-  return { fetchBook: id => dispatch(fetchBook(id)), setAnnotations: query => dispatch(setAnnotations(query)) };
+  return {
+    fetchBook: id => dispatch(fetchBook(id)),
+    setAnnotations: query => dispatch(setAnnotations(query)),
+    postAnnotation: args => dispatch(postAnnotation(args)),
+  };
 };
 
 export default connect(
