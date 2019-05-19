@@ -16,7 +16,10 @@ function fetchAnnotations(book, query = {}) {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     });
     const annotations = await resp.json();
-    dispatch({ type: "SET_OTHER_ANNOTATIONS", annotations: annotations });
+    const preparedAnnotations = annotations.map(a => {
+      return { ...a, visible: true, highlighted: false };
+    });
+    dispatch({ type: "SET_OTHER_ANNOTATIONS", annotations: preparedAnnotations });
   };
 }
 
@@ -52,4 +55,8 @@ function findBook(getState) {
   const originalBook = getState().library.find(b => b.id === book.id);
   return originalBook;
 }
-export { fetchAnnotations, setAnnotations, postAnnotation };
+
+function highlightAnnotation(id) {
+  return { type: "HIGHLIGHT_ANNOTATION", annotationId: id };
+}
+export { fetchAnnotations, setAnnotations, postAnnotation, highlightAnnotation };

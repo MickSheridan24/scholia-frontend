@@ -22,6 +22,10 @@ function annotate(book, annotations) {
   const annoIndex = prepAnnotations(annotations);
   for (const key in annoIndex) {
     annoIndex[key].forEach(anno => {
+      let ind = anno.location_char_index;
+      while (parsedText[key][ind] !== " " && ind < parsedText[key].length) {
+        ind++;
+      }
       parsedText[key] =
         parsedText[key].slice(0, anno.location_char_index) +
         `*{${anno.id}}` +
@@ -49,7 +53,7 @@ function jsxify(line, index) {
         key += line[i];
         i++;
       }
-      segments.push(<AnnotationMarker key={`Annotation-${key}`} />);
+      segments.push(<AnnotationMarker id={key} key={`Annotation-${key}`} />);
       currentSegment = "";
     } else {
       currentSegment += line[i];

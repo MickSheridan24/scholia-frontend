@@ -4,13 +4,17 @@
   "private": true,
   "dependencies": {
     "html-react-parser": "^0.7.0",
+    "in-view": "^0.6.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "react-scroll": "^1.7.11",
+    "react-window-decorators": "^1.0.6",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "semantic-ui-css": "^2.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

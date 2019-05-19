@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { fetchBook } from "../redux/actions/libraryActions";
 import { setAnnotations, postAnnotation } from "../redux/actions/annotationsActions";
+import { setScrolling } from "../redux/actions/bookWindowActions";
 import { connect } from "react-redux";
 
 class BookContainer extends Component {
@@ -16,11 +17,6 @@ class BookContainer extends Component {
       sel.setBaseAndExtent(e.target, 0, sel.focusNode, sel.focusOffset);
       let targetString = sel.toString().replace("*", "");
       let target = targetString.length;
-      let actualText = e.target.innerText;
-      while (target < actualText.length && actualText[target] !== " ") {
-        target++;
-      }
-
       let lineId = e.target.children.lineIndex.dataset.index;
       this.props.postAnnotation({ pIndex: lineId, charIndex: target, text: "THIS IS A TEST" });
     }
@@ -58,8 +54,9 @@ class BookContainer extends Component {
   };
 
   render() {
+    console.log("Render");
     return (
-      <div>
+      <div className="book-window" id="ScrollContainer" onScroll={this.initiateScroll}>
         <p>{this.props.book.title}</p>
         <p>{this.props.book.author}</p>
         <div onDoubleClick={this.handleOnDoubleClick} id="container">
@@ -71,13 +68,14 @@ class BookContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  return { book: state.currentBook };
+  return { book: state.currentBook, otherAnnotations: state.otherAnnotations };
 };
 const mapDispatchToProps = dispatch => {
   return {
     fetchBook: id => dispatch(fetchBook(id)),
     setAnnotations: query => dispatch(setAnnotations(query)),
     postAnnotation: args => dispatch(postAnnotation(args)),
+    setScrolling: () => dispatch(setScrolling(true)),
   };
 };
 

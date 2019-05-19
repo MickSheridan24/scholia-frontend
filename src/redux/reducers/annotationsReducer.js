@@ -11,6 +11,11 @@ function userAnnotationsReducer(state = [], action) {
 
 function otherAnnotationsReducer(state = [], action) {
   switch (action.type) {
+    case "HIGHLIGHT_ANNOTATION":
+      const intId = parseInt(action.annotationId);
+      return state.map(a => {
+        return a.id === intId ? { ...a, highlighted: true } : { ...a, highlighted: false };
+      });
     case "SET_OTHER_ANNOTATIONS":
       return action.annotations;
     case "ADD_ANNOTATION":
