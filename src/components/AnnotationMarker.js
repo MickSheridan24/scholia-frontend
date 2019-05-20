@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { highlightAnnotation, enterAnnotation, exitAnnotation } from "../redux/actions/annotationsActions";
 import { connect } from "react-redux";
 import inView from "in-view";
 
 class AnnotationMarker extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.annotation.highlighted !== this.props.annotation.highlighted;
+  }
   handleMouseOut = e => {
     this.props.highlightAnnotation(0);
   };
@@ -20,9 +23,6 @@ class AnnotationMarker extends React.Component {
   };
 
   componentDidMount() {
-    if (inView.is(document.getElementById(`marker-${this.props.id}`))) {
-      this.handleEnter();
-    }
     inView(`#marker-${this.props.id}`)
       .on("enter", () => this.handleEnter())
       .on("exit", () => this.handleExit());
@@ -31,6 +31,7 @@ class AnnotationMarker extends React.Component {
     console.log("unmounting");
   }
   render() {
+    console.log("Asterix Rendered", this.props.annotation.highlighted);
     return (
       <span
         id={`marker-${this.props.id}`}

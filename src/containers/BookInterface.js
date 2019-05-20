@@ -4,6 +4,7 @@ import AnnotationsContainer from "./AnnotationsContainer";
 
 export default class BookInterface extends Component {
   render() {
+    console.log("Interface Rendered");
     return (
       <div className="ui grid">
         <div className="eight wide column">

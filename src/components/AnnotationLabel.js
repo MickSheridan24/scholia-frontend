@@ -9,6 +9,7 @@ function AnnotationLabel(props) {
   const handleMouseOver = e => {
     props.highlightAnnotation(props.annotation.id);
   };
+  console.log("Label Rendered");
   return (
     <div className="item">
       <div

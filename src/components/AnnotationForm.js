@@ -5,6 +5,7 @@ import { postAnnotation } from "../redux/actions/annotationsActions";
 function AnnotationForm(props) {
   const [title, setTitle] = useState("Title");
   const [body, setBody] = useState("");
+  console.log("Annotation Form Rendering");
   return props.args ? (
     <div>
       <h4>New Annotation:</h4>

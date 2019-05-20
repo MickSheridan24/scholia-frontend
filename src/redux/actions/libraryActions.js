@@ -1,6 +1,7 @@
 import { setBook } from "./currentBookActions";
 
 function fetchBook(id) {
+  console.log("FETCHBOOK ACTION");
   return async dispatch => {
     const resp = await fetch(`http://localhost:3000/api/v1/books/${id}`);
     const book = await resp.json();
@@ -15,6 +16,7 @@ function fetchBook(id) {
 
 //addBook adds the retrievedBook to the library
 function addBook(book) {
+  console.log("ADDBOOK ACTION");
   return { type: "ADD_BOOK", book: book };
 }
 

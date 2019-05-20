@@ -1,5 +1,5 @@
 function login(user) {
-  console.log("logging in");
+  console.log("LOGIN");
   return async dispatch => {
     const resp = await fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
@@ -16,6 +16,7 @@ function login(user) {
 }
 
 function autoLogin() {
+  console.log("AUTOLOGIN");
   return async dispatch => {
     let token = localStorage.getItem("token");
     const resp = await fetch("http://localhost:3000/api/v1/users/home", {
@@ -32,6 +33,7 @@ function autoLogin() {
   };
 }
 function logout() {
+  console.log("LOGOUT");
   return { type: "SET_USER", user: {} };
 }
 

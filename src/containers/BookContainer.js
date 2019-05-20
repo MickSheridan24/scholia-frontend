@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 class BookContainer extends Component {
   componentDidMount() {
-    this.props.fetchBook(0);
+    this.props.fetchBook(2);
   }
   shouldComponentUpdate(nextProps) {
     if (nextProps.book !== this.props.book) {
@@ -48,7 +48,7 @@ class BookContainer extends Component {
   };
 
   render() {
-    console.log("Render");
+    console.log("Book Container Render");
     return (
       <div className="book-window" id="ScrollContainer" onScroll={this.initiateScroll}>
         <div onDoubleClick={this.handleOnDoubleClick} id="container">
