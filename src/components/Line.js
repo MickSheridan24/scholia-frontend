@@ -21,11 +21,11 @@ function Line(props) {
   }
   function titleTag() {
     return (
-      <h2 className="title">
+      <span className="title">
         {props.line.map(segment => {
           return segment;
         })}
-      </h2>
+      </span>
     );
   }
   function lineTag() {
@@ -39,11 +39,11 @@ function Line(props) {
   }
   function authorTag() {
     return (
-      <h4 className="author">
+      <span className="author">
         {props.line.map(segment => {
           return segment;
         })}
-      </h4>
+      </span>
     );
   }
   if (isGutenberg()) {
