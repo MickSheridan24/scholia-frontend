@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import currentBookReducer from "./currentBookReducer";
 import { libraryReducer, libraryIndexReducer } from "./libraryReducer";
-import { bookWindowReducer } from "./bookWindowReducer";
+import { windowStatusReducer } from "./windowStatusReducer";
 import { userAnnotationsReducer, otherAnnotationsReducer } from "./annotationsReducer";
 
 const rootReducer = combineReducers({
   currentBook: currentBookReducer,
-  bookWindow: bookWindowReducer,
+  windowStatus: windowStatusReducer,
   library: libraryReducer,
   libraryIndex: libraryIndexReducer,
   userAnnotations: userAnnotationsReducer,

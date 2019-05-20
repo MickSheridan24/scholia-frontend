@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import { fetchBook } from "../redux/actions/libraryActions";
-import { setAnnotations, postAnnotation } from "../redux/actions/annotationsActions";
-import { setScrolling } from "../redux/actions/bookWindowActions";
+import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsActions";
+
 import { connect } from "react-redux";
 
 class BookContainer extends Component {
   componentDidMount() {
     this.props.fetchBook(0);
+    debugger;
+  }
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.book !== this.props.book) {
+      return true;
+    }
+    return false;
   }
 
   handleOnDoubleClick = e => {
@@ -18,7 +25,7 @@ class BookContainer extends Component {
       let targetString = sel.toString().replace("*", "");
       let target = targetString.length;
       let lineId = e.target.children.lineIndex.dataset.index;
-      this.props.postAnnotation({ pIndex: lineId, charIndex: target, text: "THIS IS A TEST" });
+      this.props.newAnnotationForm({ charIndex: target, pIndex: lineId });
     }
   };
 
@@ -74,8 +81,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchBook: id => dispatch(fetchBook(id)),
     setAnnotations: query => dispatch(setAnnotations(query)),
-    postAnnotation: args => dispatch(postAnnotation(args)),
-    setScrolling: () => dispatch(setScrolling(true)),
+    newAnnotationForm: args => dispatch(newAnnotationForm(args)),
   };
 };
 

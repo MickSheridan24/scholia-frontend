@@ -24,6 +24,32 @@
   border: 2px solid black;
   margin: 1em;
 }
+.hover-marker {
+  color: red;
+  font-size: 1.5em;
+  user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+}
 .marker {
   color: red;
+  user-select: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+}
+.annotationContainer {
+  position: fixed;
+}
+.annotationList {
+  height: 90vh;
+  width: 35em;
+  margin: 1em;
+  position: fixed;
+  overflow: scroll;
+  border: 2px solid black;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
 }

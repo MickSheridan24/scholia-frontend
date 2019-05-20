@@ -1,20 +1,31 @@
-import React from "react";
-import { highlightAnnotation } from "../redux/actions/annotationsActions";
+import React, { useState, useEffect } from "react";
+import { highlightAnnotation, enterAnnotation, exitAnnotation } from "../redux/actions/annotationsActions";
 import { connect } from "react-redux";
 import inView from "in-view";
 
-class AnnotationMarker extends React.PureComponent {
-  componentDidMount() {
-    inView(`#marker-${this.props.id}`)
-      .on("enter", el => console.log("enter", el.dataset.id))
-      .on("exit", el => console.log("exit", el.dataset.id));
-  }
+class AnnotationMarker extends React.Component {
   handleMouseOut = e => {
     this.props.highlightAnnotation(0);
   };
   handleMouseOver = e => {
     this.props.highlightAnnotation(this.props.id);
   };
+  handleEnter = () => {
+    this.props.enterAnnotation(this.props.id);
+  };
+  handleExit = () => {
+    this.props.exitAnnotation(this.props.id);
+  };
+
+  componentDidMount() {
+    if (inView.is(document.getElementById(`marker-${this.props.id}`))) {
+      this.handleEnter();
+    }
+    inView(`#marker-${this.props.id}`)
+      .on("enter", () => this.handleEnter())
+      .on("exit", () => this.handleExit());
+    return () => {};
+  }
   render() {
     return (
       <span
@@ -22,7 +33,7 @@ class AnnotationMarker extends React.PureComponent {
         data-id={this.props.id}
         onMouseOut={this.handleMouseOut}
         onMouseOver={this.handleMouseOver}
-        className="marker">
+        className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}>
         *
       </span>
     );
@@ -30,10 +41,19 @@ class AnnotationMarker extends React.PureComponent {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { highlightAnnotation: id => dispatch(highlightAnnotation(id)) };
+  return {
+    exitAnnotation: id => dispatch(exitAnnotation(id)),
+    enterAnnotation: id => dispatch(enterAnnotation(id)),
+    highlightAnnotation: id => dispatch(highlightAnnotation(id)),
+  };
+}
+function mapStateToProps(state, ownProps) {
+  return {
+    annotation: state.otherAnnotations.find(a => a.id === parseInt(ownProps.id)),
+  };
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(AnnotationMarker);

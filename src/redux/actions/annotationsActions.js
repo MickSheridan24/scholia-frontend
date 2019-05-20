@@ -17,13 +17,13 @@ function fetchAnnotations(book, query = {}) {
     });
     const annotations = await resp.json();
     const preparedAnnotations = annotations.map(a => {
-      return { ...a, visible: true, highlighted: false };
+      return { ...a, visible: false, highlighted: false };
     });
     dispatch({ type: "SET_OTHER_ANNOTATIONS", annotations: preparedAnnotations });
   };
 }
 
-function postAnnotation({ pIndex, charIndex, text }) {
+function postAnnotation({ pIndex, charIndex, title, body }) {
   return async (dispatch, getState) => {
     const book = getState().currentBook;
     const resp = await fetch("http://localhost:3000/api/v1/annotations", {
@@ -32,10 +32,10 @@ function postAnnotation({ pIndex, charIndex, text }) {
       body: JSON.stringify({
         annotation: {
           book_id: book.id,
-          body: text,
+          body: body,
           location_p_index: pIndex,
           location_char_index: charIndex,
-          title: "THIS IS A TEST",
+          title: title,
         },
       }),
     });
@@ -50,6 +50,10 @@ function addAnnotation(annotation) {
   return { type: "ADD_ANNOTATION", annotation: annotation };
 }
 
+function newAnnotationForm(args) {
+  return { type: "NEW_ANNOTATION_FORM", args: args };
+}
+
 function findBook(getState) {
   const book = getState().currentBook;
   const originalBook = getState().library.find(b => b.id === book.id);
@@ -57,6 +61,20 @@ function findBook(getState) {
 }
 
 function highlightAnnotation(id) {
-  return { type: "HIGHLIGHT_ANNOTATION", annotationId: id };
+  return { type: "HIGHLIGHT_ANNOTATION", annotationId: parseInt(id) };
 }
-export { fetchAnnotations, setAnnotations, postAnnotation, highlightAnnotation };
+function enterAnnotation(id) {
+  return { type: "ENTER_ANNOTATION", annotationId: parseInt(id) };
+}
+function exitAnnotation(id) {
+  return { type: "EXIT_ANNOTATION", annotationId: parseInt(id) };
+}
+export {
+  newAnnotationForm,
+  fetchAnnotations,
+  setAnnotations,
+  postAnnotation,
+  highlightAnnotation,
+  exitAnnotation,
+  enterAnnotation,
+};
