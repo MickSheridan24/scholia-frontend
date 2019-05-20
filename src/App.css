@@ -23,6 +23,7 @@
 .book-window {
   border: 2px solid black;
   margin: 1em;
+  z-index: 0;
 }
 .hover-marker {
   color: red;
@@ -48,8 +49,21 @@
   overflow: scroll;
   border: 2px solid black;
 }
-.navbar {
-  position: fixed;
+.ui.segment.navbar {
+  position: sticky;
+  background: rgba(165, 42, 42, 1);
+  z-index: 1;
+
   top: 0;
   left: 0;
+}
+.ui.segment.navbar > link {
+  color: beige;
+}
+.title {
+  text-align: center;
+}
+.author {
+  text-align: center;
+  font-style: italic;
 }

@@ -1,7 +1,3 @@
-//represents current annotations being worked with
-//changes if annotation query changes
-//or book is switched
-
 function userAnnotationsReducer(state = [], action) {
   switch (action.type) {
     default:

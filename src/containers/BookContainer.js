@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { fetchBook } from "../redux/actions/libraryActions";
 import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsActions";
+import Line from "../components/Line";
 
 import { connect } from "react-redux";
 
 class BookContainer extends Component {
   componentDidMount() {
-    this.props.fetchBook(0);
-    debugger;
+    this.props.fetchBook(1);
   }
   shouldComponentUpdate(nextProps) {
     if (nextProps.book !== this.props.book) {
@@ -36,14 +36,7 @@ class BookContainer extends Component {
   };
   displayParagraph = (par, i) => {
     return (
-      <p
-        key={`par-${i}`}
-        style={{
-          color: `rgb(${Math.floor(Math.random() * 230)}, ${Math.floor(Math.random() * 230)}, ${Math.floor(
-            Math.random() * 230,
-          )}`,
-        }}
-        className="paragraph">
+      <p key={`par-${i}`} className="paragraph">
         {par.map((line, ii) => {
           return this.displayLine(line, i, ii);
         })}
@@ -51,21 +44,13 @@ class BookContainer extends Component {
     );
   };
   displayLine = (line, i, ii) => {
-    return (
-      <span key={`line-${i}-${ii}`} className={ii === 0 ? "first-line" : "line"}>
-        {line.map(segment => {
-          return segment;
-        })}
-      </span>
-    );
+    return <Line key={`line-${i}-${ii}`} firstLine={ii === 0} line={line} />;
   };
 
   render() {
     console.log("Render");
     return (
       <div className="book-window" id="ScrollContainer" onScroll={this.initiateScroll}>
-        <p>{this.props.book.title}</p>
-        <p>{this.props.book.author}</p>
         <div onDoubleClick={this.handleOnDoubleClick} id="container">
           {this.props.book.text ? this.displayBook() : null}{" "}
         </div>
@@ -89,3 +74,9 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(BookContainer);
+
+// //style={{
+//           color: `rgb(${Math.floor(Math.random() * 230)}, ${Math.floor(Math.random() * 230)}, ${Math.floor(
+//             Math.random() * 230,
+//           )}`,
+//         }}

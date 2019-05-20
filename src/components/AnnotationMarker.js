@@ -11,9 +11,11 @@ class AnnotationMarker extends React.Component {
     this.props.highlightAnnotation(this.props.id);
   };
   handleEnter = () => {
+    console.log("enter");
     this.props.enterAnnotation(this.props.id);
   };
   handleExit = () => {
+    console.log("exit");
     this.props.exitAnnotation(this.props.id);
   };
 
@@ -24,7 +26,9 @@ class AnnotationMarker extends React.Component {
     inView(`#marker-${this.props.id}`)
       .on("enter", () => this.handleEnter())
       .on("exit", () => this.handleExit());
-    return () => {};
+  }
+  componentWillUnmount() {
+    console.log("unmounting");
   }
   render() {
     return (

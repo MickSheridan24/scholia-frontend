@@ -25,10 +25,11 @@ function fetchAnnotations(book, query = {}) {
 
 function postAnnotation({ pIndex, charIndex, title, body }) {
   return async (dispatch, getState) => {
+    const token = localStorage.getItem("token");
     const book = getState().currentBook;
     const resp = await fetch("http://localhost:3000/api/v1/annotations", {
       method: "POST",
-      headers: { "Content-Type": "Application/json", accepts: "Application/json" },
+      headers: { "Content-Type": "Application/json", accepts: "Application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify({
         annotation: {
           book_id: book.id,
@@ -39,10 +40,16 @@ function postAnnotation({ pIndex, charIndex, title, body }) {
         },
       }),
     });
-    const annotation = await resp.json();
-    dispatch(addAnnotation(annotation));
-    const originalBook = findBook(getState);
-    dispatch(annotateAndSetBook(originalBook));
+    const postResp = await resp.json();
+    if (postResp.success) {
+      const annotation = postResp.annotation;
+      dispatch(addAnnotation(annotation));
+      const originalBook = findBook(getState);
+      dispatch(annotateAndSetBook(originalBook));
+    } else {
+      debugger;
+      alert("Something went wrong saving your annotation.");
+    }
   };
 }
 
