@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { highlightAnnotation, deleteAnnotation } from "../redux/actions/annotationsActions";
+import { highlightAnnotation, deleteAnnotation, likeAnnotation } from "../redux/actions/annotationsActions";
 
 function AnnotationLabel(props) {
   const handleMouseOut = e => {
@@ -11,6 +11,9 @@ function AnnotationLabel(props) {
   };
   const handleDelete = e => {
     props.deleteAnnotation(props.annotation.id);
+  };
+  const handleLike = e => {
+    props.likeAnnotation(props.annotation.id);
   };
   return (
     <div className="item">
@@ -27,10 +30,15 @@ function AnnotationLabel(props) {
           <button onClick={handleDelete} className="ui mini right floated button" style={{ color: "red" }}>
             X
           </button>
-        ) : (
-          <button className="ui mini right floated button">Like</button>
+        ) : props.annotation.userLiked ? null : (
+          <button className="ui mini right floated button" onClick={handleLike}>
+            Like
+          </button>
         )}
-        <h4>{props.annotation.title}</h4>
+        <h4>
+          {props.annotation.title} <em>({props.annotation.likeCount})</em>
+        </h4>
+
         <p>{props.annotation.body}</p>
       </div>
     </div>
@@ -41,6 +49,7 @@ function mapDispatchToProps(dispatch) {
   return {
     highlightAnnotation: id => dispatch(highlightAnnotation(id)),
     deleteAnnotation: id => dispatch(deleteAnnotation(id)),
+    likeAnnotation: id => dispatch(likeAnnotation(id)),
   };
 }
 function mapStateToProps(state) {

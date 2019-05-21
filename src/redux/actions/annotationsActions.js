@@ -1,4 +1,5 @@
 import { annotateAndSetBook } from "./currentBookActions";
+import { generateKeyPairSync } from "crypto";
 
 function setAnnotations(query = {}) {
   // console.log("SET ANNOTATIONS");
@@ -94,6 +95,23 @@ function deleteAnnotation(id) {
     }
   };
 }
+function likeAnnotation(id) {
+  console.log("liking", id);
+  return async (dispatch, getState) => {
+    const resp = await fetch("http://localhost:3000/api/v1/annotations/likes", {
+      method: "POST",
+      headers: {
+        "Content-type": "Application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ annotation: { id: id } }),
+    });
+    const status = await resp.json();
+    if (status.success) {
+      dispatch({ type: "LIKE_ANNOTATION", annotationId: id });
+    }
+  };
+}
 function enterAnnotation(id) {
   // console.log("ENTER ANNOTATION ACTION");
   return { type: "ENTER_ANNOTATION", annotationId: parseInt(id) };
@@ -120,4 +138,5 @@ export {
   setShowUserAnnotations,
   setShowOtherAnnotations,
   deleteAnnotation,
+  likeAnnotation,
 };
