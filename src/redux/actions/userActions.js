@@ -10,6 +10,7 @@ function login(user) {
 
     if (loginStatus.success) {
       localStorage.setItem("token", loginStatus["jwt"]);
+      console.log("Welcome back, prisoner #", loginStatus.id);
       dispatch({
         type: "SET_USER",
         user: { username: loginStatus.username, id: loginStatus.id, login: loginStatus.success },
@@ -31,6 +32,7 @@ function autoLogin() {
     });
     const user = await resp.json();
     if (user.id) {
+      console.log("Welcome back, prisoner #", user.id);
       dispatch({ type: "SET_USER", user: { username: user.username, id: user.id, login: true } });
     }
   };

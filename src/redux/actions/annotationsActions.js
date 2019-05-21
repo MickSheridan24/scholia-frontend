@@ -25,7 +25,7 @@ function fetchAnnotations(book, query = {}) {
   };
 }
 
-function postAnnotation({ pIndex, charIndex, title, body }) {
+function postAnnotation({ pIndex, charIndex, title, body, color }) {
   // console.log("POST ANNOTATIONS");
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
@@ -37,6 +37,7 @@ function postAnnotation({ pIndex, charIndex, title, body }) {
         annotation: {
           book_id: book.id,
           body: body,
+          color: color,
           location_p_index: pIndex,
           location_char_index: charIndex,
           title: title,

@@ -62,9 +62,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(BookContainer);
-
-// //style={{
-//           color: `rgb(${Math.floor(Math.random() * 230)}, ${Math.floor(Math.random() * 230)}, ${Math.floor(
-//             Math.random() * 230,
-//           )}`,
-//         }}

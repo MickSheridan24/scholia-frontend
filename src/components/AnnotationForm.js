@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { postAnnotation } from "../redux/actions/annotationsActions";
+import { genericTypeAnnotation } from "@babel/types";
 
 function AnnotationForm(props) {
   const [title, setTitle] = useState("Title");
@@ -17,6 +18,7 @@ function AnnotationForm(props) {
             charIndex: props.args.charIndex,
             title: e.currentTarget.elements.title.value,
             body: e.currentTarget.elements.body.value,
+            color: "green",
           };
           props.postAnnotation(args);
           setTitle("Title");
@@ -24,6 +26,7 @@ function AnnotationForm(props) {
         }}>
         <label>Title</label>
         <input type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} />
+        <label>Color</label>
         <label>Content</label>
         <textarea type="text" name="body" value={body} onChange={e => setBody(e.target.value)} />
         <input type="submit" />
