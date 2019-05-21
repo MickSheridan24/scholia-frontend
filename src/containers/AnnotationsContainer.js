@@ -49,7 +49,7 @@ class AnnotationsContainer extends Component {
         <div className="annotationList">
           <div className="ui toggle checkbox" onClick={this.handleToggle}>
             <input type="checkbox" name="toggleAll" checked={this.state.allAnnotations} onChange={this.handleToggle} />
-            <label>All</label>
+            <label>{this.state.allAnnotations ? "All" : "On Page"}</label>
           </div>
           {this.listAnnotations()}
         </div>

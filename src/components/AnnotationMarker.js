@@ -43,17 +43,17 @@ class AnnotationMarker extends React.Component {
   }
   render() {
     // console.log("Asterix Rendered", this.props.annotation.highlighted);
-    return (
+    return this.props.annotation ? (
       <span
         id={`marker-${this.props.id}`}
         data-id={this.props.id}
         onMouseOut={this.handleMouseOut}
         onMouseOver={this.handleMouseOver}
         className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
-        style={{ color: this.props.annotation.color }}>
+        style={this.props.annotation ? { color: this.props.annotation.color } : {}}>
         {this.isntHidden() ? "*" : ""}
       </span>
-    );
+    ) : null;
   }
 }
 

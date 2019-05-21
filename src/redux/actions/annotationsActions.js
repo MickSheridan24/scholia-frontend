@@ -14,8 +14,7 @@ function fetchAnnotations(book, query = {}) {
   return async dispatch => {
     const resp = await fetch(`http://localhost:3000/api/v1/annotations?book_id=${book.id}&options=${query}`, {
       method: "GET",
-      headers: { "Content-Type": "Application/json" },
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      headers: { "Content-Type": "Application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     const annotations = await resp.json();
     const preparedAnnotations = annotations.map(a => {
@@ -78,6 +77,23 @@ function highlightAnnotation(id) {
   // console.log("HIGHLIGHT ACTION");
   return { type: "HIGHLIGHT_ANNOTATION", annotationId: parseInt(id) };
 }
+
+function deleteAnnotation(id) {
+  return async (dispatch, getState) => {
+    const resp = await fetch(`http://localhost:3000/api/v1/annotations/${id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    const status = await resp.json();
+    if (status.success) {
+      await dispatch({ type: "DELETE_ANNOTATION", annotationId: parseInt(id) });
+      const originalBook = findBook(getState);
+      dispatch(annotateAndSetBook(originalBook));
+    } else {
+      alert("Something went wrong with your request! Try again later.");
+    }
+  };
+}
 function enterAnnotation(id) {
   // console.log("ENTER ANNOTATION ACTION");
   return { type: "ENTER_ANNOTATION", annotationId: parseInt(id) };
@@ -103,4 +119,5 @@ export {
   enterAnnotation,
   setShowUserAnnotations,
   setShowOtherAnnotations,
+  deleteAnnotation,
 };

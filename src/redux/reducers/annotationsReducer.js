@@ -27,6 +27,8 @@ function otherAnnotationsReducer(state = [], action) {
       let targetAnno = state.find(anno => anno.location_char_index <= targetSpot);
       let targetIndex = state.indexOf(targetAnno);
       return [...state.slice(0, targetIndex), action.annotation, ...state.slice(targetIndex)];
+    case "DELETE_ANNOTATION":
+      return state.filter(a => a.id !== action.annotationId);
     default:
       return state;
   }
