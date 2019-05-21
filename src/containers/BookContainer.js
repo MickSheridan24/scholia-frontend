@@ -6,7 +6,7 @@ import BookChunk from "./BookChunk";
 
 class BookContainer extends Component {
   componentDidMount() {
-    this.props.fetchBook(1);
+    this.props.fetchBook(0);
   }
   shouldComponentUpdate(nextProps) {
     if (nextProps.book !== this.props.book) {

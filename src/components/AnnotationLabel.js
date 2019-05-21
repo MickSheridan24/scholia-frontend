@@ -16,7 +16,7 @@ function AnnotationLabel(props) {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
         className="ui segment"
-        style={props.annotation.highlighted ? { background: "red" } : {}}>
+        style={props.annotation.highlighted ? { background: props.annotation.color } : {}}>
         <h4>{props.annotation.title}</h4>
         <p>{props.annotation.body}</p>
       </div>

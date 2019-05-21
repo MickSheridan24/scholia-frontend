@@ -26,14 +26,12 @@
   z-index: 0;
 }
 .hover-marker {
-  color: red;
   font-size: 1.5em;
   user-select: none;
   -moz-user-select: -moz-none;
   -ms-user-select: none;
 }
 .marker {
-  color: red;
   user-select: none;
   -moz-user-select: -moz-none;
   -ms-user-select: none;

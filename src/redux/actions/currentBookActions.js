@@ -14,6 +14,7 @@ function annotateAndSetBook(book) {
   // console.log("ANNOTATE AND SET BOOK ACTION");
   return (dispatch, getState) => {
     const annotations = getState().otherAnnotations;
+    // console.log(annotations);
     annotate(book, annotations, dispatch, getState);
   };
 }
@@ -25,11 +26,12 @@ function annotate(book, annotations, dispatch, getState) {
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
   if (parsedText.length > 500) {
-    paragraphs = [jsxParagraphs(parsedText.slice(0, 500))];
+    paragraphs = [jsxParagraphs(parsedText.slice(0, 500), 0)];
+    // console.log(paragraphs);
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
     continueParsing(parsedText, dispatch);
   } else {
-    paragraphs = [jsxParagraphs(parsedText)];
+    paragraphs = [jsxParagraphs(parsedText, 0)];
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
   }
 }
@@ -38,11 +40,13 @@ function continueParsing(parsedText, dispatch) {
   let counter = 500;
 
   while (counter + 500 < parsedText.length) {
-    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500));
+    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500), counter);
+    // console.log(paragraphs);
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
     counter += 500;
   }
-  const paragraphs = jsxParagraphs(parsedText.slice(counter));
+  const paragraphs = jsxParagraphs(parsedText.slice(counter), counter);
+  // console.log(paragraphs);
   dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
 }
 function addAsterisks(parsedText, annoIndex) {
@@ -64,14 +68,16 @@ function parseBook(text) {
   const lines = text.split(/\r\n[ \t]*/);
   return lines;
 }
-function jsxify(line, index) {
+function jsxify(line, index, counter) {
   // console.log("JSXIFY LINE");
   const segments = [];
   let i = 0;
   let currentSegment = "";
   while (i < line.length) {
     if (line[i] === "*" && line[i + 1] === "{") {
-      segments.push(<React.Fragment key={`line-${index}-segment-${segments.length}`}>{currentSegment}</React.Fragment>);
+      segments.push(
+        <React.Fragment key={`line-${index + counter}-segment-${segments.length}`}>{currentSegment}</React.Fragment>,
+      );
       let key = "";
       i += 2;
       while (line[i] !== "}" && i < line.length) {
@@ -86,20 +92,22 @@ function jsxify(line, index) {
     i++;
   }
   if (currentSegment.length > 0) {
-    segments.push(<React.Fragment key={`line-${index}-segment-${segments.length}`}>{currentSegment}</React.Fragment>);
+    segments.push(
+      <React.Fragment key={`line-${index + counter}-segment-${segments.length}`}>{currentSegment}</React.Fragment>,
+    );
   }
 
-  segments.push(<meta key={`line-${index}-metaSegment`} data-index={index} name="lineIndex" />);
+  segments.push(<meta key={`line-${index + counter}-metaSegment`} data-index={index + counter} name="lineIndex" />);
 
   return segments;
 }
-function jsxParagraphs(lines) {
+function jsxParagraphs(lines, counter) {
   // console.log("JSXIFY PARAGRAPHS");
   let paragraphs = [];
   let currentParagraph = [];
   let i = 0;
   while (i < lines.length) {
-    const jsxLine = jsxify(lines[i], i);
+    const jsxLine = jsxify(lines[i], i, counter);
     if (jsxLine.length > 1) {
       currentParagraph.push(jsxLine);
     } else {

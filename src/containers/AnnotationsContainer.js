@@ -2,29 +2,51 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AnnotationForm from "../components/AnnotationForm";
 import AnnotationLabel from "../components/AnnotationLabel";
+import AnnotationsNavigator from "../components/AnnotationsNavigator";
 
 class AnnotationsContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      allAnnotations: false,
+    };
+  }
+
   listAnnotations = () => {
-    const visibleAnnotations = this.props.otherAnnotations
-      .filter(a => a.visible)
+    const annotations = this.props.otherAnnotations;
+
+    const filteredAnnotations = this.state.allAnnotations ? annotations : annotations.filter(a => a.visible);
+
+    const visibleAnnotations = filteredAnnotations
       .reverse()
       .sort((l, h) => parseInt(l.location_p_index) - parseInt(h.location_p_index));
 
     return (
       <div className="ui list">
         {visibleAnnotations.map(a => {
-          return <AnnotationLabel key={`label - ${a.id}`} annotation={a} />;
+          return <AnnotationLabel key={`anno -label - ${a.id}`} annotation={a} />;
         })}
       </div>
     );
   };
 
+  handleToggle = () => {
+    this.setState({ allAnnotations: !this.state.allAnnotations });
+  };
   render() {
+    console.log(this.props.userAnnotations, this.props.otherAnnotations);
     // console.log("Annotations  Container Rendered");
     return (
       <div className="annotationContainer">
         <AnnotationForm />
-        <div className="annotationList">{this.listAnnotations()}</div>
+        <AnnotationsNavigator />
+        <div className="annotationList">
+          <div className="ui toggle checkbox" onClick={this.handleToggle}>
+            <input type="checkbox" name="toggleAll" checked={this.state.allAnnotations} onChange={this.handleToggle} />
+            <label>All</label>
+          </div>
+          {this.listAnnotations()}
+        </div>
       </div>
     );
   }

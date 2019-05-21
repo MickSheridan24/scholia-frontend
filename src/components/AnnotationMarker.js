@@ -38,7 +38,8 @@ class AnnotationMarker extends React.Component {
         data-id={this.props.id}
         onMouseOut={this.handleMouseOut}
         onMouseOver={this.handleMouseOver}
-        className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}>
+        className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
+        style={{ color: this.props.annotation.color }}>
         *
       </span>
     );
