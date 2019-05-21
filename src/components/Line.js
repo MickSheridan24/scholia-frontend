@@ -20,7 +20,7 @@ function Line(props) {
       .includes("project gutenberg");
   }
   function titleTag() {
-    console.log("Title Rendered");
+    // console.log("Title Rendered");
     return (
       <span className="title">
         {props.line.map(segment => {
@@ -30,7 +30,7 @@ function Line(props) {
     );
   }
   function lineTag() {
-    console.log("Line Rendered");
+    // console.log("Line Rendered");
     return (
       <span className={props.firstLine ? "first-line" : "line"}>
         {props.line.map(segment => {
@@ -40,7 +40,7 @@ function Line(props) {
     );
   }
   function authorTag() {
-    console.log("Author Rendered");
+    // console.log("Author Rendered");
     return (
       <span className="author">
         {props.line.map(segment => {

@@ -1,10 +1,9 @@
 import { fetchAnnotations } from "./annotationsActions";
 import React from "react";
 import AnnotationMarker from "../../components/AnnotationMarker";
-import { loadPartialConfig } from "@babel/core";
 
 function setBook(book) {
-  console.log("SETBOOK ACTION");
+  // console.log("SETBOOK ACTION");
   return async dispatch => {
     const bookToBeAnnotated = { ...book };
     await dispatch(fetchAnnotations(bookToBeAnnotated));
@@ -12,7 +11,7 @@ function setBook(book) {
   };
 }
 function annotateAndSetBook(book) {
-  console.log("ANNOTATE AND SET BOOK ACTION");
+  // console.log("ANNOTATE AND SET BOOK ACTION");
   return (dispatch, getState) => {
     const annotations = getState().otherAnnotations;
     annotate(book, annotations, dispatch, getState);
@@ -20,17 +19,31 @@ function annotateAndSetBook(book) {
 }
 
 function annotate(book, annotations, dispatch, getState) {
-  console.log("ANNOTATE ACTION");
+  // console.log("ANNOTATE ACTION");
   const parsedText = parseBook(book.text);
   const annoIndex = prepAnnotations(annotations);
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
   if (parsedText.length > 500) {
-    paragraphs = jsxParagraphs(parsedText.slice(0, 500));
+    paragraphs = [jsxParagraphs(parsedText.slice(0, 500))];
+    dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
+    continueParsing(parsedText, dispatch);
   } else {
-    paragraphs = jsxParagraphs(parsedText);
+    paragraphs = [jsxParagraphs(parsedText)];
+    dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
   }
-  dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
+}
+
+function continueParsing(parsedText, dispatch) {
+  let counter = 500;
+
+  while (counter + 500 < parsedText.length) {
+    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500));
+    dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
+    counter += 500;
+  }
+  const paragraphs = jsxParagraphs(parsedText.slice(counter));
+  dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
 }
 function addAsterisks(parsedText, annoIndex) {
   for (const key in annoIndex) {
@@ -47,12 +60,12 @@ function addAsterisks(parsedText, annoIndex) {
   }
 }
 function parseBook(text) {
-  console.log("PARSE BOOK");
+  // console.log("PARSE BOOK");
   const lines = text.split(/\r\n[ \t]*/);
   return lines;
 }
 function jsxify(line, index) {
-  console.log("JSXIFY LINE");
+  // console.log("JSXIFY LINE");
   const segments = [];
   let i = 0;
   let currentSegment = "";
@@ -81,7 +94,7 @@ function jsxify(line, index) {
   return segments;
 }
 function jsxParagraphs(lines) {
-  console.log("JSXIFY PARAGRAPHS");
+  // console.log("JSXIFY PARAGRAPHS");
   let paragraphs = [];
   let currentParagraph = [];
   let i = 0;
@@ -101,7 +114,7 @@ function jsxParagraphs(lines) {
   return paragraphs;
 }
 function prepAnnotations(annotations) {
-  console.log("HIST ANNOTATIONS ACTION");
+  // console.log("HIST ANNOTATIONS ACTION");
   const index = annotations.reduce((memo, annotation) => {
     if (!memo[annotation.location_p_index]) {
       memo[annotation.location_p_index] = [annotation];

@@ -14,11 +14,11 @@ class AnnotationMarker extends React.Component {
     this.props.highlightAnnotation(this.props.id);
   };
   handleEnter = () => {
-    console.log("enter");
+    // console.log("enter");
     this.props.enterAnnotation(this.props.id);
   };
   handleExit = () => {
-    console.log("exit");
+    // console.log("exit");
     this.props.exitAnnotation(this.props.id);
   };
 
@@ -28,10 +28,10 @@ class AnnotationMarker extends React.Component {
       .on("exit", () => this.handleExit());
   }
   componentWillUnmount() {
-    console.log("unmounting");
+    // console.log("unmounting");
   }
   render() {
-    console.log("Asterix Rendered", this.props.annotation.highlighted);
+    // console.log("Asterix Rendered", this.props.annotation.highlighted);
     return (
       <span
         id={`marker-${this.props.id}`}

@@ -20,7 +20,7 @@ class AnnotationsContainer extends Component {
   };
 
   render() {
-    console.log("Annotations  Container Rendered");
+    // console.log("Annotations  Container Rendered");
     return (
       <div className="annotationContainer">
         <AnnotationForm />

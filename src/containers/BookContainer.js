@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { fetchBook } from "../redux/actions/libraryActions";
 import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsActions";
-import Line from "../components/Line";
-
 import { connect } from "react-redux";
+import BookChunk from "./BookChunk";
 
 class BookContainer extends Component {
   componentDidMount() {
-    this.props.fetchBook(2);
+    this.props.fetchBook(1);
   }
   shouldComponentUpdate(nextProps) {
     if (nextProps.book !== this.props.book) {
@@ -30,25 +29,14 @@ class BookContainer extends Component {
   };
 
   displayBook = () => {
-    return this.props.book.text.map((par, i) => {
-      return this.displayParagraph(par, i);
+    // console.log("book Display");
+    return this.props.book.text.map((ch, i) => {
+      return <BookChunk index={i} />;
     });
-  };
-  displayParagraph = (par, i) => {
-    return (
-      <p key={`par-${i}`} className="paragraph">
-        {par.map((line, ii) => {
-          return this.displayLine(line, i, ii);
-        })}
-      </p>
-    );
-  };
-  displayLine = (line, i, ii) => {
-    return <Line key={`line-${i}-${ii}`} firstLine={ii === 0} line={line} />;
   };
 
   render() {
-    console.log("Book Container Render");
+    // console.log("Book Container Render");
     return (
       <div className="book-window" id="ScrollContainer" onScroll={this.initiateScroll}>
         <div onDoubleClick={this.handleOnDoubleClick} id="container">
