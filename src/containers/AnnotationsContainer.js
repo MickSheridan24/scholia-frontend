@@ -13,8 +13,14 @@ class AnnotationsContainer extends Component {
   }
 
   listAnnotations = () => {
-    const annotations = this.props.otherAnnotations;
-
+    let annotations = this.props.otherAnnotations.reduce((memo, anno) => {
+      if (
+        (this.props.userShow && anno.user_id === this.props.user.id) ||
+        (this.props.otherShow && anno.user_id !== this.props.user.id)
+      ) {
+        return [...memo, anno];
+      } else return memo;
+    }, []);
     const filteredAnnotations = this.state.allAnnotations ? annotations : annotations.filter(a => a.visible);
 
     const visibleAnnotations = filteredAnnotations
@@ -34,7 +40,7 @@ class AnnotationsContainer extends Component {
     this.setState({ allAnnotations: !this.state.allAnnotations });
   };
   render() {
-    console.log(this.props.userAnnotations, this.props.otherAnnotations);
+    // console.log(this.props.userAnnotations, this.props.otherAnnotations);
     // console.log("Annotations  Container Rendered");
     return (
       <div className="annotationContainer">
@@ -56,7 +62,10 @@ function mapStateToProps(state) {
   return {
     otherAnnotations: state.otherAnnotations,
     userAnnotations: state.userAnnotations,
+    userShow: state.windowStatus.userShow,
+    otherShow: state.windowStatus.otherShow,
     windowStatus: state.windowStatus,
+    user: state.user,
   };
 }
 

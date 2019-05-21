@@ -85,6 +85,13 @@ function exitAnnotation(id) {
   // console.log("EXIT ANNOTATION ACTION");
   return { type: "EXIT_ANNOTATION", annotationId: parseInt(id) };
 }
+function setShowUserAnnotations(bool) {
+  return dispatch => dispatch({ type: "SET_SHOW_USER_ANNOTATIONS", value: bool });
+}
+function setShowOtherAnnotations(bool, dispatch) {
+  return { type: "SET_SHOW_OTHER_ANNOTATIONS", value: bool };
+}
+
 export {
   newAnnotationForm,
   fetchAnnotations,
@@ -93,4 +100,6 @@ export {
   highlightAnnotation,
   exitAnnotation,
   enterAnnotation,
+  setShowUserAnnotations,
+  setShowOtherAnnotations,
 };

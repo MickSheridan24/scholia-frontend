@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { setShowOtherAnnotations, setShowUserAnnotations } from "../redux/actions/annotationsActions";
 
-export default function AnnotationsNavigator() {
+function AnnotationsNavigator(props) {
   const [hidden, setHidden] = useState(true);
-  const [userChecked, setUserChecked] = useState(true);
-  const [otherChecked, setOtherChecked] = useState(true);
 
   function form() {
     return (
@@ -11,15 +11,19 @@ export default function AnnotationsNavigator() {
         <input
           type="checkbox"
           name={"checkUsers"}
-          checked={userChecked}
-          onChange={() => setUserChecked(!userChecked)}
+          checked={props.userShow}
+          onChange={() => {
+            props.setShowUserAnnotations(!props.userShow);
+          }}
         />
         <label>My Annotations</label>
         <input
           type="checkbox"
           name={"checkOthers"}
-          checked={otherChecked}
-          onChange={() => setOtherChecked(!otherChecked)}
+          checked={props.otherShow}
+          onChange={() => {
+            props.setShowOtherAnnotations(!props.otherShow);
+          }}
         />
         <label>Other Annotations</label>
         <button onClick={() => setHidden(true)}>X</button>
@@ -29,3 +33,17 @@ export default function AnnotationsNavigator() {
 
   return <div>{hidden ? <button onClick={() => setHidden(false)}>^</button> : form()}</div>;
 }
+function mapStateToProps(state) {
+  return { userShow: state.windowStatus.userShow, otherShow: state.windowStatus.otherShow };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setShowUserAnnotations: b => dispatch(setShowUserAnnotations(b)),
+    setShowOtherAnnotations: b => dispatch(setShowOtherAnnotations(b, dispatch)),
+  };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AnnotationsNavigator);

@@ -9,14 +9,18 @@ function AnnotationLabel(props) {
   const handleMouseOver = e => {
     props.highlightAnnotation(props.annotation.id);
   };
-  console.log("Label Rendered");
+  // console.log("Label Rendered");
   return (
     <div className="item">
       <div
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
         className="ui segment"
-        style={props.annotation.highlighted ? { background: props.annotation.color } : {}}>
+        style={
+          props.annotation.highlighted
+            ? { background: props.annotation.color }
+            : { border: `2px solid ${props.annotation.color}` }
+        }>
         <h4>{props.annotation.title}</h4>
         <p>{props.annotation.body}</p>
       </div>

@@ -4,9 +4,13 @@ import { connect } from "react-redux";
 import inView from "in-view";
 
 class AnnotationMarker extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    return nextProps.annotation.highlighted !== this.props.annotation.highlighted;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   return (
+  //     nextProps.annotation.highlighted !== this.props.annotation.highlighted ||
+  //     nextProps.userShow !== this.props.userShow ||
+  //     nextProps.otherShow !== this.props.otherShow
+  //   );
+  // }
   handleMouseOut = e => {
     this.props.highlightAnnotation(0);
   };
@@ -14,11 +18,11 @@ class AnnotationMarker extends React.Component {
     this.props.highlightAnnotation(this.props.id);
   };
   handleEnter = () => {
-    // console.log("enter");
+    console.log("enter");
     this.props.enterAnnotation(this.props.id);
   };
   handleExit = () => {
-    // console.log("exit");
+    console.log("exit");
     this.props.exitAnnotation(this.props.id);
   };
 
@@ -28,7 +32,14 @@ class AnnotationMarker extends React.Component {
       .on("exit", () => this.handleExit());
   }
   componentWillUnmount() {
-    // console.log("unmounting");
+    console.log("unmounting asterix");
+  }
+
+  isntHidden() {
+    return (
+      (this.props.userShow && this.props.annotation.user_id === this.props.user.id) ||
+      (this.props.otherShow && this.props.annotation.user_id !== this.props.user.id)
+    );
   }
   render() {
     // console.log("Asterix Rendered", this.props.annotation.highlighted);
@@ -40,7 +51,7 @@ class AnnotationMarker extends React.Component {
         onMouseOver={this.handleMouseOver}
         className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
         style={{ color: this.props.annotation.color }}>
-        *
+        {this.isntHidden() ? "*" : ""}
       </span>
     );
   }
@@ -56,6 +67,9 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
   return {
     annotation: state.otherAnnotations.find(a => a.id === parseInt(ownProps.id)),
+    userShow: state.windowStatus.userShow,
+    otherShow: state.windowStatus.otherShow,
+    user: state.user,
   };
 }
 
