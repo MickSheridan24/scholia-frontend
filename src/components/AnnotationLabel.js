@@ -23,9 +23,13 @@ function AnnotationLabel(props) {
             ? { background: props.annotation.color }
             : { border: `2px solid ${props.annotation.color}` }
         }>
-        <button onClick={handleDelete} className="ui mini left floated button" style={{ color: "red" }}>
-          X
-        </button>
+        {props.userId === props.annotation.user_id ? (
+          <button onClick={handleDelete} className="ui mini right floated button" style={{ color: "red" }}>
+            X
+          </button>
+        ) : (
+          <button className="ui mini right floated button">Like</button>
+        )}
         <h4>{props.annotation.title}</h4>
         <p>{props.annotation.body}</p>
       </div>
@@ -39,7 +43,10 @@ function mapDispatchToProps(dispatch) {
     deleteAnnotation: id => dispatch(deleteAnnotation(id)),
   };
 }
+function mapStateToProps(state) {
+  return { userId: state.user.id };
+}
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(AnnotationLabel);
