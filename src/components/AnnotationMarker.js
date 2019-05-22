@@ -27,7 +27,11 @@ class AnnotationMarker extends React.Component {
       .on("exit", () => this.handleExit());
   }
   componentDidUpdate(nextProps) {
-    if (this.props.annotation.selected && nextProps.annotation.selected !== this.props.annotation.selected) {
+    if (
+      this.props.annotation &&
+      this.props.annotation.selected &&
+      nextProps.annotation.selected !== this.props.annotation.selected
+    ) {
       const handleScroll = async () => {
         await this.props.setChunk(parseInt(this.props.chunk));
 
@@ -54,17 +58,17 @@ class AnnotationMarker extends React.Component {
   render() {
     // console.log("Asterix Rendered", this.props.annotation.highlighted);
     return this.props.annotation ? (
-      <span
-        id={`marker-${this.props.id}`}
-        data-id={this.props.id}
-        onMouseOut={this.handleMouseOut}
-        onMouseOver={this.handleMouseOver}
-        className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
-        style={this.props.annotation ? { color: this.props.annotation.color } : {}}>
-        <Element style={{ display: "inline" }} name={`asterix-${this.props.annotation.id}`}>
+      <Element style={{ display: "inline" }} name={`asterix-${this.props.annotation.id}`}>
+        <span
+          id={`marker-${this.props.id}`}
+          data-id={this.props.id}
+          onMouseOut={this.handleMouseOut}
+          onMouseOver={this.handleMouseOver}
+          className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
+          style={this.props.annotation ? { color: this.props.annotation.color } : {}}>
           {this.isntHidden() ? "*" : ""}{" "}
-        </Element>
-      </span>
+        </span>
+      </Element>
     ) : null;
   }
 }

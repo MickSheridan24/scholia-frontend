@@ -105,7 +105,6 @@ function jsxify(line, index, counter, chunkCounter) {
   return segments;
 }
 function jsxParagraphs(lines, counter, chunkCounter) {
-  debugger;
   // console.log("JSXIFY PARAGRAPHS");
   let paragraphs = [];
   let currentParagraph = [];
@@ -139,8 +138,11 @@ function prepAnnotations(annotations) {
 }
 
 function setChunk(i) {
-  console.log("to chunk", i);
   return { type: "SET_CHUNK", value: i };
 }
 
-export { setBook, annotate, annotateAndSetBook, setChunk };
+function setSelectedLine(args) {
+  return { type: "SET_SELECTED_LINE", line: args };
+}
+
+export { setBook, annotate, annotateAndSetBook, setChunk, setSelectedLine };

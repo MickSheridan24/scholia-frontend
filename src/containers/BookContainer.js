@@ -4,7 +4,7 @@ import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsA
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import BookChunk from "./BookChunk";
-import { Link, Element, Events, animateScroll as scroll, scroller } from "react-scroll";
+import { Element, Events, animateScroll as scroll, scroller } from "react-scroll";
 
 class BookContainer extends Component {
   state = {
@@ -53,8 +53,6 @@ class BookContainer extends Component {
   };
 
   handleNavigation = dir => {
-    console.log("this was hit");
-
     if (dir === "up") {
       if (this.props.currentChunk <= 0) {
         this.scrollToTop();
@@ -88,7 +86,6 @@ class BookContainer extends Component {
   displayBook = () => {
     // console.log("book Display");
     return this.props.book.text.map((ch, i) => {
-      console.log("chunk");
       return (
         <Element key={`chunk${i}`} name={`chunk${i}`}>
           <BookChunk index={i} />

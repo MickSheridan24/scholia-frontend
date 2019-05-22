@@ -7,7 +7,7 @@ function Line(props) {
       return str.props.children ? memo + str.props.children : memo;
     }, "");
   }
-  function isAuthor(props) {
+  function isAuthor() {
     const authorString = `by ${props.author}`;
     return lineString().toLowerCase() === authorString.toLowerCase();
   }
@@ -19,45 +19,36 @@ function Line(props) {
       .toLowerCase()
       .includes("project gutenberg");
   }
-  function titleTag() {
-    // console.log("Title Rendered");
-    return (
-      <span className="title">
-        {props.line.map(segment => {
-          return segment;
-        })}
-      </span>
-    );
+  function isSelected() {
+    const ind = parseInt(props.line[props.line.length - 1].props["data-index"]);
+    return props.selected.index && ind === parseInt(props.selected.index);
   }
-  function lineTag() {
-    // console.log("Line Rendered");
-    return (
-      <span className={props.firstLine ? "first-line" : "line"}>
-        {props.line.map(segment => {
-          return segment;
-        })}
-      </span>
-    );
+
+  function getClassNames() {
+    let ret = "";
+    ret += isTitle() ? "title " : isAuthor() ? "author " : props.firstLine ? "first-line " : "line ";
+    return ret;
   }
-  function authorTag() {
-    // console.log("Author Rendered");
-    return (
-      <span className="author">
-        {props.line.map(segment => {
-          return segment;
-        })}
-      </span>
-    );
+  function displaySegments() {
+    return props.line.map(segment => {
+      return segment;
+    });
   }
   if (isGutenberg()) {
     return null;
+  } else if (isSelected()) {
+    return (
+      <span className={getClassNames()}>
+        <span className="selected-line">{displaySegments()}</span>
+      </span>
+    );
   } else {
-    return isTitle(props) ? titleTag() : isAuthor(props) ? authorTag() : lineTag();
+    return <span className={getClassNames()}>{displaySegments()}</span>;
   }
 }
 
 function mapStateToProps(state) {
-  return { author: state.currentBook.author };
+  return { author: state.currentBook.author, selected: state.windowStatus.selectedLine };
 }
 
 export default connect(mapStateToProps)(Line);
