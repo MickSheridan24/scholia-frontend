@@ -43,9 +43,9 @@ class AnnotationsContainer extends Component {
     // console.log(this.props.userAnnotations, this.props.otherAnnotations);
     // console.log("Annotations  Container Rendered");
     return (
-      <div className="annotationContainer">
+      <React.Fragment>
         <AnnotationForm />
-        <AnnotationsNavigator />
+
         <div className="annotationList">
           <div className="ui toggle checkbox" onClick={this.handleToggle}>
             <input type="checkbox" name="toggleAll" checked={this.state.allAnnotations} onChange={this.handleToggle} />
@@ -53,7 +53,7 @@ class AnnotationsContainer extends Component {
           </div>
           {this.listAnnotations()}
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

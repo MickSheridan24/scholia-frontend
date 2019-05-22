@@ -24,12 +24,33 @@
 }
 
 .book-window {
-  border: 2px solid black;
-  margin: 1em;
+  border: 0px solid black;
+  margin: 0em;
   z-index: 0;
+  padding: 0em;
 }
 .book-controls {
+  width: 100%;
+  z-index: 1;
+  display: block;
   position: fixed;
+}
+.interface-top {
+  border: 0px solid greenyellow;
+  margin-bottom: 0em;
+  position: fixed;
+}
+
+.interface-body {
+  border: 0px solid salmon;
+  margin: 0em;
+}
+
+#body-row {
+  padding-top: 0em;
+}
+.book-text {
+  border: 0px solid red;
 }
 .hover-marker {
   font-size: 1.5em;
@@ -44,6 +65,7 @@
 }
 .annotationContainer {
   position: fixed;
+  border: 2px solid black;
 }
 .annotationList {
   height: 90vh;
@@ -51,7 +73,6 @@
   margin: 1em;
   position: fixed;
   overflow: scroll;
-  border: 2px solid black;
 }
 .ui.segment.navbar {
   position: sticky;

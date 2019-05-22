@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import { setShowOtherAnnotations, setShowUserAnnotations } from "../redux/actions/annotationsActions";
 
 function AnnotationsNavigator(props) {
-  const [hidden, setHidden] = useState(true);
-
   function form() {
     return (
       <div className="ui segment">
@@ -26,12 +24,11 @@ function AnnotationsNavigator(props) {
           }}
         />
         <label>Other Annotations</label>
-        <button onClick={() => setHidden(true)}>X</button>
       </div>
     );
   }
 
-  return <div>{hidden ? <button onClick={() => setHidden(false)}>^</button> : form()}</div>;
+  return form();
 }
 function mapStateToProps(state) {
   return { userShow: state.windowStatus.userShow, otherShow: state.windowStatus.otherShow };
