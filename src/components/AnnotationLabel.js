@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { highlightAnnotation, deleteAnnotation, likeAnnotation } from "../redux/actions/annotationsActions";
+import {
+  highlightAnnotation,
+  deleteAnnotation,
+  likeAnnotation,
+  selectAnnotation,
+} from "../redux/actions/annotationsActions";
 
 function AnnotationLabel(props) {
   const handleMouseOut = e => {
@@ -20,6 +25,7 @@ function AnnotationLabel(props) {
       <div
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
+        onClick={() => props.selectAnnotation(props.annotation.id)}
         className="ui segment"
         style={
           props.annotation.highlighted
@@ -50,6 +56,7 @@ function mapDispatchToProps(dispatch) {
     highlightAnnotation: id => dispatch(highlightAnnotation(id)),
     deleteAnnotation: id => dispatch(deleteAnnotation(id)),
     likeAnnotation: id => dispatch(likeAnnotation(id)),
+    selectAnnotation: id => dispatch(selectAnnotation(id)),
   };
 }
 function mapStateToProps(state) {

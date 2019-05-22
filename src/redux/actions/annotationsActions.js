@@ -19,7 +19,7 @@ function fetchAnnotations(book, query = {}) {
     });
     const annotations = await resp.json();
     const preparedAnnotations = annotations.map(a => {
-      return { ...a, visible: false, highlighted: false };
+      return { ...a, visible: false, highlighted: false, selected: false };
     });
     dispatch({ type: "SET_OTHER_ANNOTATIONS", annotations: preparedAnnotations });
   };
@@ -75,8 +75,11 @@ function findBook(getState) {
 }
 
 function highlightAnnotation(id) {
-  // console.log("HIGHLIGHT ACTION");
   return { type: "HIGHLIGHT_ANNOTATION", annotationId: parseInt(id) };
+}
+
+function selectAnnotation(id) {
+  return { type: "SELECT_ANNOTATION", annotationId: parseInt(id) };
 }
 
 function deleteAnnotation(id) {
@@ -139,4 +142,5 @@ export {
   setShowOtherAnnotations,
   deleteAnnotation,
   likeAnnotation,
+  selectAnnotation,
 };

@@ -41,13 +41,13 @@ function continueParsing(parsedText, dispatch) {
   let chunkCounter = 1;
 
   while (counter + 500 < parsedText.length) {
-    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500, chunkCounter), counter);
+    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500), counter, chunkCounter);
     // console.log(paragraphs);
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
     counter += 500;
     chunkCounter += 1;
   }
-  const paragraphs = jsxParagraphs(parsedText.slice(counter), counter);
+  const paragraphs = jsxParagraphs(parsedText.slice(counter), counter, chunkCounter);
   // console.log(paragraphs);
   dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
 }
@@ -86,6 +86,7 @@ function jsxify(line, index, counter, chunkCounter) {
         key += line[i];
         i++;
       }
+
       segments.push(<AnnotationMarker chunk={chunkCounter} id={key} key={`Annotation-${key}`} />);
       currentSegment = "";
     } else {
@@ -104,6 +105,7 @@ function jsxify(line, index, counter, chunkCounter) {
   return segments;
 }
 function jsxParagraphs(lines, counter, chunkCounter) {
+  debugger;
   // console.log("JSXIFY PARAGRAPHS");
   let paragraphs = [];
   let currentParagraph = [];

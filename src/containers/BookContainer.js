@@ -20,6 +20,27 @@ class BookContainer extends Component {
       console.log("end", arguments);
     });
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      nextProps.book !== this.props.book ||
+      nextProps.currentChunk !== this.props.currentChunk ||
+      nextState !== this.state
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.currentChunk !== this.props.currentChunk) {
+      scroller.scrollTo(`chunk${this.props.currentChunk}`, {
+        duration: 100,
+        smooth: true,
+        isDynamic: true,
+      });
+    }
+  }
+
   componentWillUnmount() {
     Events.scrollEvent.remove("begin");
     Events.scrollEvent.remove("end");
@@ -50,17 +71,6 @@ class BookContainer extends Component {
       }
     }
   };
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      nextProps.book !== this.props.book ||
-      nextProps.currentChunk !== this.props.currentChunk ||
-      nextState !== this.state
-    ) {
-      return true;
-    }
-    return false;
-  }
 
   handleOnDoubleClick = e => {
     e.persist();
@@ -98,31 +108,13 @@ class BookContainer extends Component {
             </button>
             {this.state.showControls ? (
               <div>
-                <Link
-                  className="ui button"
-                  activeClass="active"
-                  to={this.props.currentChunk > 0 ? `chunk${this.props.currentChunk - 1}` : `chunk${0}`}
-                  smooth={true}
-                  onClick={() => this.handleNavigation("up")}
-                  duration={100}
-                  isDynamic>
+                <button className="ui button" onClick={() => this.handleNavigation("up")}>
                   Up
-                </Link>
+                </button>
                 <span>Section {this.props.currentChunk + 1}</span>
-                <Link
-                  className="ui button"
-                  activeClass="active"
-                  to={
-                    this.props.currentChunk < this.props.book.text.length - 1
-                      ? `chunk${this.props.currentChunk + 1}`
-                      : `chunk${this.props.book.text.length - 1}`
-                  }
-                  smooth={true}
-                  isDynamic
-                  onClick={() => this.handleNavigation("down")}
-                  duration={100}>
+                <button className="ui button" onClick={() => this.handleNavigation("down")}>
                   Down
-                </Link>
+                </button>
               </div>
             ) : null}
           </div>

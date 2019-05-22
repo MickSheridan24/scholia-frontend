@@ -1,7 +1,8 @@
 import React from "react";
 import { highlightAnnotation, enterAnnotation, exitAnnotation } from "../redux/actions/annotationsActions";
+import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
-import { Element } from "react-scroll";
+import { Element, scroller } from "react-scroll";
 import inView from "in-view";
 
 class AnnotationMarker extends React.Component {
@@ -25,6 +26,21 @@ class AnnotationMarker extends React.Component {
       .on("enter", () => this.handleEnter())
       .on("exit", () => this.handleExit());
   }
+  componentDidUpdate(nextProps) {
+    if (this.props.annotation.selected && nextProps.annotation.selected !== this.props.annotation.selected) {
+      const handleScroll = async () => {
+        await this.props.setChunk(parseInt(this.props.chunk));
+
+        scroller.scrollTo(`asterix-${this.props.annotation.id}`, {
+          duration: 100,
+          smooth: true,
+          isDynamic: true,
+          offset: -200,
+        });
+      };
+      handleScroll();
+    }
+  }
   componentWillUnmount() {
     console.log("unmounting asterix");
   }
@@ -38,17 +54,17 @@ class AnnotationMarker extends React.Component {
   render() {
     // console.log("Asterix Rendered", this.props.annotation.highlighted);
     return this.props.annotation ? (
-      <Element name={`asterix-${this.props.annotation.id}`}>
-        <span
-          id={`marker-${this.props.id}`}
-          data-id={this.props.id}
-          onMouseOut={this.handleMouseOut}
-          onMouseOver={this.handleMouseOver}
-          className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
-          style={this.props.annotation ? { color: this.props.annotation.color } : {}}>
-          {this.isntHidden() ? "*" : ""}
-        </span>
-      </Element>
+      <span
+        id={`marker-${this.props.id}`}
+        data-id={this.props.id}
+        onMouseOut={this.handleMouseOut}
+        onMouseOver={this.handleMouseOver}
+        className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
+        style={this.props.annotation ? { color: this.props.annotation.color } : {}}>
+        <Element style={{ display: "inline" }} name={`asterix-${this.props.annotation.id}`}>
+          {this.isntHidden() ? "*" : ""}{" "}
+        </Element>
+      </span>
     ) : null;
   }
 }
@@ -58,6 +74,7 @@ function mapDispatchToProps(dispatch) {
     exitAnnotation: id => dispatch(exitAnnotation(id)),
     enterAnnotation: id => dispatch(enterAnnotation(id)),
     highlightAnnotation: id => dispatch(highlightAnnotation(id)),
+    setChunk: ind => dispatch(setChunk(ind)),
   };
 }
 function mapStateToProps(state, ownProps) {
