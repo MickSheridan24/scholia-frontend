@@ -25,6 +25,9 @@
   margin: 1em;
   z-index: 0;
 }
+.book-controls {
+  position: fixed;
+}
 .hover-marker {
   font-size: 1.5em;
   user-select: none;

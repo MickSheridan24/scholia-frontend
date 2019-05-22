@@ -12,13 +12,13 @@ class BookChunk extends Component {
 
   displayParagraph = (par, i) => {
     return (
-      <LazyLoad once offset={500} key={`par-${i}`} placeholder={<p className="placeholder">...</p>}>
-        <p key={`par-${i}`} className="paragraph">
-          {par.map((line, ii) => {
-            return this.displayLine(line, i, ii);
-          })}
-        </p>
-      </LazyLoad>
+      //  <LazyLoad once offset={500} key={`par-${i}`} placeholder={<p className="placeholder">...</p>}>
+      <p key={`par-${i}`} className="paragraph">
+        {par.map((line, ii) => {
+          return this.displayLine(line, i, ii);
+        })}
+      </p>
+      //  </LazyLoad>
     );
   };
   displayLine = (line, i, ii) => {

@@ -1,16 +1,10 @@
 import React from "react";
 import { highlightAnnotation, enterAnnotation, exitAnnotation } from "../redux/actions/annotationsActions";
 import { connect } from "react-redux";
+import { Element } from "react-scroll";
 import inView from "in-view";
 
 class AnnotationMarker extends React.Component {
-  // shouldComponentUpdate(nextProps) {
-  //   return (
-  //     nextProps.annotation.highlighted !== this.props.annotation.highlighted ||
-  //     nextProps.userShow !== this.props.userShow ||
-  //     nextProps.otherShow !== this.props.otherShow
-  //   );
-  // }
   handleMouseOut = e => {
     this.props.highlightAnnotation(0);
   };
@@ -44,15 +38,17 @@ class AnnotationMarker extends React.Component {
   render() {
     // console.log("Asterix Rendered", this.props.annotation.highlighted);
     return this.props.annotation ? (
-      <span
-        id={`marker-${this.props.id}`}
-        data-id={this.props.id}
-        onMouseOut={this.handleMouseOut}
-        onMouseOver={this.handleMouseOver}
-        className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
-        style={this.props.annotation ? { color: this.props.annotation.color } : {}}>
-        {this.isntHidden() ? "*" : ""}
-      </span>
+      <Element name={`asterix-${this.props.annotation.id}`}>
+        <span
+          id={`marker-${this.props.id}`}
+          data-id={this.props.id}
+          onMouseOut={this.handleMouseOut}
+          onMouseOver={this.handleMouseOver}
+          className={this.props.annotation && this.props.annotation.highlighted ? "hover-marker" : "marker"}
+          style={this.props.annotation ? { color: this.props.annotation.color } : {}}>
+          {this.isntHidden() ? "*" : ""}
+        </span>
+      </Element>
     ) : null;
   }
 }

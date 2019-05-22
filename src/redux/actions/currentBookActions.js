@@ -26,24 +26,26 @@ function annotate(book, annotations, dispatch, getState) {
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
   if (parsedText.length > 500) {
-    paragraphs = [jsxParagraphs(parsedText.slice(0, 500), 0)];
+    paragraphs = [jsxParagraphs(parsedText.slice(0, 500), 0, 0)];
     // console.log(paragraphs);
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
     continueParsing(parsedText, dispatch);
   } else {
-    paragraphs = [jsxParagraphs(parsedText, 0)];
+    paragraphs = [jsxParagraphs(parsedText, 0, 0)];
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
   }
 }
 
 function continueParsing(parsedText, dispatch) {
   let counter = 500;
+  let chunkCounter = 1;
 
   while (counter + 500 < parsedText.length) {
-    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500), counter);
+    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500, chunkCounter), counter);
     // console.log(paragraphs);
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
     counter += 500;
+    chunkCounter += 1;
   }
   const paragraphs = jsxParagraphs(parsedText.slice(counter), counter);
   // console.log(paragraphs);
@@ -68,7 +70,7 @@ function parseBook(text) {
   const lines = text.split(/\r\n[ \t]*/);
   return lines;
 }
-function jsxify(line, index, counter) {
+function jsxify(line, index, counter, chunkCounter) {
   // console.log("JSXIFY LINE");
   const segments = [];
   let i = 0;
@@ -84,7 +86,7 @@ function jsxify(line, index, counter) {
         key += line[i];
         i++;
       }
-      segments.push(<AnnotationMarker id={key} key={`Annotation-${key}`} />);
+      segments.push(<AnnotationMarker chunk={chunkCounter} id={key} key={`Annotation-${key}`} />);
       currentSegment = "";
     } else {
       currentSegment += line[i];
@@ -101,13 +103,13 @@ function jsxify(line, index, counter) {
 
   return segments;
 }
-function jsxParagraphs(lines, counter) {
+function jsxParagraphs(lines, counter, chunkCounter) {
   // console.log("JSXIFY PARAGRAPHS");
   let paragraphs = [];
   let currentParagraph = [];
   let i = 0;
   while (i < lines.length) {
-    const jsxLine = jsxify(lines[i], i, counter);
+    const jsxLine = jsxify(lines[i], i, counter, chunkCounter);
     if (jsxLine.length > 1) {
       currentParagraph.push(jsxLine);
     } else {
@@ -134,4 +136,9 @@ function prepAnnotations(annotations) {
   return index;
 }
 
-export { setBook, annotate, annotateAndSetBook };
+function setChunk(i) {
+  console.log("to chunk", i);
+  return { type: "SET_CHUNK", value: i };
+}
+
+export { setBook, annotate, annotateAndSetBook, setChunk };
