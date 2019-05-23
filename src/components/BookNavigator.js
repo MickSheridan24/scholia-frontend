@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 class BookNavigator extends Component {
   render() {
     return (
-      <div className="book-controls ui segment">
-        <button className="ui button" onClick={() => this.props.handleNavigation("up")}>
+      <React.Fragment>
+        <button className="ui button" onClick={() => this.handleNavigation("up")}>
           Up
         </button>
         <span>Section {this.props.currentChunk + 1}</span>
-        <button className="ui button" onClick={() => this.props.handleNavigation("down")}>
+        <button className="ui button" onClick={() => this.handleNavigation("down")}>
           Down
         </button>
-      </div>
+      </React.Fragment>
     );
   }
 }

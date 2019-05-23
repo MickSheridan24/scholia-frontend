@@ -5,13 +5,6 @@ import AnnotationLabel from "../components/AnnotationLabel";
 import AnnotationsNavigator from "../components/AnnotationsNavigator";
 
 class AnnotationsContainer extends Component {
-  constructor() {
-    super();
-    this.state = {
-      allAnnotations: false,
-    };
-  }
-
   listAnnotations = () => {
     let annotations = this.props.otherAnnotations.reduce((memo, anno) => {
       if (
@@ -21,7 +14,7 @@ class AnnotationsContainer extends Component {
         return [...memo, anno];
       } else return memo;
     }, []);
-    const filteredAnnotations = this.state.allAnnotations ? annotations : annotations.filter(a => a.visible);
+    const filteredAnnotations = this.props.allToggle ? annotations : annotations.filter(a => a.visible);
 
     const visibleAnnotations = filteredAnnotations
       .reverse()
@@ -36,9 +29,6 @@ class AnnotationsContainer extends Component {
     );
   };
 
-  handleToggle = () => {
-    this.setState({ allAnnotations: !this.state.allAnnotations });
-  };
   render() {
     // console.log(this.props.userAnnotations, this.props.otherAnnotations);
     // console.log("Annotations  Container Rendered");
@@ -46,13 +36,7 @@ class AnnotationsContainer extends Component {
       <React.Fragment>
         <AnnotationForm />
 
-        <div className="annotationList">
-          <div className="ui toggle checkbox" onClick={this.handleToggle}>
-            <input type="checkbox" name="toggleAll" checked={this.state.allAnnotations} onChange={this.handleToggle} />
-            <label>{this.state.allAnnotations ? "All" : "On Page"}</label>
-          </div>
-          {this.listAnnotations()}
-        </div>
+        {this.listAnnotations()}
       </React.Fragment>
     );
   }
@@ -66,6 +50,7 @@ function mapStateToProps(state) {
     otherShow: state.windowStatus.otherShow,
     windowStatus: state.windowStatus,
     user: state.user,
+    allToggle: state.windowStatus.allToggle,
   };
 }
 

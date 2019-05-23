@@ -1,5 +1,12 @@
+:root {
+  --main-color: #95c3d7;
+  --light-shade: #fcfafb;
+  --light-accent: #ddc690;
+  --dark-accent: #a7b0c0;
+  --dark-shade: #647a9c;
+}
 * {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .line {
@@ -16,7 +23,7 @@
   margin-left: 1.5em;
 }
 .selected-line {
-  background: yellow;
+  background: var(--main-color);
 }
 .paragraph {
   margin-top: 1em;
@@ -63,28 +70,7 @@
   -moz-user-select: -moz-none;
   -ms-user-select: none;
 }
-.annotationContainer {
-  position: fixed;
-  border: 2px solid black;
-}
-.annotationList {
-  height: 90vh;
-  width: 35em;
-  margin: 1em;
-  position: fixed;
-  overflow: scroll;
-}
-.ui.segment.navbar {
-  position: sticky;
-  background: rgba(165, 42, 42, 1);
-  z-index: 1;
 
-  top: 0;
-  left: 0;
-}
-.ui.segment.navbar > link {
-  color: beige;
-}
 .title {
   text-align: center;
   display: block;
@@ -97,4 +83,72 @@
 }
 .placeholder {
   text-align: center;
+}
+
+.navigator {
+  background: var(--dark-shade);
+  position: fixed;
+  margin: 1.5em;
+  margin-left: 0em;
+  padding: 1em;
+  color: var(--light-shade);
+}
+/* .navigator > .ui.simple.dropdown.item > .menu {
+  background: var(--light-shade);
+} */
+.navigator > .ui.simple.dropdown.item > .menu > a {
+  color: var(--dark-shade);
+}
+
+.wrapper {
+  position: fixed;
+  margin: 0px;
+  padding: 0px;
+}
+
+.annotation-list {
+  height: 85vh;
+
+  margin: 0em;
+  margin-right: 2.5em;
+
+  padding: 40em;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  overflow-y: scroll;
+  color: var(--dark-shade);
+  background: var(--light-accent);
+}
+.annotation-list::-webkit-scrollbar {
+  display: none;
+}
+
+.annotation-label {
+  width: 80%;
+  background: var(--light-shade) !important;
+  color: var(--dark-shade);
+
+  margin-left: 1em;
+  margin-right: 1em;
+}
+#annotations {
+  padding-left: 1em;
+}
+#navigator {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 50%;
+  margin: 0em;
+  margin-right: 2.5em;
+  margin-top: 2.5em;
+
+  padding: 1em;
+}
+
+.book-container {
+  background: var(--light-shade);
 }

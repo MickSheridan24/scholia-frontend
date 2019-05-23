@@ -129,6 +129,9 @@ function setShowUserAnnotations(bool) {
 function setShowOtherAnnotations(bool, dispatch) {
   return { type: "SET_SHOW_OTHER_ANNOTATIONS", value: bool };
 }
+function toggleAll() {
+  return { type: "TOGGLE_ALL" };
+}
 
 export {
   newAnnotationForm,
@@ -143,4 +146,5 @@ export {
   deleteAnnotation,
   likeAnnotation,
   selectAnnotation,
+  toggleAll,
 };

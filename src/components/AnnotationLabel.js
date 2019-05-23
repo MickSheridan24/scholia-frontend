@@ -21,16 +21,16 @@ function AnnotationLabel(props) {
     props.likeAnnotation(props.annotation.id);
   };
   return (
-    <div className="item">
+    <div className="item ">
       <div
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
         onClick={() => props.selectAnnotation(props.annotation.id)}
-        className="ui segment"
+        className="ui segment annotation-label"
         style={
           props.annotation.highlighted
-            ? { background: props.annotation.color }
-            : { border: `2px solid ${props.annotation.color}` }
+            ? { color: props.annotation.color }
+            : { "border-left": `2px solid ${props.annotation.color}` }
         }>
         {props.userId === props.annotation.user_id ? (
           <button onClick={handleDelete} className="ui mini right floated button" style={{ color: "red" }}>

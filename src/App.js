@@ -19,7 +19,6 @@ class App extends React.Component {
     console.log("App Render");
     return (
       <div>
-        <NavBar />
         <Switch>
           <Route exact path="/book" component={this.props.user.username ? BookInterface : Login} />
           <Route exact path="/annotations" component={this.props.user.username ? AnnotationsContainer : Login} />
