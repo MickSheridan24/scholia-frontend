@@ -31,20 +31,20 @@ function AnnotationLabel(props) {
           ? { color: props.annotation.color }
           : { "border-left": `2px solid ${props.annotation.color}` }
       }>
-      {props.userId === props.annotation.user_id ? (
-        <button onClick={handleDelete} className="ui mini right floated button" style={{ color: "red" }}>
-          X
-        </button>
-      ) : props.annotation.userLiked ? null : (
-        <button className="ui mini right floated button" onClick={handleLike}>
-          Like
-        </button>
-      )}
-      <h4 className="label-title">
-        {props.annotation.title} <em>({props.annotation.likeCount})</em>
-      </h4>
-
-      <p>{props.annotation.body}</p>
+      <div className="label-main">
+        <h4 className="label-title">{props.annotation.title}</h4>
+        {props.annotation.body}
+      </div>
+      <div className="label-right">
+        <div className="like-count">{props.annotation.likeCount}</div>
+        {props.userId === props.annotation.user_id ? (
+          <i className=" close icon label-button" onClick={handleDelete} />
+        ) : props.annotation.userLiked ? (
+          <i className=" star  icon label-button" onClick={handleLike} />
+        ) : (
+          <i className=" star outline icon label-button" onClick={handleLike} />
+        )}
+      </div>
     </div>
   );
 }

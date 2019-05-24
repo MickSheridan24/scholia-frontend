@@ -2,13 +2,15 @@
   --main-color: #95c3d7;
   --light-shade: #fcfafb;
   --light-accent: #ddc690;
+  --light-accent: #faf2df;
   --dark-accent: #a7b0c0;
   --dark-shade: #647a9c;
+  --font-color: #050a41d5;
 }
 
 * {
   font-family: Cochin, Georgia, Times, "Times New Roman", serif;
-  background: var(--light-shade);
+  background: var(--light-accent);
 }
 
 .line {
@@ -115,7 +117,7 @@
   flex-direction: column;
   overflow-y: scroll;
   color: var(--dark-shade);
-  background: var(--light-accent);
+  background: var(--main-color);
 }
 .annotation-list::-webkit-scrollbar {
   display: none;
@@ -129,14 +131,44 @@
   width: 80%;
   background: var(--light-shade) !important;
   color: var(--dark-shade);
-
+  max-height: 7em;
   margin-left: 1em;
   margin-right: 1em;
+  display: flex;
+  flex-direction: row;
+}
+.annotation-label > * {
+  background: var(--light-shade) !important;
 }
 
+.label-main {
+  background: var(--light-shade) !important;
+  flex: 9;
+}
+.label-right {
+  flex: 1;
+}
 .label-title {
   font-family: Cochin, Georgia, Times, "Times New Roman", serif;
+  background: var(--light-shade) !important;
 }
+
+.label-button {
+  float: right;
+  margin: 0em;
+  padding: 0em;
+  background: var(--light-shade) !important;
+}
+.like-count {
+  display: inline;
+  margin: 0em;
+  padding: 0em;
+  background: var(--light-shade) !important;
+}
+/* .delete-button {
+}
+.like-button {
+} */
 #navigator {
   background: var(--dark-shade);
   border-top-left-radius: 5px;
@@ -165,7 +197,7 @@
   color: var(--dark-shade);
 }
 
-i {
+.navigator-arrow > i {
   background: var(--dark-shade);
 }
 
@@ -258,4 +290,6 @@ i {
   padding-left: 2em;
   padding-top: 2em;
   border: 5px solid --main-color;
+  color: var(--font-color);
+  letter-spacing: 0.05em;
 }
