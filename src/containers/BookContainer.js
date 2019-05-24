@@ -9,7 +9,9 @@ import { Element, Events, animateScroll as scroll, scroller } from "react-scroll
 
 class BookContainer extends Component {
   componentDidMount() {
-    this.props.fetchBook(0);
+    if (this.props.linkId) {
+      this.props.fetchBook(this.props.linkId);
+    }
     Events.scrollEvent.register("begin", function(to, element) {
       console.log("begin", arguments);
     });

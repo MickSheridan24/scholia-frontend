@@ -5,6 +5,7 @@ import NavigatorContainer from "./NavigatorContainer";
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import NavBar from "../components/NavBar";
+import { withRouter } from "react-router-dom";
 
 class BookInterface extends Component {
   render() {
@@ -13,7 +14,7 @@ class BookInterface extends Component {
       <div className="ui grid">
         <div id="body-row" className="row interface-body">
           <div className="eight wide column book-container">
-            <BookContainer />
+            <BookContainer linkId={this.props.match.params.id} />
           </div>
           <div className="eight wide column annotations-container">
             <div className="wrapper">
@@ -37,4 +38,4 @@ function mapStateToProps(state) {
   return { currentChunk: state.windowStatus.currentChunk };
 }
 
-export default connect(mapStateToProps)(BookInterface);
+export default withRouter(connect(mapStateToProps)(BookInterface));

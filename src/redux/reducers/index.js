@@ -4,6 +4,7 @@ import { libraryReducer, libraryIndexReducer } from "./libraryReducer";
 import { windowStatusReducer } from "./windowStatusReducer";
 import { userAnnotationsReducer, otherAnnotationsReducer } from "./annotationsReducer";
 import { userReducer } from "./userReducer";
+import { searchResultsReducer } from "./searchResultsReducer";
 
 const rootReducer = combineReducers({
   currentBook: currentBookReducer,
@@ -13,5 +14,6 @@ const rootReducer = combineReducers({
   userAnnotations: userAnnotationsReducer,
   otherAnnotations: otherAnnotationsReducer,
   user: userReducer,
+  searchResults: searchResultsReducer,
 });
 export default rootReducer;

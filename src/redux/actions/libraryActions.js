@@ -19,5 +19,15 @@ function addBook(book) {
   // console.log("ADDBOOK ACTION");
   return { type: "ADD_BOOK", book: book };
 }
+function searchBooks(query) {
+  return async dispatch => {
+    const resp = await fetch(`http://localhost:3000/api/v1/books/search?query=${query}`);
+    const searchResults = await resp.json();
 
-export { fetchBook, addBook };
+    if (searchResults.success) {
+      dispatch({ type: "SET_RESULTS", results: searchResults.results });
+    }
+  };
+}
+
+export { fetchBook, addBook, searchBooks };

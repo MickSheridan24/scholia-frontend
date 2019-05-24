@@ -12,10 +12,10 @@ export default class NavBar extends Component {
               Home
             </Link>
             <Link className="item" to="/book">
-              Books!
+              Current Book
             </Link>
-            <Link className="item" to="/annotations">
-              Annotations!
+            <Link className="item" to="/search">
+              Search Library
             </Link>
             <Link
               className="item"

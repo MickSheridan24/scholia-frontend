@@ -25,8 +25,8 @@ function annotate(book, annotations, dispatch, getState) {
   const annoIndex = prepAnnotations(annotations);
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
-  if (parsedText.length > 500) {
-    paragraphs = [jsxParagraphs(parsedText.slice(0, 500), 0, 0)];
+  if (parsedText.length > 1000) {
+    paragraphs = [jsxParagraphs(parsedText.slice(0, 1000), 0, 0)];
     // console.log(paragraphs);
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
     continueParsing(parsedText, dispatch);
@@ -37,14 +37,14 @@ function annotate(book, annotations, dispatch, getState) {
 }
 
 function continueParsing(parsedText, dispatch) {
-  let counter = 500;
+  let counter = 1000;
   let chunkCounter = 1;
 
-  while (counter + 500 < parsedText.length) {
-    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 500), counter, chunkCounter);
+  while (counter + 1000 < parsedText.length) {
+    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 1000), counter, chunkCounter);
     // console.log(paragraphs);
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
-    counter += 500;
+    counter += 1000;
     chunkCounter += 1;
   }
   const paragraphs = jsxParagraphs(parsedText.slice(counter), counter, chunkCounter);
