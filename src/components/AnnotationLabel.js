@@ -21,32 +21,30 @@ function AnnotationLabel(props) {
     props.likeAnnotation(props.annotation.id);
   };
   return (
-    <div className="item ">
-      <div
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-        onClick={() => props.selectAnnotation(props.annotation.id)}
-        className="ui segment annotation-label"
-        style={
-          props.annotation.highlighted
-            ? { color: props.annotation.color }
-            : { "border-left": `2px solid ${props.annotation.color}` }
-        }>
-        {props.userId === props.annotation.user_id ? (
-          <button onClick={handleDelete} className="ui mini right floated button" style={{ color: "red" }}>
-            X
-          </button>
-        ) : props.annotation.userLiked ? null : (
-          <button className="ui mini right floated button" onClick={handleLike}>
-            Like
-          </button>
-        )}
-        <h4>
-          {props.annotation.title} <em>({props.annotation.likeCount})</em>
-        </h4>
+    <div
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+      onClick={() => props.selectAnnotation(props.annotation.id)}
+      className="ui segment annotation-label"
+      style={
+        props.annotation.highlighted
+          ? { color: props.annotation.color }
+          : { "border-left": `2px solid ${props.annotation.color}` }
+      }>
+      {props.userId === props.annotation.user_id ? (
+        <button onClick={handleDelete} className="ui mini right floated button" style={{ color: "red" }}>
+          X
+        </button>
+      ) : props.annotation.userLiked ? null : (
+        <button className="ui mini right floated button" onClick={handleLike}>
+          Like
+        </button>
+      )}
+      <h4 className="label-title">
+        {props.annotation.title} <em>({props.annotation.likeCount})</em>
+      </h4>
 
-        <p>{props.annotation.body}</p>
-      </div>
+      <p>{props.annotation.body}</p>
     </div>
   );
 }

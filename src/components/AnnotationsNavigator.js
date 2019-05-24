@@ -9,30 +9,37 @@ function AnnotationsNavigator(props) {
   };
   function form() {
     return (
-      <React.Fragment>
-        <input
-          type="checkbox"
-          name={"checkUsers"}
-          checked={props.userShow}
-          onChange={() => {
-            props.setShowUserAnnotations(!props.userShow);
-          }}
-        />
-        <label>My Annotations</label>
-        <input
-          type="checkbox"
-          name={"checkOthers"}
-          checked={props.otherShow}
-          onChange={() => {
-            props.setShowOtherAnnotations(!props.otherShow);
-          }}
-        />
-        <label>Other Annotations</label>
-        <div className="ui toggle checkbox">
-          <input type="checkbox" name="toggleAll" checked={props.allToggle} onChange={handleToggle} />
-          <label>Show All</label>
+      <div className="filter-widget-container">
+        <div className="filter-widget">
+          <div className="annotation-filters">
+            <div className="ui checkbox annotation-filter">
+              <input
+                id="toggle-all-input"
+                className="toggle-all-box"
+                type="checkbox"
+                name="toggleAll"
+                checked={props.allToggle}
+                onChange={handleToggle}
+              />
+              <label />
+            </div>
+            <div className="annotation-filter-label">Show All Notes</div>
+          </div>
+          <div className="filter-widget" />
+          <div className="annotation-filters">
+            <div className="ui checkbox annotation-filter">
+              <input
+                type="checkbox"
+                className="filter-box"
+                checked={props.userShow}
+                onChange={() => props.setShowUserAnnotations(!props.userShow)}
+              />
+              <label />
+            </div>
+            <div className="annotation-filter-label">Include My Notes</div>
+          </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 

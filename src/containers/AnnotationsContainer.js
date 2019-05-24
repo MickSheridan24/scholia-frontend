@@ -20,13 +20,9 @@ class AnnotationsContainer extends Component {
       .reverse()
       .sort((l, h) => parseInt(l.location_p_index) - parseInt(h.location_p_index));
 
-    return (
-      <div className="ui list">
-        {visibleAnnotations.map(a => {
-          return <AnnotationLabel key={`anno -label - ${a.id}`} annotation={a} />;
-        })}
-      </div>
-    );
+    return visibleAnnotations.map(a => {
+      return <AnnotationLabel key={`anno -label - ${a.id}`} annotation={a} />;
+    });
   };
 
   render() {

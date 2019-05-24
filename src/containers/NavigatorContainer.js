@@ -8,9 +8,11 @@ export default class NavigatorContainer extends Component {
     return (
       <React.Fragment>
         <BookNavigator handleNavigation={this.props.handleNavigation} />
-        <NavBar />
         <AnnotationsNavigator />
       </React.Fragment>
     );
   }
 }
+
+//
+//
