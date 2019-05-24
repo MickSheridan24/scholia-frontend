@@ -6,10 +6,11 @@ import NavBar from "../components/NavBar";
 export default class NavigatorContainer extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className="navigator-container">
         <BookNavigator handleNavigation={this.props.handleNavigation} />
         <AnnotationsNavigator />
-      </React.Fragment>
+        <NavBar />
+      </div>
     );
   }
 }

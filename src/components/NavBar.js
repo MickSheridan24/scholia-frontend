@@ -5,8 +5,8 @@ export default class NavBar extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="ui simple dropdown item">
-          <i className="large compass outline icon" />
+        <div className="ui simple dropdown item " id="nav-bar">
+          <i className="large compass outline icon" menu />
           <div className="menu">
             <Link className="item" to="/home">
               Home

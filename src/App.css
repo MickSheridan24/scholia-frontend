@@ -103,12 +103,11 @@
   padding-left: 1em;
 }
 .annotation-list {
-  height: 85vh;
+  height: 80vh;
 
   margin: 0em;
-  margin-right: 2.5em;
-
-  padding: 40em;
+  margin-right: 3em;
+  border: 2px solid var(--dark-shade);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 
@@ -128,12 +127,11 @@
 }
 
 .annotation-label {
-  width: 80%;
+  width: 90%;
   background: var(--light-shade) !important;
   color: var(--dark-shade);
   max-height: 7em;
-  margin-left: 1em;
-  margin-right: 1em;
+
   display: flex;
   flex-direction: row;
 }
@@ -169,17 +167,32 @@
 }
 .like-button {
 } */
+
+.navigator-container {
+  padding: 0em;
+  margin: 0em;
+  background-color: var(--light-shade);
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+.book-navigator {
+  background: var(--dark-shade);
+  flex: 1;
+}
+
 #navigator {
   background: var(--dark-shade);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   margin: 0em;
-  margin-right: 2.5em;
+  margin-right: 3em;
   margin-top: 2.5em;
   min-height: 5em;
 
   padding: 1em;
 }
+
 #navigator > * {
   background: var(--dark-shade);
 }
@@ -204,11 +217,13 @@
 .navigator-arrow {
   background: var(--dark-shade);
   align-items: center;
-  padding-left: 0.3em;
+  padding-left: 0.4em;
   display: block;
 }
 .section-indicator {
   background: var(--main-color);
+  max-width: 1.5em;
+
   color: var(--dark-shade);
   font-size: 1.3em;
   border-radius: 50px;
@@ -246,6 +261,8 @@
 }
 
 .filter-widget-container {
+  background-color: var(--dark-shade);
+  flex: 8;
   align-items: center;
   padding-top: 0.5em;
 }
@@ -290,6 +307,18 @@
   padding-left: 2em;
   padding-top: 2em;
   border: 5px solid --main-color;
-  color: var(--font-color);
+  color: var(--dark-shade);
   letter-spacing: 0.05em;
+}
+
+#nav-bar {
+  background-color: inherit !important;
+  padding-right: 1em;
+  flex: 1;
+  height: 2em;
+  align-self: flex-start;
+}
+#nav-bar > i {
+  float: right;
+  background-color: inherit;
 }
