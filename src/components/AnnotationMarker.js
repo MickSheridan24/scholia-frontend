@@ -45,12 +45,10 @@ class AnnotationMarker extends React.Component {
   componentWillUnmount() {
     console.log("unmounting asterix");
   }
-  handleScroll = async () => {
-    await this.props.setChunk(parseInt(this.props.chunk));
-
+  handleScroll = () => {
     scroller.scrollTo(`asterix-${this.props.annotation.id}`, {
       duration: 400,
-      smooth: "easeInOutQuad",
+      smooth: true,
       isDynamic: true,
       offset: -200,
     });

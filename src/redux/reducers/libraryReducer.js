@@ -1,8 +1,3 @@
-import { strictEqual } from "assert";
-
-//Library represents the current texts user is working on in a session
-//Books in library remain unannotated, source of truth on validity of text
-
 function libraryReducer(state = [], action) {
   switch (action.type) {
     case "ADD_BOOK":

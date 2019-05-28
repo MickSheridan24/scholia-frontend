@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AnnotationForm from "../components/AnnotationForm";
 import AnnotationLabel from "../components/AnnotationLabel";
-import AnnotationsNavigator from "../components/AnnotationsNavigator";
 import StudyLabel from "../components/StudyLabel";
 
 class AnnotationsContainer extends Component {
@@ -28,7 +27,6 @@ class AnnotationsContainer extends Component {
   };
 
   listGroups = () => {
-    debugger;
     return this.props.studies.map(g => {
       return <StudyLabel key={`study-label-${g.id}`} study={g} />;
     });

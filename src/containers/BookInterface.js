@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import BookContainer from "./BookContainer";
 import AnnotationsContainer from "./AnnotationsContainer";
 import NavigatorContainer from "./NavigatorContainer";
-import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
-import NavBar from "../components/NavBar";
 import { withRouter } from "react-router-dom";
 
 class BookInterface extends Component {

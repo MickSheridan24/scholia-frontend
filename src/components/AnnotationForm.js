@@ -18,11 +18,21 @@ function AnnotationForm(props) {
           name="color"
           value={color}
           onChange={e => setColor(e.target.value)}>
-          <option value="blue">Blue</option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-          <option value="purple">Purple</option>
-          <option value="turquoise">Turquoise</option>
+          <option key="blue" value="blue">
+            Blue
+          </option>
+          <option key="red" value="red">
+            Red
+          </option>
+          <option key="green" value="green">
+            Green
+          </option>
+          <option key="purple" value="purple">
+            Purple
+          </option>
+          <option key="turquoise" value="turquoise">
+            Turquoise
+          </option>
         </select>
       </React.Fragment>
     );
@@ -64,7 +74,11 @@ function AnnotationForm(props) {
           onChange={e => setStudy(e.target.value)}>
           <option value={0}>None</option>
           {props.studies.map(s => {
-            return <option value={s.id}>{s.name}</option>;
+            return (
+              <option key={`study-select${s.id}`} value={s.id}>
+                {s.name}
+              </option>
+            );
           })}
         </select>
 

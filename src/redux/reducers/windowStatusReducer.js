@@ -5,6 +5,7 @@ const INITIALSTATE = {
   currentChunk: 0,
   selectedLine: {},
   allToggle: false,
+  annotationForm: null,
   studiesList: false,
 };
 
@@ -24,11 +25,8 @@ function windowStatusReducer(state = INITIALSTATE, action) {
         selectedLine: {},
       };
     case "TOGGLE_STUDIES_LIST":
-      debugger;
       return {
         ...state,
-        annotationForm: null,
-        selectedLine: {},
         studiesList: action.bool,
       };
     case "ADD_ANNOTATION":

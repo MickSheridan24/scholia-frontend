@@ -4,6 +4,15 @@ import LazyLoad from "react-lazyload";
 import Line from "../components/Line";
 
 class BookChunk extends Component {
+  state = {
+    loaded: false,
+  };
+  componentDidMount() {
+    this.setState({ loaded: true });
+  }
+  shouldComponentUpdate() {
+    return !this.state.loaded;
+  }
   displayChunk = () => {
     return this.props.chunk.map((par, i) => {
       return this.displayParagraph(par, i);
@@ -12,13 +21,11 @@ class BookChunk extends Component {
 
   displayParagraph = (par, i) => {
     return (
-      //  <LazyLoad once offset={500} key={`par-${i}`} placeholder={<p className="placeholder">...</p>}>
-      <p key={`par-${i}`} className="paragraph">
+      <div key={`par-${i}`} className="paragraph">
         {par.map((line, ii) => {
           return this.displayLine(line, i, ii);
         })}
-      </p>
-      //  </LazyLoad>
+      </div>
     );
   };
   displayLine = (line, i, ii) => {
@@ -26,13 +33,14 @@ class BookChunk extends Component {
   };
 
   render() {
+    console.log("Chunk rendering");
     return (
-      <LazyLoad once offset={1000}>
+      <LazyLoad offset={1000}>
         <div> {this.displayChunk()}</div>
       </LazyLoad>
     );
   }
-}
+
 
 function mapStateToProps(state, ownProps) {
   return { chunk: state.currentBook.text[ownProps.index], currentChunk: state.windowStatus.currentChunk };

@@ -29,7 +29,7 @@ function AnnotationLabel(props) {
       style={
         props.annotation.highlighted
           ? { color: props.annotation.color }
-          : { "border-left": `2px solid ${props.annotation.color}` }
+          : { borderLeft: `2px solid ${props.annotation.color}` }
       }>
       <div className="label-main">
         <h4 className="label-title">

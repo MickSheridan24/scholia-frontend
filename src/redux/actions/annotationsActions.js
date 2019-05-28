@@ -1,5 +1,4 @@
 import { annotateAndSetBook } from "./currentBookActions";
-import { generateKeyPairSync } from "crypto";
 
 function setAnnotations(query = {}) {
   // console.log("SET ANNOTATIONS");

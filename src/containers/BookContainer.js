@@ -4,7 +4,6 @@ import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsA
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import BookChunk from "./BookChunk";
-import { forceCheck } from "react-lazyload";
 
 import { Element, Events, animateScroll as scroll, scroller } from "react-scroll";
 
@@ -33,12 +32,27 @@ class BookContainer extends Component {
   }
 
   componentDidUpdate = async prevProps => {
-    if (prevProps.currentChunk !== this.props.currentChunk) {
+    if (prevProps.currentChunk < this.props.currentChunk) {
       for (let chunk = parseInt(prevProps.currentChunk); chunk < parseInt(this.props.currentChunk); chunk++) {
         console.log("Scrolling", chunk + 1);
         scroller.scrollTo(`chunk${chunk + 1}`, {
           duration: 100,
-          smooth: false,
+          smooth: true,
+          isDynamic: true,
+        });
+        await new Promise((res, rej) => {
+          setTimeout(() => {
+            console.log("waited");
+            res();
+          }, 150);
+        });
+      }
+    } else if (prevProps.currentChunk > this.props.currentChunk) {
+      for (let chunk = parseInt(this.props.currentChunk); chunk > parseInt(prevProps.currentChunk); chunk--) {
+        console.log("Scrolling", chunk - 1);
+        scroller.scrollTo(`chunk${chunk - 1}`, {
+          duration: 100,
+          smooth: true,
           isDynamic: true,
         });
         await new Promise((res, rej) => {
@@ -87,7 +101,7 @@ class BookContainer extends Component {
   };
 
   render() {
-    // console.log("Book Container Render");
+    console.log("Book Container Render");
     return (
       <React.Fragment>
         <div onDoubleClick={this.handleOnDoubleClick} className="book-text" id="container">

@@ -10,7 +10,7 @@ class StudyLabel extends Component {
         style={
           this.props.study.highlighted
             ? { color: this.props.study.color }
-            : { "border-left": `2px solid ${this.props.study.color}` }
+            : { borderLeft: `2px solid ${this.props.study.color}` }
         }>
         <div className="label-main">
           <h4 className="label-title">{this.props.study.name}</h4>
