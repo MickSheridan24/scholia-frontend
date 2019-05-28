@@ -15,6 +15,12 @@ function windowStatusReducer(state = INITIALSTATE, action) {
         annotationForm: action.args,
         selectedLine: { index: action.args.pIndex, character: action.args.charIndex },
       };
+    case "CANCEL_ANNOTATION_FORM":
+      return {
+        ...state, 
+        annotationForm: null, 
+        selectedLine: {}
+      }
     case "ADD_ANNOTATION":
       return { ...state, annotationForm: null, selectedLine: {} };
     case "SET_SHOW_USER_ANNOTATIONS":

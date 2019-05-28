@@ -1,11 +1,13 @@
 import { fetchAnnotations } from "./annotationsActions";
 import React from "react";
 import AnnotationMarker from "../../components/AnnotationMarker";
+import { fetchStudies } from "./studiesActions";
 
 function setBook(book) {
   // console.log("SETBOOK ACTION");
   return async dispatch => {
     const bookToBeAnnotated = { ...book };
+    dispatch(fetchStudies());
     await dispatch(fetchAnnotations(bookToBeAnnotated));
 
     dispatch(annotateAndSetBook(bookToBeAnnotated));

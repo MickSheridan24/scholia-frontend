@@ -25,7 +25,7 @@ function fetchAnnotations(book, query = {}) {
   };
 }
 
-function postAnnotation({ pIndex, charIndex, title, body, color }) {
+function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
   // console.log("POST ANNOTATIONS");
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
@@ -41,6 +41,7 @@ function postAnnotation({ pIndex, charIndex, title, body, color }) {
           location_p_index: pIndex,
           location_char_index: charIndex,
           title: title,
+          study_id: study_id > 0 ? study_id : null,
         },
       }),
     });
@@ -65,6 +66,9 @@ function addAnnotation(annotation) {
 function newAnnotationForm(args) {
   // console.log("NEW FORM");
   return { type: "NEW_ANNOTATION_FORM", args: args };
+}
+function cancelAnnotationForm() {
+  return { type: "CANCEL_ANNOTATION_FORM" };
 }
 
 function findBook(getState) {
@@ -147,4 +151,5 @@ export {
   likeAnnotation,
   selectAnnotation,
   toggleAll,
+  cancelAnnotationForm,
 };
