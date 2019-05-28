@@ -136,6 +136,9 @@ function setShowOtherAnnotations(bool, dispatch) {
 function toggleAll() {
   return { type: "TOGGLE_ALL" };
 }
+function setStudiesList(b) {
+  return { type: "TOGGLE_STUDIES_LIST", bool: b };
+}
 
 export {
   newAnnotationForm,
@@ -152,4 +155,5 @@ export {
   selectAnnotation,
   toggleAll,
   cancelAnnotationForm,
+  setStudiesList,
 };

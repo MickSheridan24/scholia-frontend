@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import AnnotationForm from "../components/AnnotationForm";
 import AnnotationLabel from "../components/AnnotationLabel";
 import AnnotationsNavigator from "../components/AnnotationsNavigator";
+import GroupLabel from "../components/GroupLabel";
 
 class AnnotationsContainer extends Component {
   listAnnotations = () => {
@@ -25,10 +26,27 @@ class AnnotationsContainer extends Component {
     });
   };
 
+  listGroups = () => {
+    debugger;
+    return this.props.studies.map(g => {
+      return <GroupLabel key={`group-label-${g.id}`} group={g} />;
+    });
+  };
+
   render() {
     // console.log(this.props.userAnnotations, this.props.otherAnnotations);
     // console.log("Annotations  Container Rendered");
-    return <React.Fragment>{this.props.annotationForm ? <AnnotationForm /> : this.listAnnotations()}</React.Fragment>;
+    return (
+      <React.Fragment>
+        {this.props.annotationForm ? (
+          <AnnotationForm />
+        ) : this.props.studiesList ? (
+          this.listGroups()
+        ) : (
+          this.listAnnotations()
+        )}
+      </React.Fragment>
+    );
   }
 }
 
@@ -42,6 +60,8 @@ function mapStateToProps(state) {
     user: state.user,
     allToggle: state.windowStatus.allToggle,
     annotationForm: state.windowStatus.annotationForm,
+    studies: state.studies,
+    studiesList: state.windowStatus.studiesList,
   };
 }
 

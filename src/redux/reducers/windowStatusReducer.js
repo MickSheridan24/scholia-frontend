@@ -5,6 +5,7 @@ const INITIALSTATE = {
   currentChunk: 0,
   selectedLine: {},
   allToggle: false,
+  studiesList: false,
 };
 
 function windowStatusReducer(state = INITIALSTATE, action) {
@@ -14,13 +15,22 @@ function windowStatusReducer(state = INITIALSTATE, action) {
         ...state,
         annotationForm: action.args,
         selectedLine: { index: action.args.pIndex, character: action.args.charIndex },
+        studiesList: false,
       };
     case "CANCEL_ANNOTATION_FORM":
       return {
-        ...state, 
-        annotationForm: null, 
-        selectedLine: {}
-      }
+        ...state,
+        annotationForm: null,
+        selectedLine: {},
+      };
+    case "TOGGLE_STUDIES_LIST":
+      debugger;
+      return {
+        ...state,
+        annotationForm: null,
+        selectedLine: {},
+        studiesList: action.bool,
+      };
     case "ADD_ANNOTATION":
       return { ...state, annotationForm: null, selectedLine: {} };
     case "SET_SHOW_USER_ANNOTATIONS":
