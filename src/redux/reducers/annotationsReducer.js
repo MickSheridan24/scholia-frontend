@@ -14,7 +14,11 @@ function otherAnnotationsReducer(state = [], action) {
       });
     case "SELECT_ANNOTATION":
       return state.map(a => {
-        return a.id === id ? { ...a, selected: true } : { ...a, selected: false };
+        return a.id === action.annotation.id ? { ...a, selected: true } : { ...a, selected: false };
+      });
+    case "DESELECT_ANNOTATION":
+      return state.map(a => {
+        return { ...a, selected: false };
       });
     case "ENTER_ANNOTATION":
       return state.map(a => {

@@ -27,7 +27,7 @@ class BookChunk extends Component {
 
   render() {
     return (
-      <LazyLoad once offset={500} placeholder={<p className="placeholder">...</p>}>
+      <LazyLoad once offset={1000}>
         <div> {this.displayChunk()}</div>
       </LazyLoad>
     );
@@ -35,7 +35,7 @@ class BookChunk extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return { chunk: state.currentBook.text[ownProps.index] };
+  return { chunk: state.currentBook.text[ownProps.index], currentChunk: state.windowStatus.currentChunk };
 }
 
 export default connect(mapStateToProps)(BookChunk);

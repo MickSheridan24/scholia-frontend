@@ -46,6 +46,8 @@ function windowStatusReducer(state = INITIALSTATE, action) {
       return { ...state, loading: action.increment };
     case "SET_BOOK":
       return { ...state, loading: 0, currentChunk: 0 };
+    case "SELECT_ANNOTATION":
+      return { ...state, currentChunk: Math.floor(parseInt(action.annotation.location_p_index) / 1000) };
 
     default:
       return state;

@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import AnnotationForm from "../components/AnnotationForm";
 import AnnotationLabel from "../components/AnnotationLabel";
 import AnnotationsNavigator from "../components/AnnotationsNavigator";
-import GroupLabel from "../components/GroupLabel";
+import StudyLabel from "../components/StudyLabel";
 
 class AnnotationsContainer extends Component {
   listAnnotations = () => {
     let annotations = this.props.otherAnnotations.reduce((memo, anno) => {
       if (
-        (this.props.userShow && anno.user_id === this.props.user.id) ||
-        (this.props.otherShow && anno.user_id !== this.props.user.id)
+        ((this.props.userShow && anno.user_id === this.props.user.id) ||
+          (this.props.otherShow && anno.user_id !== this.props.user.id)) &&
+        (!anno.study || this.props.studies.find(s => s.id === anno.study_id).visible)
       ) {
         return [...memo, anno];
       } else return memo;
@@ -29,7 +30,7 @@ class AnnotationsContainer extends Component {
   listGroups = () => {
     debugger;
     return this.props.studies.map(g => {
-      return <GroupLabel key={`group-label-${g.id}`} group={g} />;
+      return <StudyLabel key={`study-label-${g.id}`} study={g} />;
     });
   };
 

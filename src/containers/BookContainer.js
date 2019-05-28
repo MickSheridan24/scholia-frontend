@@ -4,6 +4,7 @@ import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsA
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import BookChunk from "./BookChunk";
+import { forceCheck } from "react-lazyload";
 
 import { Element, Events, animateScroll as scroll, scroller } from "react-scroll";
 
@@ -31,15 +32,24 @@ class BookContainer extends Component {
     return false;
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate = async prevProps => {
     if (prevProps.currentChunk !== this.props.currentChunk) {
-      scroller.scrollTo(`chunk${this.props.currentChunk}`, {
-        duration: 100,
-        smooth: true,
-        isDynamic: true,
-      });
+      for (let chunk = parseInt(prevProps.currentChunk); chunk < parseInt(this.props.currentChunk); chunk++) {
+        console.log("Scrolling", chunk + 1);
+        scroller.scrollTo(`chunk${chunk + 1}`, {
+          duration: 100,
+          smooth: false,
+          isDynamic: true,
+        });
+        await new Promise((res, rej) => {
+          setTimeout(() => {
+            console.log("waited");
+            res();
+          }, 150);
+        });
+      }
     }
-  }
+  };
 
   componentWillUnmount() {
     Events.scrollEvent.remove("begin");

@@ -313,6 +313,7 @@
 }
 
 .book-container {
+  position: fixed;
   width: 50vw;
   padding-left: 2em;
   padding-top: 2em;

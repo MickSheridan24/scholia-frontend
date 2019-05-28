@@ -4,9 +4,16 @@ function fetchStudies() {
     const resp = await fetch("http://localhost:3000/api/v1/studies");
     const studies = await resp.json();
     if (studies.length > 0) {
-      dispatch({ type: "SET_STUDIES", studies: studies });
+      const preparedStudies = studies.map(s => {
+        return { ...s, visible: true };
+      });
+      dispatch({ type: "SET_STUDIES", studies: preparedStudies });
     }
   };
 }
 
-export { fetchStudies };
+function toggleStudy(studyId, bool) {
+  return { type: "TOGGLE_STUDY", studyId: studyId, bool: bool };
+}
+
+export { fetchStudies, toggleStudy };

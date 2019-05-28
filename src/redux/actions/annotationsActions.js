@@ -82,8 +82,11 @@ function highlightAnnotation(id) {
   return { type: "HIGHLIGHT_ANNOTATION", annotationId: parseInt(id) };
 }
 
-function selectAnnotation(id) {
-  return { type: "SELECT_ANNOTATION", annotationId: parseInt(id) };
+function selectAnnotation(annotation) {
+  return { type: "SELECT_ANNOTATION", annotation: annotation };
+}
+function deselectAnnotation() {
+  return { type: "DESELECT_ANNOTATION" };
 }
 
 function deleteAnnotation(id) {
@@ -156,4 +159,5 @@ export {
   toggleAll,
   cancelAnnotationForm,
   setStudiesList,
+  deselectAnnotation,
 };

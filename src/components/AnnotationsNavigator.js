@@ -29,7 +29,7 @@ function AnnotationsNavigator(props) {
                 />
                 <label />
               </div>
-              <div className="annotation-filter-label">Notes On Page</div>
+              <div className="annotation-filter-label">Notes In View</div>
             </div>
           </div>
           <div className="filter-widget">
@@ -38,12 +38,12 @@ function AnnotationsNavigator(props) {
                 <input
                   type="checkbox"
                   className="filter-box"
-                  checked={props.userShow}
+                  checked={!props.userShow}
                   onChange={() => props.setShowUserAnnotations(!props.userShow)}
                 />
                 <label />
               </div>
-              <div className="annotation-filter-label">Include My Notes</div>
+              <div className="annotation-filter-label">Exclude My Notes</div>
             </div>
           </div>
         </div>

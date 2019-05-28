@@ -24,7 +24,7 @@ function AnnotationLabel(props) {
     <div
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
-      onClick={() => props.selectAnnotation(props.annotation.id)}
+      onClick={() => props.selectAnnotation(props.annotation)}
       className="ui segment annotation-label"
       style={
         props.annotation.highlighted
@@ -57,7 +57,7 @@ function mapDispatchToProps(dispatch) {
     highlightAnnotation: id => dispatch(highlightAnnotation(id)),
     deleteAnnotation: id => dispatch(deleteAnnotation(id)),
     likeAnnotation: id => dispatch(likeAnnotation(id)),
-    selectAnnotation: id => dispatch(selectAnnotation(id)),
+    selectAnnotation: annotation => dispatch(selectAnnotation(annotation)),
   };
 }
 function mapStateToProps(state) {

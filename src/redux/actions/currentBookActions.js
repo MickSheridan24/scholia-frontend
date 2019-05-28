@@ -103,7 +103,11 @@ function jsxify(line, index, counter, chunkCounter) {
     );
   }
 
-  segments.push(<meta key={`line-${index + counter}-metaSegment`} data-index={index + counter} name="lineIndex" />);
+  segments.push(
+    <span key={`line-${index + counter}-metaSegment`} data-index={index + counter} name="lineIndex">
+      {index + counter}
+    </span>,
+  );
 
   return segments;
 }

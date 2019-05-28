@@ -1,5 +1,10 @@
 import React from "react";
-import { highlightAnnotation, enterAnnotation, exitAnnotation } from "../redux/actions/annotationsActions";
+import {
+  deselectAnnotation,
+  highlightAnnotation,
+  enterAnnotation,
+  exitAnnotation,
+} from "../redux/actions/annotationsActions";
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import { Element, scroller } from "react-scroll";
@@ -13,11 +18,9 @@ class AnnotationMarker extends React.Component {
     this.props.highlightAnnotation(this.props.id);
   };
   handleEnter = () => {
-    console.log("enter");
     this.props.enterAnnotation(this.props.id);
   };
   handleExit = () => {
-    console.log("exit");
     this.props.exitAnnotation(this.props.id);
   };
 
@@ -25,6 +28,9 @@ class AnnotationMarker extends React.Component {
     inView(`#marker-${this.props.id}`)
       .on("enter", () => this.handleEnter())
       .on("exit", () => this.handleExit());
+    if (this.props.annotation.selected) {
+      this.handleScroll();
+    }
   }
   componentDidUpdate(nextProps) {
     if (
@@ -32,22 +38,23 @@ class AnnotationMarker extends React.Component {
       this.props.annotation.selected &&
       nextProps.annotation.selected !== this.props.annotation.selected
     ) {
-      const handleScroll = async () => {
-        await this.props.setChunk(parseInt(this.props.chunk));
-
-        scroller.scrollTo(`asterix-${this.props.annotation.id}`, {
-          duration: 100,
-          smooth: true,
-          isDynamic: true,
-          offset: -200,
-        });
-      };
-      handleScroll();
+      this.handleScroll();
+      this.props.deselectAnnotation();
     }
   }
   componentWillUnmount() {
     console.log("unmounting asterix");
   }
+  handleScroll = async () => {
+    await this.props.setChunk(parseInt(this.props.chunk));
+
+    scroller.scrollTo(`asterix-${this.props.annotation.id}`, {
+      duration: 400,
+      smooth: "easeInOutQuad",
+      isDynamic: true,
+      offset: -200,
+    });
+  };
 
   isntHidden() {
     return (
@@ -79,6 +86,7 @@ function mapDispatchToProps(dispatch) {
     enterAnnotation: id => dispatch(enterAnnotation(id)),
     highlightAnnotation: id => dispatch(highlightAnnotation(id)),
     setChunk: ind => dispatch(setChunk(ind)),
+    deselectAnnotation: () => dispatch(deselectAnnotation()),
   };
 }
 function mapStateToProps(state, ownProps) {
