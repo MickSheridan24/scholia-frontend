@@ -1,4 +1,11 @@
-const INITIALSTATE = { userShow: true, otherShow: true, currentChunk: 0, selectedLine: {}, allToggle: false };
+const INITIALSTATE = {
+  loading: 0,
+  userShow: true,
+  otherShow: true,
+  currentChunk: 0,
+  selectedLine: {},
+  allToggle: false,
+};
 
 function windowStatusReducer(state = INITIALSTATE, action) {
   switch (action.type) {
@@ -19,6 +26,10 @@ function windowStatusReducer(state = INITIALSTATE, action) {
     case "TOGGLE_ALL":
       console.log("togglin", state.allToggle);
       return { ...state, allToggle: !state.allToggle };
+    case "LOADING_BOOK":
+      return { ...state, loading: action.increment };
+    case "SET_BOOK":
+      return { ...state, loading: 0, currentChunk: 0 };
 
     default:
       return state;

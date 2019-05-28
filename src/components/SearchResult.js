@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchBook } from "../redux/actions/libraryActions";
+import { fetchBook, setLoading } from "../redux/actions/libraryActions";
 import { NavLink as Link } from "react-router-dom";
 
 function SearchResult(props) {
@@ -8,7 +8,7 @@ function SearchResult(props) {
     <div className="ui container">
       <div className="label-title">{props.result.title}</div>
       <em>{props.result.author}</em>
-      <button>
+      <button onClick={() => props.setLoading()}>
         <Link to={`/book/${props.result.id}`}>Checkout</Link>
       </button>
     </div>
@@ -16,7 +16,7 @@ function SearchResult(props) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { fetchBook: id => dispatch(fetchBook(id)) };
+  return { fetchBook: id => dispatch(fetchBook(id)), setLoading: () => dispatch(setLoading()) };
 }
 
 export default connect(

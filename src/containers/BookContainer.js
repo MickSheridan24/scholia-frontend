@@ -22,6 +22,7 @@ class BookContainer extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       nextProps.book !== this.props.book ||
+      nextProps.loading !== this.props.loading ||
       nextProps.currentChunk !== this.props.currentChunk ||
       nextState !== this.state
     ) {
@@ -80,7 +81,11 @@ class BookContainer extends Component {
     return (
       <React.Fragment>
         <div onDoubleClick={this.handleOnDoubleClick} className="book-text" id="container">
-          {this.props.book.text ? this.displayBook() : null}
+          {this.props.book.text && !this.props.loading ? (
+            this.displayBook()
+          ) : (
+            <div className="loading-screen">Retrieving...</div>
+          )}
         </div>
       </React.Fragment>
     );
@@ -92,6 +97,7 @@ const mapStateToProps = state => {
     book: state.currentBook,
     otherAnnotations: state.otherAnnotations,
     currentChunk: state.windowStatus.currentChunk,
+    loading: state.windowStatus.loading,
   };
 };
 const mapDispatchToProps = dispatch => {

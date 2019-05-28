@@ -26,7 +26,11 @@ class BookChunk extends Component {
   };
 
   render() {
-    return <div> {this.displayChunk()}</div>;
+    return (
+      <LazyLoad once offset={500} placeholder={<p className="placeholder">...</p>}>
+        <div> {this.displayChunk()}</div>
+      </LazyLoad>
+    );
   }
 }
 

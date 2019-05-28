@@ -10,6 +10,7 @@ function fetchBook(id) {
     book.text = unparsed;
 
     dispatch(addBook(book));
+
     dispatch(setBook(book));
   };
 }
@@ -29,5 +30,8 @@ function searchBooks(query) {
     }
   };
 }
+function setLoading() {
+  return { type: "SET_LOADING" };
+}
 
-export { fetchBook, addBook, searchBooks };
+export { fetchBook, addBook, searchBooks, setLoading };

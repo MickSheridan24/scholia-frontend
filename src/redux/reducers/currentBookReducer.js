@@ -9,6 +9,8 @@ function currentBookReducer(state = {}, action) {
       const text = [...state.text];
       text.push(action.chunk);
       return { ...state, text: text };
+    case "SET_LOADING":
+      return {};
     default:
       return state;
   }

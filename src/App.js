@@ -21,7 +21,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/book/:id" component={this.props.user.username ? BookInterface : Login} />
           <Route exact path="/search" component={this.props.user.username ? BookSearchInterface : Login} />
-          <Route component={this.props.user.username ? UserHome : Login} />
+          <Route component={this.props.user.username ? BookSearchInterface : Login} />
         </Switch>
       </div>
     );

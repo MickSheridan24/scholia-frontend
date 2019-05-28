@@ -28,13 +28,7 @@ class AnnotationsContainer extends Component {
   render() {
     // console.log(this.props.userAnnotations, this.props.otherAnnotations);
     // console.log("Annotations  Container Rendered");
-    return (
-      <React.Fragment>
-        <AnnotationForm />
-
-        {this.listAnnotations()}
-      </React.Fragment>
-    );
+    return <React.Fragment>{this.props.annotationForm ? <AnnotationForm /> : this.listAnnotations()}</React.Fragment>;
   }
 }
 
@@ -47,6 +41,7 @@ function mapStateToProps(state) {
     windowStatus: state.windowStatus,
     user: state.user,
     allToggle: state.windowStatus.allToggle,
+    annotationForm: state.windowStatus.annotationForm,
   };
 }
 

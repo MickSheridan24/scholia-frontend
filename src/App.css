@@ -27,7 +27,7 @@
   margin-left: 1.5em;
 }
 .selected-line {
-  background: var(--main-color);
+  background: var(--light-shade);
 }
 .paragraph {
   margin-top: 1em;
@@ -309,6 +309,13 @@
   border: 5px solid --main-color;
   color: var(--dark-shade);
   letter-spacing: 0.05em;
+  height: 100vh;
+}
+.loading-screen {
+  padding: 40%;
+  font-style: italic;
+  font-size: 1.5em;
+  text-align: center;
 }
 
 #nav-bar {
@@ -321,4 +328,29 @@
 #nav-bar > i {
   float: right;
   background-color: inherit;
+}
+
+.annotation-form {
+  background: var(--main-color);
+}
+
+.annotation-form > * {
+  background: inherit;
+}
+.annotation-form-label {
+  background: inherit;
+  display: block;
+}
+.annotation-form-input {
+  background: var(--light-shade);
+  display: block;
+}
+
+.annotation-form-body {
+  background: var(--light-shade);
+  column-count: 500;
+  height: 150;
+}
+.annotation-form-color-select {
+  background: var(--light-shade);
 }

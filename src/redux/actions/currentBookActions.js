@@ -7,6 +7,7 @@ function setBook(book) {
   return async dispatch => {
     const bookToBeAnnotated = { ...book };
     await dispatch(fetchAnnotations(bookToBeAnnotated));
+
     dispatch(annotateAndSetBook(bookToBeAnnotated));
   };
 }
