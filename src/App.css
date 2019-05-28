@@ -131,9 +131,12 @@
   background: var(--light-shade) !important;
   color: var(--dark-shade);
   max-height: 7em;
-
+  overflow-y: scroll;
   display: flex;
   flex-direction: row;
+}
+.annotation-label::-webkit-scrollbar {
+  display: none;
 }
 .annotation-label > * {
   background: var(--light-shade) !important;
@@ -147,10 +150,17 @@
   flex: 1;
 }
 .label-title {
-  font-family: Cochin, Georgia, Times, "Times New Roman", serif;
+  font-family: Cochin, Georgia, Times, "Times New Roman", serif !important;
   background: var(--light-shade) !important;
 }
-
+.label-study-information {
+  font-style: italic;
+  font-size: 0.75em;
+  display: inline;
+  background: var(--light-shade);
+  float: right;
+  padding-right: 1em;
+}
 .label-button {
   float: right;
   margin: 0em;

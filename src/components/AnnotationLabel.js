@@ -32,7 +32,10 @@ function AnnotationLabel(props) {
           : { "border-left": `2px solid ${props.annotation.color}` }
       }>
       <div className="label-main">
-        <h4 className="label-title">{props.annotation.title}</h4>
+        <h4 className="label-title">
+          {props.annotation.title}{" "}
+          {props.annotation.study ? <div className="label-study-information">{props.annotation.study.name}</div> : null}
+        </h4>
         {props.annotation.body}
       </div>
       <div className="label-right">
