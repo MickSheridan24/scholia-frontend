@@ -40,7 +40,7 @@ class BookChunk extends Component {
       </LazyLoad>
     );
   }
-
+}
 
 function mapStateToProps(state, ownProps) {
   return { chunk: state.currentBook.text[ownProps.index], currentChunk: state.windowStatus.currentChunk };

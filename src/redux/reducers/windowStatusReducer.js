@@ -38,7 +38,6 @@ function windowStatusReducer(state = INITIALSTATE, action) {
     case "SET_CHUNK":
       return { ...state, currentChunk: action.value };
     case "TOGGLE_ALL":
-      console.log("togglin", state.allToggle);
       return { ...state, allToggle: !state.allToggle };
     case "LOADING_BOOK":
       return { ...state, loading: action.increment };

@@ -8,11 +8,11 @@ import {
 } from "../redux/actions/annotationsActions";
 
 function AnnotationLabel(props) {
-  const handleMouseOut = e => {
-    props.highlightAnnotation(0);
-  };
   const handleMouseOver = e => {
-    props.highlightAnnotation(props.annotation.id);
+    e.stopPropagation();
+    if (!props.annotation.highlighted) {
+      props.highlightAnnotation(props.annotation.id);
+    }
   };
   const handleDelete = e => {
     props.deleteAnnotation(props.annotation.id);
@@ -23,7 +23,6 @@ function AnnotationLabel(props) {
   return (
     <div
       onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
       onClick={() => props.selectAnnotation(props.annotation)}
       className="ui segment annotation-label"
       style={

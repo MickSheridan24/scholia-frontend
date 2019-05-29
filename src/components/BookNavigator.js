@@ -5,7 +5,7 @@ import { setChunk } from "../redux/actions/currentBookActions";
 class BookNavigator extends Component {
   handleNavigation = dir => {
     if (dir === "up") {
-      if (this.props.currentChunk <= 0) {
+      if (this.props.currentChunk <= 1) {
         this.props.setChunk(0);
       } else {
         this.props.setChunk(this.props.currentChunk - 1);
