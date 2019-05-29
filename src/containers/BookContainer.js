@@ -12,22 +12,8 @@ class BookContainer extends Component {
     if (this.props.linkId) {
       this.props.fetchBook(this.props.linkId);
     }
-    // let scrolling = false;
-    // Events.scrollEvent.register("begin", function (to, element) {
-    //   if(scrolling)
-    // });
-    // Events.scrollEvent.register("end", function(to, element) {
-    //   scrolling = false;
-    // });
   }
   shouldComponentUpdate(nextProps, nextState) {
-    // console.log(
-    //   (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length),
-    //   nextProps.book.text && nextProps.book.text,
-    //   this.props.book.text && this.props.book.text.length,
-    // );
-    // console.log(nextProps.loading !== this.props.loading);
-    // console.log(nextProps.currentChunk !== this.props.currentChunk);
     if (
       (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length) ||
       nextProps.loading !== this.props.loading ||
@@ -36,9 +22,6 @@ class BookContainer extends Component {
       return true;
     }
     return false;
-  }
-  componentWillUnmount() {
-    console.log("Book unmounting");
   }
 
   componentDidUpdate = async prevProps => {
@@ -51,10 +34,6 @@ class BookContainer extends Component {
     }
   };
 
-  componentWillUnmount() {
-    // Events.scrollEvent.remove("begin");
-    // Events.scrollEvent.remove("end");
-  }
   scrollToBottom = () => {
     scroll.scrollToBottom();
   };

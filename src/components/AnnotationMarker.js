@@ -17,6 +17,7 @@ class AnnotationMarker extends React.Component {
   handleMouseOver = e => {
     this.props.highlightAnnotation(this.props.id);
   };
+
   handleEnter = () => {
     this.props.enterAnnotation(this.props.id);
   };

@@ -9,10 +9,10 @@ import {
 
 function AnnotationLabel(props) {
   const handleMouseOver = e => {
-    e.stopPropagation();
-    if (!props.annotation.highlighted) {
-      props.highlightAnnotation(props.annotation.id);
-    }
+    props.highlightAnnotation(props.annotation.id);
+  };
+  const handleMouseOut = e => {
+    props.highlightAnnotation(0);
   };
   const handleDelete = e => {
     props.deleteAnnotation(props.annotation.id);
@@ -22,7 +22,8 @@ function AnnotationLabel(props) {
   };
   return (
     <div
-      onMouseOver={handleMouseOver}
+      onMouseEnter={handleMouseOver}
+      onMouseLeave={handleMouseOut}
       onClick={() => props.selectAnnotation(props.annotation)}
       className="ui segment annotation-label"
       style={
