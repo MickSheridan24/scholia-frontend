@@ -18,7 +18,7 @@ class StudyLabel extends Component {
         </div>
         <div className="label-right">
           <div className="like-count">{this.props.study.annotation_count}</div>
-          {this.props.study.visible ? (
+          {this.props.study.userSubscribed ? (
             <i className="star icon label-button" onClick={() => this.props.toggleStudy(this.props.study.id, false)} />
           ) : (
             <i
@@ -31,6 +31,7 @@ class StudyLabel extends Component {
     );
   }
 }
+
 function mapDispatchToProps(dispatch) {
   return { toggleStudy: (id, bool) => dispatch(toggleStudy(id, bool)) };
 }

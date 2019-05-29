@@ -10,7 +10,7 @@ class AnnotationsContainer extends Component {
       if (
         ((this.props.userShow && anno.user_id === this.props.user.id) ||
           (this.props.otherShow && anno.user_id !== this.props.user.id)) &&
-        (!anno.study || this.props.studies.find(s => s.id === anno.study_id).visible)
+        (!anno.study || this.props.studies.find(s => s.id === anno.study_id).userSubscribed)
       ) {
         return [...memo, anno];
       } else return memo;

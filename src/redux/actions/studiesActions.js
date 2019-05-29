@@ -38,7 +38,11 @@ function toggleStudy(studyId, subscribe) {
   return async dispatch => {
     const resp = await fetch(url, options);
 
-    dispatch({ type: "TOGGLE_STUDY", studyId: studyId, bool: subscribe });
+    const success = await resp.json();
+    debugger;
+    if (success.success) {
+      dispatch({ type: "TOGGLE_STUDY", studyId: studyId, bool: subscribe });
+    }
   };
 }
 
