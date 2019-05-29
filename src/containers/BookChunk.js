@@ -33,9 +33,8 @@ class BookChunk extends Component {
   };
 
   render() {
-    console.log("Chunk rendering");
     return (
-      <LazyLoad offset={1000}>
+      <LazyLoad once offset={1000}>
         <div> {this.displayChunk()}</div>
       </LazyLoad>
     );

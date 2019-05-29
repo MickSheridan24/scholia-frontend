@@ -12,12 +12,13 @@ class BookContainer extends Component {
     if (this.props.linkId) {
       this.props.fetchBook(this.props.linkId);
     }
-    Events.scrollEvent.register("begin", function(to, element) {
-      console.log("begin", arguments);
-    });
-    Events.scrollEvent.register("end", function(to, element) {
-      console.log("end", arguments);
-    });
+    // let scrolling = false;
+    // Events.scrollEvent.register("begin", function (to, element) {
+    //   if(scrolling)
+    // });
+    // Events.scrollEvent.register("end", function(to, element) {
+    //   scrolling = false;
+    // });
   }
   shouldComponentUpdate(nextProps, nextState) {
     if (
@@ -34,7 +35,6 @@ class BookContainer extends Component {
   componentDidUpdate = async prevProps => {
     if (prevProps.currentChunk < this.props.currentChunk) {
       for (let chunk = parseInt(prevProps.currentChunk); chunk < parseInt(this.props.currentChunk); chunk++) {
-        console.log("Scrolling", chunk + 1);
         scroller.scrollTo(`chunk${chunk + 1}`, {
           duration: 100,
           smooth: true,
@@ -42,32 +42,29 @@ class BookContainer extends Component {
         });
         await new Promise((res, rej) => {
           setTimeout(() => {
-            console.log("waited");
             res();
           }, 150);
         });
       }
     } else if (prevProps.currentChunk > this.props.currentChunk) {
-      for (let chunk = parseInt(this.props.currentChunk); chunk > parseInt(prevProps.currentChunk); chunk--) {
-        console.log("Scrolling", chunk - 1);
+      for (let chunk = parseInt(prevProps.currentChunk); chunk > parseInt(this.props.currentChunk); chunk--) {
         scroller.scrollTo(`chunk${chunk - 1}`, {
-          duration: 100,
-          smooth: true,
+          duration: 20,
+          smooth: false,
           isDynamic: true,
         });
         await new Promise((res, rej) => {
           setTimeout(() => {
-            console.log("waited");
             res();
-          }, 150);
+          }, 30);
         });
       }
     }
   };
 
   componentWillUnmount() {
-    Events.scrollEvent.remove("begin");
-    Events.scrollEvent.remove("end");
+    // Events.scrollEvent.remove("begin");
+    // Events.scrollEvent.remove("end");
   }
   scrollToBottom = () => {
     scroll.scrollToBottom();
@@ -101,7 +98,6 @@ class BookContainer extends Component {
   };
 
   render() {
-    console.log("Book Container Render");
     return (
       <React.Fragment>
         <div onDoubleClick={this.handleOnDoubleClick} className="book-text" id="container">

@@ -11,7 +11,7 @@ class BookNavigator extends Component {
         this.props.setChunk(this.props.currentChunk - 1);
       }
     } else if (dir === "down") {
-      if (this.props.currentChunk >= this.props.book.text.length - 1) {
+      if (this.props.currentChunk >= this.props.book.text.length) {
         this.props.setChunk(this.props.book.text.length - 1);
       } else {
         this.props.setChunk(this.props.currentChunk + 1);
