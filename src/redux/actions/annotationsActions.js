@@ -1,4 +1,4 @@
-import { annotateAndSetBook } from "./currentBookActions";
+import { annotateAndSetBook, setChunk, reannotateChunk } from "./currentBookActions";
 
 function setAnnotations(query = {}) {
   // console.log("SET ANNOTATIONS");
@@ -48,8 +48,8 @@ function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
     if (postResp.success) {
       const annotation = postResp.annotation;
       dispatch(addAnnotation(annotation));
-      const originalBook = findBook(getState);
-      dispatch(annotateAndSetBook(originalBook));
+
+      dispatch(reannotateChunk(annotation));
     } else {
       alert("Something went wrong saving your annotation.");
     }
@@ -95,9 +95,10 @@ function deleteAnnotation(id) {
     });
     const status = await resp.json();
     if (status.success) {
+      const annotation = getState().otherAnnotations.find(a => a.id === id);
       await dispatch({ type: "DELETE_ANNOTATION", annotationId: parseInt(id) });
       const originalBook = findBook(getState);
-      dispatch(annotateAndSetBook(originalBook));
+      dispatch(reannotateChunk(annotation));
     } else {
       alert("Something went wrong with your request! Try again later.");
     }
@@ -158,4 +159,5 @@ export {
   cancelAnnotationForm,
   setStudiesList,
   deselectAnnotation,
+  findBook,
 };

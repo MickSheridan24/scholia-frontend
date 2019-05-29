@@ -21,13 +21,13 @@ class BookContainer extends Component {
     // });
   }
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(
-      (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length),
-      nextProps.book.text && nextProps.book.text,
-      this.props.book.text && this.props.book.text.length,
-    );
-    console.log(nextProps.loading !== this.props.loading);
-    console.log(nextProps.currentChunk !== this.props.currentChunk);
+    // console.log(
+    //   (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length),
+    //   nextProps.book.text && nextProps.book.text,
+    //   this.props.book.text && this.props.book.text.length,
+    // );
+    // console.log(nextProps.loading !== this.props.loading);
+    // console.log(nextProps.currentChunk !== this.props.currentChunk);
     if (
       (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length) ||
       nextProps.loading !== this.props.loading ||

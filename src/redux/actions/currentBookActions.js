@@ -2,7 +2,8 @@ import { fetchAnnotations } from "./annotationsActions";
 import React from "react";
 import AnnotationMarker from "../../components/AnnotationMarker";
 import { fetchStudies } from "./studiesActions";
-import { setLoading } from "./libraryActions";
+import { findBook } from "./annotationsActions";
+import { CHUNK_SIZE } from "../actionType";
 
 function setBook(book) {
   // console.log("SETBOOK ACTION");
@@ -29,8 +30,8 @@ function annotate(book, annotations, dispatch, getState) {
   const annoIndex = prepAnnotations(annotations);
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
-  if (parsedText.length > 2000) {
-    paragraphs = [jsxParagraphs(parsedText.slice(0, 2000), 0, 0)];
+  if (parsedText.length > CHUNK_SIZE) {
+    paragraphs = [jsxParagraphs(parsedText.slice(0, CHUNK_SIZE), 0, 0)];
     // console.log(paragraphs);
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
     continueParsing(parsedText, dispatch);
@@ -41,31 +42,31 @@ function annotate(book, annotations, dispatch, getState) {
 }
 
 function continueParsing(parsedText, dispatch) {
-  let counter = 2000;
+  let counter = CHUNK_SIZE;
   let chunkCounter = 1;
 
-  while (counter + 2000 < parsedText.length) {
-    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 2000), counter, chunkCounter);
+  while (counter + CHUNK_SIZE < parsedText.length) {
+    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + CHUNK_SIZE), counter, chunkCounter);
     // console.log(paragraphs);
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
-    counter += 2000;
+    counter += CHUNK_SIZE;
     chunkCounter += 1;
   }
   const paragraphs = jsxParagraphs(parsedText.slice(counter), counter, chunkCounter);
   // console.log(paragraphs);
   dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
 }
-function addAsterisks(parsedText, annoIndex) {
+function addAsterisks(parsedText, annoIndex, offset = 0) {
   for (const key in annoIndex) {
     annoIndex[key].forEach(anno => {
       let ind = anno.location_char_index;
-      while (parsedText[key][ind] !== " " && ind < parsedText[key].length) {
+      while (parsedText[key - offset][ind] !== " " && ind < parsedText[key - offset].length) {
         ind++;
       }
-      parsedText[key] =
-        parsedText[key].slice(0, anno.location_char_index) +
+      parsedText[key - offset] =
+        parsedText[key - offset].slice(0, anno.location_char_index) +
         `*{${anno.id}}` +
-        parsedText[key].slice(anno.location_char_index);
+        parsedText[key - offset].slice(anno.location_char_index);
     });
   }
 }
@@ -128,6 +129,29 @@ function jsxParagraphs(lines, counter, chunkCounter) {
   }
   return paragraphs;
 }
+function reannotateChunk(annotation) {
+  const chunk = Math.floor(annotation.location_p_index / CHUNK_SIZE);
+
+  let line = null;
+
+  return (dispatch, getState) => {
+    const chunkArray = getState().currentBook.text[chunk];
+    const book = findBook(getState);
+    const parsedBook = parseBook(book.text);
+    const low = CHUNK_SIZE * chunk;
+    const high = CHUNK_SIZE * chunk + CHUNK_SIZE;
+    const range = parsedBook.slice(low, high);
+    const relevantAnnotations = getState().otherAnnotations.filter(a => {
+      return a.location_p_index >= low && a.location_p_index < high;
+    });
+    const preparedAnnotations = prepAnnotations(relevantAnnotations);
+    addAsterisks(range, preparedAnnotations, low);
+    const newParagraphs = jsxParagraphs(range, low, chunk);
+
+    dispatch({ type: "REANNOTATE_CHUNK", chunk: newParagraphs, chunkIndex: chunk });
+  };
+}
+
 function prepAnnotations(annotations) {
   // console.log("HIST ANNOTATIONS ACTION");
   const index = annotations.reduce((memo, annotation) => {
@@ -149,4 +173,4 @@ function setSelectedLine(args) {
   return { type: "SET_SELECTED_LINE", line: args };
 }
 
-export { setBook, annotate, annotateAndSetBook, setChunk, setSelectedLine };
+export { setBook, annotate, annotateAndSetBook, setChunk, setSelectedLine, reannotateChunk };

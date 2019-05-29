@@ -1,3 +1,5 @@
+import { CHUNK_SIZE } from "../actionType";
+
 const INITIALSTATE = {
   loading: false,
   userShow: true,
@@ -44,7 +46,7 @@ function windowStatusReducer(state = INITIALSTATE, action) {
     case "SET_BOOK":
       return { ...state, loading: false, currentChunk: 0 };
     case "SELECT_ANNOTATION":
-      return { ...state, currentChunk: Math.floor(parseInt(action.annotation.location_p_index) / 1000) };
+      return { ...state, currentChunk: Math.floor(parseInt(action.annotation.location_p_index) / CHUNK_SIZE) };
 
     default:
       return state;

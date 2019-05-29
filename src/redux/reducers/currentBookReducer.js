@@ -1,6 +1,3 @@
-//Current Book represents the active piece of text
-//It is the result of a fetch from library/backed and annotate()
-
 function currentBookReducer(state = {}, action) {
   switch (action.type) {
     case "SET_BOOK":
@@ -9,10 +6,10 @@ function currentBookReducer(state = {}, action) {
       const text = [...state.text, action.chunk];
 
       return { ...state, text: text };
-    case "SET_CHUNK":
-      const newtext = [...state.text];
-
-      return { ...state };
+    case "REANNOTATE_CHUNK":
+      const newChunks = [...state.text];
+      newChunks[action.chunkIndex] = action.chunk;
+      return { ...state, text: newChunks };
     case "SET_LOADING":
       return {};
     default:
