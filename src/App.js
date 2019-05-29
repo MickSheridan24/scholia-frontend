@@ -19,7 +19,7 @@ class App extends React.Component {
   render() {
     console.log("App Render");
     return (
-      <div>
+      <div className="main-window">
         <Switch>
           <Route exact path="/book/:id" component={this.props.user.username ? BookInterface : Login} />
           <Route exact path="/search" component={this.props.user.username ? BookSearchInterface : Login} />

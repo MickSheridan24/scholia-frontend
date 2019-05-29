@@ -8,28 +8,40 @@
   --font-color: #050a41d5;
 }
 
-* {
+.main-window {
   font-family: Cochin, Georgia, Times, "Times New Roman", serif;
+  height: 100vh;
   background: var(--light-accent);
+  background-image: linear-gradient(to right, var(--light-accent), 75%, #a7b0c0aa, var(--light-accent));
+  overflow: scroll;
 }
-
+.main-window::-webkit-scrollbar {
+  display: none;
+}
 .line {
+  background: none;
   line-height: 1.2em;
   display: block;
+  background-image: inherit;
 }
 .italicize {
+  background: none;
   line-height: 1.2em;
   font-style: italic;
+  background-image: inherit;
 }
 .first-line {
+  background: none;
   line-height: 1.2em;
   display: block;
   margin-left: 1.5em;
+  background-image: inherit;
 }
 .selected-line {
   background: var(--light-shade);
 }
 .paragraph {
+  background: inherit;
   margin-top: 1em;
   margin-left: 1em;
 }
