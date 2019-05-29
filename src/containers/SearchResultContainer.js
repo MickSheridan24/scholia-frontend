@@ -6,12 +6,10 @@ import NavBar from "../components/NavBar";
 class SearchResultContainer extends Component {
   render() {
     return this.props.results ? (
-      <div>
-        Results
+      <div className="search-results-container">
         {this.props.results.map(r => (
           <SearchResult result={r} />
-        )) }
-            <NavBar></NavBar>
+        ))}
       </div>
     ) : null;
   }

@@ -8,12 +8,10 @@
   --font-color: #050a41d5;
 }
 
-.main-window {
+* {
   font-family: Cochin, Georgia, Times, "Times New Roman", serif;
-  height: 100vh;
+
   background: var(--light-accent);
-  background-image: linear-gradient(to right, var(--light-accent), 75%, #a7b0c0aa, var(--light-accent));
-  overflow: scroll;
 }
 .main-window::-webkit-scrollbar {
   display: none;
@@ -334,6 +332,7 @@
   color: var(--dark-shade);
   letter-spacing: 0.05em;
   height: 100vh;
+  background: var(--light-accent);
 }
 .loading-screen {
   padding: 40%;
@@ -379,19 +378,23 @@
   background: var(--light-shade);
 }
 
-.search-form {
-  display: block;
-}
-
 .library-container {
+  background: var(--dark-accent);
+  border: 1px solid var(--dark-shade);
+  height: 100%;
+  border-radius: 10px;
+  color: var(--dark-shade);
+  text-align: center;
 }
 .card-container {
+  background: inherit;
   padding: 1em;
   display: flex;
 }
 .library-card {
   display: inline-block;
   min-height: 5em;
+
   margin: 1em;
   padding: 0.5em;
   background: var(--dark-shade) !important;
@@ -422,4 +425,95 @@
 }
 .card-link {
   color: var(--light-shade) !important;
+}
+
+.book-search-interface {
+  height: 100vh;
+  background-color: var(--light-shade);
+  display: flex;
+  flex-direction: row;
+}
+.book-search-left {
+  background: inherit;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5em;
+}
+.book-search-right {
+  margin: 3em;
+  flex: 1;
+}
+.search-form {
+  display: block;
+  background-color: inherit;
+  color: var(--dark-shade);
+  text-align: center;
+}
+.search-form-label {
+  background-color: inherit;
+  display: inline;
+  color: inherit;
+  font-size: 1.5em;
+  padding-left: 1.75em;
+}
+.search-input {
+  background-color: var(--light-accent);
+  color: var(--dark-shade);
+  font: inherit;
+  width: 40vw;
+  height: 2em;
+  text-align: center;
+  display: block;
+  justify-self: right;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+}
+#search-button {
+  background: var(--light-shade);
+  color: var(--dark-shade) !important;
+  border: 2px solid var(--main-color);
+  margin-top: 1em;
+  font: inherit;
+}
+.search-results-container {
+  background-color: inherit;
+  color: var(--dark-shade);
+  padding: 3em;
+  overflow: scroll;
+  max-width: 80%;
+}
+.search-results-container::-webkit-scrollbar {
+  display: none;
+}
+.search-form-nav-container {
+  display: inline;
+  background: inherit;
+  float: right;
+}
+
+.search-result {
+  padding: 1em;
+  color: inherit;
+  margin: 0.5em;
+  border: 1px solid var(--main-color);
+  border-radius: 5px;
+  display: flex;
+}
+.search-result-left-section {
+  flex: 5;
+}
+.search-result-right-section {
+  flex: 1;
+}
+.search-result-title {
+  color: inherit;
+  font-size: 1.1em;
+}
+.search-result-author {
+  font-style: italic;
+}
+.checkout-button {
+  align-self: flex-end;
 }

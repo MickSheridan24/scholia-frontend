@@ -12,9 +12,7 @@ class LibraryContainer extends Component {
   render() {
     return (
       <div className="library-container">
-        {this.props.library.length > 0 ? <div>Currently in your Library:</div> : null}
-
-        <div className="card-container"> {this.displayLibrary()}</div>
+        {this.props.library.length > 0 ? this.displayLibrary() : "There are no books in your library yet!"}
       </div>
     );
   }

@@ -5,12 +5,16 @@ import { NavLink as Link } from "react-router-dom";
 
 function SearchResult(props) {
   return (
-    <div className="ui container">
-      <div className="label-title">{props.result.title}</div>
-      <em>{props.result.author}</em>
-      <button onClick={() => props.setLoading()}>
-        <Link to={`/book/${props.result.id}`}>Checkout</Link>
-      </button>
+    <div className="search-result">
+      <div className="search-result-left-section">
+        <div className="search-result-title">{props.result.title}</div>
+        <div className="search-result-author">{props.result.author}</div>
+      </div>
+      <div className="search-result-right-section">
+        <Link to={`/book/${props.result.id}`}>
+          <i className="large checkout-button book icon" onClick={() => props.setLoading()} />
+        </Link>
+      </div>
     </div>
   );
 }

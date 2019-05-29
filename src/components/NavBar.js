@@ -11,9 +11,6 @@ export default class NavBar extends Component {
             <Link className="item" to="/home">
               Home
             </Link>
-            <Link className="item" to="/book">
-              Current Book
-            </Link>
             <Link className="item" to="/search">
               Search Library
             </Link>
