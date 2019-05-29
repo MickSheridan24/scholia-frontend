@@ -46,7 +46,7 @@ function windowStatusReducer(state = INITIALSTATE, action) {
     case "SET_BOOK":
       return { ...state, loading: false, currentChunk: 0 };
     case "SELECT_ANNOTATION":
-      return { ...state, currentChunk: Math.floor(parseInt(action.annotation.location_p_index) / CHUNK_SIZE) };
+      return { ...state };
 
     default:
       return state;
@@ -54,3 +54,5 @@ function windowStatusReducer(state = INITIALSTATE, action) {
 }
 
 export { windowStatusReducer };
+
+//urrentChunk: Math.floor(parseInt(action.annotation.location_p_index) / CHUNK_SIZE)

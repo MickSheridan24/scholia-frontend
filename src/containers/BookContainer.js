@@ -42,32 +42,12 @@ class BookContainer extends Component {
   }
 
   componentDidUpdate = async prevProps => {
-    if (prevProps.currentChunk < this.props.currentChunk) {
-      for (let chunk = parseInt(prevProps.currentChunk); chunk < parseInt(this.props.currentChunk); chunk++) {
-        scroller.scrollTo(`chunk${chunk + 1}`, {
-          duration: 100,
-          smooth: true,
-          isDynamic: true,
-        });
-        await new Promise((res, rej) => {
-          setTimeout(() => {
-            res();
-          }, 150);
-        });
-      }
-    } else if (prevProps.currentChunk > this.props.currentChunk) {
-      for (let chunk = parseInt(prevProps.currentChunk); chunk > parseInt(this.props.currentChunk); chunk--) {
-        scroller.scrollTo(`chunk${chunk - 1}`, {
-          duration: 20,
-          smooth: false,
-          isDynamic: true,
-        });
-        await new Promise((res, rej) => {
-          setTimeout(() => {
-            res();
-          }, 30);
-        });
-      }
+    if (prevProps.currentChunk !== this.props.currentChunk) {
+      scroller.scrollTo(`chunk${this.props.currentChunk}`, {
+        duration: 200,
+        smooth: true,
+        isDynamic: true,
+      });
     }
   };
 
