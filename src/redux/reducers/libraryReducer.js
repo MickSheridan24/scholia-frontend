@@ -10,7 +10,15 @@ function libraryReducer(state = [], action) {
 function libraryIndexReducer(state = [], action) {
   switch (action.type) {
     case "ADD_BOOK":
-      return [...state, { title: action.book.title, id: action.book.id }];
+      return [
+        ...state,
+        {
+          title: action.book.title,
+          gutenberg_id: action.book.gutenberg_id,
+          id: action.book.id,
+          author: action.book.author,
+        },
+      ];
 
     default:
       return state;

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 function SearchForm(props) {
   const [query, setQuery] = useState("");
   return (
-    <div>
+    <div className="search-form">
       <form
         onSubmit={e => {
           e.preventDefault();

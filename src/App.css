@@ -365,3 +365,32 @@
 .annotation-form-color-select {
   background: var(--light-shade);
 }
+
+.search-form {
+  display: block;
+}
+
+.library-container {
+  justify-content: center;
+}
+.card-container {
+  display: flex;
+}
+.library-card {
+  display: inline-block;
+  min-height: 5em;
+  margin: 1em;
+  padding: 0.5em;
+  background: var(--dark-shade) !important;
+  color: var(--light-shade);
+  border-bottom: 3px solid var(--main-color);
+  border-right: 3px solid var(--main-color);
+}
+.library-card-title {
+  background: inherit;
+  font-size: 1.25em;
+  font-style: italic;
+}
+.library-card-author {
+  background: inherit;
+}

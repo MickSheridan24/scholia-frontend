@@ -1,18 +1,25 @@
 import { setBook } from "./currentBookActions";
+import { findBook } from "./annotationsActions";
 
 function fetchBook(id) {
   // console.log("FETCHBOOK ACTION");
-  return async dispatch => {
+  return async (dispatch, getState) => {
     dispatch(setLoading());
-    const resp = await fetch(`http://localhost:3000/api/v1/books/${id}`);
-    const book = await resp.json();
+    const inLibrary = lookUpBook(getState, id);
 
-    let unparsed = JSON.parse(book.temporary_text).body;
-    book.text = unparsed;
+    if (inLibrary) {
+      dispatch(setBook(inLibrary));
+    } else {
+      const resp = await fetch(`http://localhost:3000/api/v1/books/${id}`);
+      const book = await resp.json();
 
-    dispatch(addBook(book));
+      let unparsed = JSON.parse(book.temporary_text).body;
+      book.text = unparsed;
 
-    dispatch(setBook(book));
+      dispatch(addBook(book));
+
+      dispatch(setBook(book));
+    }
   };
 }
 
@@ -30,6 +37,10 @@ function searchBooks(query) {
       dispatch({ type: "SET_RESULTS", results: searchResults.results });
     }
   };
+}
+
+function lookUpBook(getState, id) {
+  return getState().library.find(b => b.gutenberg_id === parseInt(id));
 }
 function setLoading() {
   return { type: "SET_LOADING" };

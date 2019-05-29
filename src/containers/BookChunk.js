@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import LazyLoad from "react-lazyload";
 import Line from "../components/Line";
 
 class BookChunk extends Component {
@@ -28,11 +27,7 @@ class BookChunk extends Component {
 
   render() {
     console.log("Chunk Render");
-    return (
-      //<LazyLoad offset={1000}>
-      <div> {this.displayChunk()}</div>
-      //</LazyLoad>
-    );
+    return <div> {this.displayChunk()}</div>;
   }
 }
 

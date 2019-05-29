@@ -7,10 +7,11 @@ import StudyLabel from "../components/StudyLabel";
 class AnnotationsContainer extends Component {
   listAnnotations = () => {
     let annotations = this.props.otherAnnotations.reduce((memo, anno) => {
+      const study = this.props.studies.find(s => s.id === anno.study_id);
       if (
         ((this.props.userShow && anno.user_id === this.props.user.id) ||
           (this.props.otherShow && anno.user_id !== this.props.user.id)) &&
-        (!anno.study || this.props.studies.find(s => s.id === anno.study_id).userSubscribed)
+        (!anno.study || (study && study.userSubscribed))
       ) {
         return [...memo, anno];
       } else return memo;
