@@ -1,4 +1,4 @@
-import { annotateAndSetBook, setChunk, reannotateChunk } from "./currentBookActions";
+import { annotateAndSetBook, reannotateChunk } from "./currentBookActions";
 
 function setAnnotations(query = {}) {
   // console.log("SET ANNOTATIONS");
@@ -9,10 +9,10 @@ function setAnnotations(query = {}) {
   };
 }
 
-function fetchAnnotations(book, query = {}) {
+function fetchAnnotations(book) {
   // console.log("FETCH ANNOTATIONS");
   return async dispatch => {
-    const resp = await fetch(`http://localhost:3000/api/v1/annotations?book_id=${book.id}&options=${query}`, {
+    const resp = await fetch(`http://localhost:3000/api/v1/annotations?book_id=${book.id}`, {
       method: "GET",
       headers: { "Content-Type": "Application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
@@ -21,6 +21,17 @@ function fetchAnnotations(book, query = {}) {
       return { ...a, visible: false, highlighted: false, selected: false };
     });
     dispatch({ type: "SET_OTHER_ANNOTATIONS", annotations: preparedAnnotations });
+  };
+}
+
+function fetchUserAnnotations() {
+  return async dispatch => {
+    const resp = await fetch(`http://localhost:3000/api/v1/annotations`, {
+      method: "GET",
+      headers: { "Content-Type": "Application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    const annotations = await resp.json();
+    dispatch({ type: "SET_USER_ANNOTATIONS", annotations: annotations });
   };
 }
 
@@ -160,4 +171,5 @@ export {
   setStudiesList,
   deselectAnnotation,
   findBook,
+  fetchUserAnnotations,
 };

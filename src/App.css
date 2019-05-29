@@ -143,10 +143,11 @@
 }
 
 .label-main {
-  background: var(--light-shade) !important;
+  background: inherit;
   flex: 9;
 }
 .label-right {
+  background: inherit;
   flex: 1;
 }
 .label-title {
@@ -371,9 +372,9 @@
 }
 
 .library-container {
-  justify-content: center;
 }
 .card-container {
+  padding: 1em;
   display: flex;
 }
 .library-card {
@@ -393,4 +394,20 @@
 }
 .library-card-author {
   background: inherit;
+}
+.user-label-book-title {
+  display: inline;
+  text-align: right;
+  padding-left: 1em;
+  font-style: italic;
+  background: inherit;
+  font-size: 0.75em;
+}
+.user-label {
+  margin: 1em;
+  display: flex;
+  background: var(--light-shade);
+}
+.card-link {
+  color: var(--light-shade) !important;
 }

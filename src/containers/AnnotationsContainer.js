@@ -5,7 +5,7 @@ import AnnotationLabel from "../components/AnnotationLabel";
 import StudyLabel from "../components/StudyLabel";
 
 class AnnotationsContainer extends Component {
-  listAnnotations = () => {
+  listOtherAnnotations = () => {
     let annotations = this.props.otherAnnotations.reduce((memo, anno) => {
       const study = this.props.studies.find(s => s.id === anno.study_id);
       if (
@@ -26,6 +26,11 @@ class AnnotationsContainer extends Component {
       return <AnnotationLabel key={`anno -label - ${a.id}`} annotation={a} />;
     });
   };
+  listUserAnnotations = () => {
+    return this.props.userAnnotations.map(a => {
+      return <AnnotationLabel home={this.props.home} key={`anno -label - ${a.id}`} annotation={a} />;
+    });
+  };
 
   listGroups = () => {
     return this.props.studies.map(g => {
@@ -43,7 +48,7 @@ class AnnotationsContainer extends Component {
         ) : this.props.studiesList ? (
           this.listGroups()
         ) : (
-          this.listAnnotations()
+          this.listOtherAnnotations()
         )}
       </React.Fragment>
     );

@@ -9,6 +9,7 @@ import {
 
 function AnnotationLabel(props) {
   const handleMouseOver = e => {
+    console.log("enter");
     props.highlightAnnotation(props.annotation.id);
   };
   const handleMouseOut = e => {

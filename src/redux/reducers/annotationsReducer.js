@@ -1,5 +1,7 @@
 function userAnnotationsReducer(state = [], action) {
   switch (action.type) {
+    case "SET_USER_ANNOTATIONS":
+      return action.annotations;
     default:
       return state;
   }
