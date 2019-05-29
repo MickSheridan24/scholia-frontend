@@ -3,6 +3,7 @@ import { setBook } from "./currentBookActions";
 function fetchBook(id) {
   // console.log("FETCHBOOK ACTION");
   return async dispatch => {
+    dispatch(setLoading());
     const resp = await fetch(`http://localhost:3000/api/v1/books/${id}`);
     const book = await resp.json();
 

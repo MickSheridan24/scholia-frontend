@@ -2,6 +2,7 @@ import { fetchAnnotations } from "./annotationsActions";
 import React from "react";
 import AnnotationMarker from "../../components/AnnotationMarker";
 import { fetchStudies } from "./studiesActions";
+import { setLoading } from "./libraryActions";
 
 function setBook(book) {
   // console.log("SETBOOK ACTION");
@@ -28,8 +29,8 @@ function annotate(book, annotations, dispatch, getState) {
   const annoIndex = prepAnnotations(annotations);
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
-  if (parsedText.length > 1000) {
-    paragraphs = [jsxParagraphs(parsedText.slice(0, 1000), 0, 0)];
+  if (parsedText.length > 2000) {
+    paragraphs = [jsxParagraphs(parsedText.slice(0, 2000), 0, 0)];
     // console.log(paragraphs);
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
     continueParsing(parsedText, dispatch);
@@ -40,14 +41,14 @@ function annotate(book, annotations, dispatch, getState) {
 }
 
 function continueParsing(parsedText, dispatch) {
-  let counter = 1000;
+  let counter = 2000;
   let chunkCounter = 1;
 
-  while (counter + 1000 < parsedText.length) {
-    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 1000), counter, chunkCounter);
+  while (counter + 2000 < parsedText.length) {
+    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + 2000), counter, chunkCounter);
     // console.log(paragraphs);
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
-    counter += 1000;
+    counter += 2000;
     chunkCounter += 1;
   }
   const paragraphs = jsxParagraphs(parsedText.slice(counter), counter, chunkCounter);

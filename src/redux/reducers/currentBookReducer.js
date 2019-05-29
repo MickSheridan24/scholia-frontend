@@ -6,9 +6,13 @@ function currentBookReducer(state = {}, action) {
     case "SET_BOOK":
       return action.book;
     case "ADD_CHUNK":
-      const text = [...state.text];
-      text.push(action.chunk);
+      const text = [...state.text, action.chunk];
+
       return { ...state, text: text };
+    case "SET_CHUNK":
+      const newtext = [...state.text];
+
+      return { ...state };
     case "SET_LOADING":
       return {};
     default:

@@ -1,5 +1,5 @@
 const INITIALSTATE = {
-  loading: 0,
+  loading: false,
   userShow: true,
   otherShow: true,
   currentChunk: 0,
@@ -39,10 +39,10 @@ function windowStatusReducer(state = INITIALSTATE, action) {
       return { ...state, currentChunk: action.value };
     case "TOGGLE_ALL":
       return { ...state, allToggle: !state.allToggle };
-    case "LOADING_BOOK":
+    case "SET_LOADING":
       return { ...state, loading: action.increment };
     case "SET_BOOK":
-      return { ...state, loading: 0, currentChunk: 0 };
+      return { ...state, loading: false, currentChunk: 0 };
     case "SELECT_ANNOTATION":
       return { ...state, currentChunk: Math.floor(parseInt(action.annotation.location_p_index) / 1000) };
 

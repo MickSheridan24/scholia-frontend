@@ -21,15 +21,24 @@ class BookContainer extends Component {
     // });
   }
   shouldComponentUpdate(nextProps, nextState) {
+    console.log(
+      (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length),
+      nextProps.book.text && nextProps.book.text,
+      this.props.book.text && this.props.book.text.length,
+    );
+    console.log(nextProps.loading !== this.props.loading);
+    console.log(nextProps.currentChunk !== this.props.currentChunk);
     if (
-      nextProps.book !== this.props.book ||
+      (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length) ||
       nextProps.loading !== this.props.loading ||
-      nextProps.currentChunk !== this.props.currentChunk ||
-      nextState !== this.state
+      nextProps.currentChunk !== this.props.currentChunk
     ) {
       return true;
     }
     return false;
+  }
+  componentWillUnmount() {
+    console.log("Book unmounting");
   }
 
   componentDidUpdate = async prevProps => {

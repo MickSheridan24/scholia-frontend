@@ -4,14 +4,8 @@ import LazyLoad from "react-lazyload";
 import Line from "../components/Line";
 
 class BookChunk extends Component {
-  state = {
-    loaded: false,
-  };
-  componentDidMount() {
-    this.setState({ loaded: true });
-  }
-  shouldComponentUpdate() {
-    return !this.state.loaded;
+  shouldComponentUpdate(nextProps) {
+    return this.props.chunk !== nextProps.chunk;
   }
   displayChunk = () => {
     return this.props.chunk.map((par, i) => {
@@ -33,10 +27,11 @@ class BookChunk extends Component {
   };
 
   render() {
+    console.log("Chunk Render");
     return (
-      <LazyLoad once offset={1000}>
-        <div> {this.displayChunk()}</div>
-      </LazyLoad>
+      //<LazyLoad offset={1000}>
+      <div> {this.displayChunk()}</div>
+      //</LazyLoad>
     );
   }
 }

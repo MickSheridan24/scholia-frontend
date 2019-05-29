@@ -51,7 +51,6 @@ function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
       const originalBook = findBook(getState);
       dispatch(annotateAndSetBook(originalBook));
     } else {
-      debugger;
       alert("Something went wrong saving your annotation.");
     }
   };

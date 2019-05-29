@@ -32,8 +32,4 @@ class BookInterface extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { currentChunk: state.windowStatus.currentChunk };
-}
-
-export default withRouter(connect(mapStateToProps)(BookInterface));
+export default withRouter(BookInterface);
