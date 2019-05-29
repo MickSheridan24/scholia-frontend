@@ -380,7 +380,7 @@
 
 .library-container {
   background: var(--dark-accent);
-  border: 1px solid var(--dark-shade);
+  border: 2px solid var(--dark-shade);
   height: 100%;
   border-radius: 10px;
   color: var(--dark-shade);
@@ -401,6 +401,7 @@
   color: var(--light-shade);
   border-bottom: 3px solid var(--main-color);
   border-right: 3px solid var(--main-color);
+  border-radius: 5px;
 }
 .library-card-title {
   background: inherit;
@@ -442,6 +443,7 @@
   padding-top: 5em;
 }
 .book-search-right {
+  background: inherit;
   margin: 3em;
   flex: 1;
 }
