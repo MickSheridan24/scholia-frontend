@@ -12,7 +12,7 @@ export default class NavBar extends Component {
               Home
             </Link>
             <Link className="item" to="/search">
-              Search Library
+              Search
             </Link>
             <Link
               className="item"

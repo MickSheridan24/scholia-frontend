@@ -13,7 +13,7 @@ class App extends React.Component {
   componentDidMount() {
     if (localStorage.getItem("token")) {
       this.props.login();
-      this.props.fetchUserAnnotations();
+      
     }
   }
   render() {
@@ -34,7 +34,7 @@ function mapStateToProps(state) {
   return { user: state.user };
 }
 function mapDispatchToProps(dispatch) {
-  return { login: () => dispatch(autoLogin()), fetchUserAnnotations: () => dispatch(fetchUserAnnotations()) };
+  return { login: () => dispatch(autoLogin()),  };
 }
 
 export default connect(

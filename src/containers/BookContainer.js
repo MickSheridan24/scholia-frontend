@@ -4,6 +4,7 @@ import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsA
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import BookChunk from "./BookChunk";
+import LazyLoad from "react-lazyload";
 
 import { Element, Events, animateScroll as scroll, scroller } from "react-scroll";
 
@@ -67,15 +68,13 @@ class BookContainer extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <div onDoubleClick={this.handleOnDoubleClick} className="book-text" id="container">
-          {this.props.book.text && !this.props.loading ? (
-            this.displayBook()
-          ) : (
-            <div className="loading-screen">Retrieving...</div>
-          )}
-        </div>
-      </React.Fragment>
+      <div onDoubleClick={this.handleOnDoubleClick} className="book-text" id="container">
+        {this.props.book.text && !this.props.loading ? (
+          this.displayBook()
+        ) : (
+          <div className="loading-screen">Retrieving...</div>
+        )}
+      </div>
     );
   }
 }

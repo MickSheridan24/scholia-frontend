@@ -36,12 +36,6 @@ function Line(props) {
   }
   if (isGutenberg()) {
     return null;
-  } else if (isSelected()) {
-    return (
-      <span className={getClassNames()}>
-        <span className="selected-line">{displaySegments()}</span>
-      </span>
-    );
   } else {
     return <span className={getClassNames()}>{displaySegments()}</span>;
   }
@@ -52,3 +46,10 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Line);
+
+// else if (isSelected()) {
+//   return (
+//     <span className={getClassNames()}>
+//       <span className="selected-line">{displaySegments()}</span>
+//     </span>
+//   );

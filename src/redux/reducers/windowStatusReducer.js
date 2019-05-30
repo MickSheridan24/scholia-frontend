@@ -6,7 +6,7 @@ const INITIALSTATE = {
   otherShow: true,
   currentChunk: 0,
   selectedLine: {},
-  allToggle: false,
+  allToggle: true,
   annotationForm: null,
   studiesList: false,
 };
@@ -17,7 +17,7 @@ function windowStatusReducer(state = INITIALSTATE, action) {
       return {
         ...state,
         annotationForm: action.args,
-        selectedLine: { index: action.args.pIndex, character: action.args.charIndex },
+        //selectedLine: { index: action.args.pIndex, character: action.args.charIndex },
         studiesList: false,
       };
     case "CANCEL_ANNOTATION_FORM":

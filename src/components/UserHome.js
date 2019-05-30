@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import LibraryContainer from "../containers/LibraryContainer";
 import NavBar from "./NavBar";
 import UserAnnotationsContainer from "../containers/UserAnnotationsContainer";
+import { fetchUserAnnotations } from "../redux/actions/annotationsActions";
 
 class UserHome extends Component {
+  componentDidMount() {
+    this.props.fetchUserAnnotations();
+  }
   render() {
     return (
       <div className="home-container">
@@ -21,4 +25,10 @@ function mapStateToProps(state) {
   return { user: state.user };
 }
 
-export default connect(mapStateToProps)(UserHome);
+function mapDispatchToProps(dispatch) {
+  return { fetchUserAnnotations: () => dispatch(fetchUserAnnotations()) };
+}
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserHome);

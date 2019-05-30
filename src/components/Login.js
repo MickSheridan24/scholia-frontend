@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { login, autoLogin } from "../redux/actions/userActions";
 import { connect } from "react-redux";
-import { sign } from "crypto";
 
 class Login extends Component {
   state = {
@@ -64,7 +63,7 @@ class Login extends Component {
           {this.state.highlight ? (
             <div className="login-asterisk-hidden-definition">
               <p>
-                <em>Scholium</em>, pl. <em>Scholia</em> a note on or explanation of an academic or literary text,
+                <em>Scholium</em>, pl. <em>Scholia</em>: a note on or explanation of an academic or literary text,
                 written by someone who has studied it (Cambridge Dictionary)
               </p>
             </div>
