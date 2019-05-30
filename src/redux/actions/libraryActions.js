@@ -14,13 +14,16 @@ function fetchBook(id) {
       const book = await resp.json();
 
       let unparsed = JSON.parse(book.temporary_text).body;
-      book.text = unparsed;
+      book.text = cleanBook(unparsed);
 
       dispatch(addBook(book));
 
       dispatch(setBook(book));
     }
   };
+}
+function cleanBook(text) {
+  return text.replace(/_/g, "");
 }
 
 //addBook adds the retrievedBook to the library

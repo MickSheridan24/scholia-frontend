@@ -48,8 +48,8 @@ class AnnotationForm extends React.Component {
           <option key="purple" value="purple">
             Purple
           </option>
-          <option key="turquoise" value="turquoise">
-            Turquoise
+          <option key="teal" value="teal">
+            Teal
           </option>
         </select>
       </React.Fragment>

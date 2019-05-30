@@ -52,6 +52,7 @@
 }
 .book-controls {
   width: 100%;
+
   z-index: 1;
   display: block;
   position: fixed;
@@ -144,6 +145,7 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: row;
+  border: 7px solid var(--dark-accent);
 }
 .annotation-label::-webkit-scrollbar {
   display: none;
