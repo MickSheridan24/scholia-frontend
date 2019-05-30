@@ -4,13 +4,28 @@ import { postAnnotation, cancelAnnotationForm } from "../redux/actions/annotatio
 
 class AnnotationForm extends React.Component {
   state = {
-    title: "Title",
+    title: "",
     body: "",
     color: "blue",
     study: 0,
   };
   // console.log("Annotation Form Rendering");
 
+  handleSubmit = e => {
+    e.preventDefault();
+    const selectedStudy = this.props.studies.find(s => parseInt(s.id) === parseInt(this.state.study));
+    const args = {
+      pIndex: this.props.args.pIndex,
+      charIndex: this.props.args.charIndex,
+      title: e.currentTarget.elements.title.value,
+      body: e.currentTarget.elements.body.value,
+      color: selectedStudy ? selectedStudy.color : this.state.color,
+      study_id: this.state.study,
+    };
+    this.props.postAnnotation(args);
+    this.setState({ title: "Title" });
+    this.setState({ body: "" });
+  };
   colorSelect = () => {
     console.log("Form Rendered");
     return (
@@ -43,24 +58,8 @@ class AnnotationForm extends React.Component {
   render() {
     return this.props.args ? (
       <div className="annotation-form">
-        <h4 className="annotation-form-header">New Annotation:</h4>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            const selectedStudy = this.props.studies.find(s => parseInt(s.id) === parseInt(this.state.study));
-            const args = {
-              pIndex: this.props.args.pIndex,
-              charIndex: this.props.args.charIndex,
-              title: e.currentTarget.elements.title.value,
-              body: e.currentTarget.elements.body.value,
-              color: selectedStudy ? selectedStudy.color : this.state.color,
-              study_id: this.state.study,
-            };
-            this.props.postAnnotation(args);
-            this.setState({ title: "Title" });
-            this.setState({ body: "" });
-          }}
-          className="annotation-form-tags">
+        <div className="annotation-form-header">New Annotation:</div>
+        <form onSubmit={this.handleSubmit} className="annotation-form-tags">
           <label className="annotation-form-label">Title</label>
           <input
             className="annotation-form-input"
@@ -70,7 +69,7 @@ class AnnotationForm extends React.Component {
             onChange={e => this.setState({ title: e.target.value })}
           />
 
-          <label className="annotation-form-color-select">Study-Group</label>
+          <label className="annotation-form-label">Study-Group</label>
           <select
             name="study"
             className="annotation-form-color-select"
@@ -99,8 +98,10 @@ class AnnotationForm extends React.Component {
             onChange={e => this.setState({ body: e.target.value })}
           />
           <br />
-          <input type="submit" />
-          <button onClick={this.props.cancelAnnotationForm}>Cancel</button>
+          <input className="annotation-form-button" type="submit" />
+          <button className="annotation-form-button" onClick={this.props.cancelAnnotationForm}>
+            Cancel
+          </button>
         </form>
       </div>
     ) : null;

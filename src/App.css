@@ -355,8 +355,15 @@
 
 .annotation-form {
   background: var(--main-color);
+  display: flex;
+  flex-direction: column;
+  font-style: inherit;
 }
 
+.annotation-form-header {
+  font-size: 1.3em;
+  margin-bottom: 0.5em;
+}
 .annotation-form > * {
   background: inherit;
 }
@@ -366,16 +373,31 @@
 }
 .annotation-form-input {
   background: var(--light-shade);
+  border-radius: 5px;
+  border: 2px solid var(--dark-shade);
   display: block;
 }
 
 .annotation-form-body {
   background: var(--light-shade);
+  border-radius: 5px;
+  border: 2px solid var(--dark-shade);
   column-count: 500;
   height: 150;
 }
 .annotation-form-color-select {
   background: var(--light-shade);
+  border: 2px solid var(--dark-shade);
+  border-radius: 5px;
+  font-family: inherit;
+}
+
+.annotation-form-button {
+  background: var(--light-shade);
+  color: var(--dark-shade);
+  border: 2px solid var(--dark-shade);
+  margin: 0.5em;
+  border-radius: 5px;
 }
 
 .library-container {
@@ -625,4 +647,11 @@
   font-size: 2em;
   color: var(--dark-accent);
   padding-bottom: 1em;
+}
+
+.search-no-result {
+  color: red;
+  border: 2px solid var(--main-color);
+  padding: 0.5em;
+  border-radius: 5px;
 }

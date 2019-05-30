@@ -5,12 +5,18 @@ import NavBar from "../components/NavBar";
 
 class SearchResultContainer extends Component {
   render() {
-    return this.props.results ? (
-      <div className="search-results-container">
-        {this.props.results.map(r => (
-          <SearchResult result={r} />
-        ))}
-      </div>
+    return this.props.results.length > 0 ? (
+      this.props.results[0] ? (
+        <div className="search-results-container">
+          {this.props.results.map(r => (
+            <SearchResult result={r} />
+          ))}
+        </div>
+      ) : (
+        <div className="search-results-container">
+          <div className="search-no-result">No Results</div>
+        </div>
+      )
     ) : null;
   }
 }

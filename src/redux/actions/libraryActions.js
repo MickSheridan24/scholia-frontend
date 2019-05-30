@@ -35,6 +35,8 @@ function searchBooks(query) {
 
     if (searchResults.success) {
       dispatch({ type: "SET_RESULTS", results: searchResults.results });
+    } else {
+      dispatch({ type: "SET_RESULTS", results: [false] });
     }
   };
 }
