@@ -4,8 +4,15 @@ import { connect } from "react-redux";
 
 class Login extends Component {
   state = {
+    highlight: false,
     fail: false,
   };
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      (nextState.fail !== this.state.fail && !localStorage.getItem("token")) ||
+      nextState.highlight !== this.state.highlight
+    );
+  }
   handleLogin = async e => {
     e.preventDefault();
     const user = {
@@ -14,7 +21,10 @@ class Login extends Component {
         password: e.currentTarget.elements.password.value,
       },
     };
-    this.props.login(user);
+
+    await this.props.login(user);
+
+    this.setState({ fail: true });
   };
   handleSignUp = async e => {
     e.preventDefault();
@@ -31,30 +41,55 @@ class Login extends Component {
     this.props.login(signUpStatus);
   };
 
-  handleResponse = obj => {
-    if (obj["success"]) {
-    } else {
-      this.setState({ fail: true });
-    }
-  };
-
   render() {
     return (
-      <div>
-        <p>Login</p>
-        {this.state.fail ? <p style={{ color: "red" }}>Username/Password incorrect</p> : null}
-        <form onSubmit={this.handleLogin}>
-          <input name="username" type="text" />
-          <input name="password" type="password" />
-          <input type="submit" />
-        </form>
-        <br />
-        <p>Signup</p>
-        <form onSubmit={this.handleSignUp}>
-          <input name="username" type="text" />
-          <input name="password" type="password" />
-          <input type="submit" />
-        </form>
+      <div className="login-container">
+        <div className="header">
+          Scholia
+          <span
+            onMouseEnter={() => {
+              this.setState({ highlight: true });
+            }}
+            onMouseLeave={() => {
+              this.setState({ highlight: false });
+            }}
+            className={this.state.highlight ? "highlighted-login-asterisk" : ""}
+            id="login-asterisk">
+            *
+          </span>
+          {this.state.highlight ? (
+            <div className="login-asterisk-hidden-definition">
+              <p>
+                <em>Scholium</em>, pl. <em>Scholia</em> a note on or explanation of an academic or literary text,
+                written by someone who has studied it (Cambridge Dictionary)
+              </p>
+            </div>
+          ) : null}
+        </div>
+        <div className="login-widgets">
+          <div className="login-segment">
+            <form className="login-form" onSubmit={this.handleLogin}>
+              {this.state.fail ? <p className="login-error">Username/Password incorrect</p> : null}
+              <div className="login-label">Login</div>
+              <label className="login-input-label">Username: </label>
+              <input autoComplete="off" className="login-input" name="username" type="text" />
+              <label className="login-input-label">Password: </label>
+              <input autoComplete="off" className="login-input" name="password" type="password" />
+              <input className="login-submit" type="submit" />
+            </form>
+          </div>
+
+          <div className="login-segment">
+            <form className="login-form" onSubmit={this.handleSignUp}>
+              <div className="login-label">Sign Up</div>
+              <label className="login-input-label">Username: </label>
+              <input autoComplete="off" className="login-input" name="username" type="text" />
+              <label className="login-input-label">Password: </label>
+              <input autoComplete="off" className="login-input" name="password" type="password" />
+              <input className="login-submit" type="submit" />
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

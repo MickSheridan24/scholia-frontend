@@ -519,3 +519,90 @@
 .checkout-button {
   align-self: flex-end;
 }
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  background: var(--dark-shade);
+}
+.header {
+  flex: 1;
+  font-size: 5em;
+  padding-top: 0.75em;
+  padding-bottom: 0em;
+  margin-top: 1em;
+  color: var(--light-shade);
+  background: inherit;
+
+  padding-bottom: 0em;
+}
+#login-asterisk {
+  color: red;
+  position: absolute;
+
+  background: inherit;
+  font-size: 1.5em;
+  vertical-align: -0.2em;
+  padding: 0em;
+}
+#login-asterisk.highlighted-login-asterisk {
+  color: blue;
+}
+.login-asterisk-hidden-definition {
+  width: 30em;
+  display: inline;
+  position: fixed;
+  text-align: left;
+  border: 3px solid var(--dark-accent);
+  margin: 1em;
+  padding: 1.5em;
+  font-size: 0.2em;
+  color: var(--dark-accent);
+  background: var(--light-accent);
+}
+
+.login-widgets {
+  flex: 6;
+  display: flex;
+  background: inherit;
+  width: 100vw;
+  align-items: center;
+}
+.login-segment {
+  color: var(--light-shade);
+  flex: 1;
+
+  background: inherit;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  background: inherit;
+  align-items: center;
+}
+.login-label {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  background: inherit;
+}
+.login-input-label {
+  background: inherit;
+}
+.login-input {
+  margin: 0.5em;
+  background: var(--light-shade);
+  border-radius: 5px;
+  width: 15em;
+}
+
+.login-submit {
+  color: inherit;
+  background: inherit;
+  width: 5em;
+}
+.login-error {
+  color: #de00aa;
+  background: inherit;
+}
