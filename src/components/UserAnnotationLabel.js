@@ -19,7 +19,14 @@ function UserAnnotationLabel(props) {
       </div>
       <div className="label-right">
         <i className=" close icon label-button" onClick={handleDelete} />
-        <div className="like-count">{props.annotation.likeCount > 0 ? <i className="heart icon" /> : null}</div>
+        <div className="like-count">
+          {props.annotation.likeCount > 0 ? (
+            <React.Fragment>
+              <em className="user-label-likes">{props.annotation.likeCount}</em>
+              <i className="heart icon" />
+            </React.Fragment>
+          ) : null}
+        </div>
       </div>
     </div>
   );

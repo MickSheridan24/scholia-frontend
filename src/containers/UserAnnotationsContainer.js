@@ -9,7 +9,7 @@ class UserAnnotationsContainer extends Component {
     });
   };
   render() {
-    return <div>{this.displayAnnotations()}</div>;
+    return <div className="user-annotations-container">{this.displayAnnotations()}</div>;
   }
 }
 function mapStateToProps(state) {

@@ -422,7 +422,19 @@
 .user-label {
   margin: 1em;
   display: flex;
+  border: 1px solid var(--main-color);
+  padding: 1em;
   background: var(--light-shade);
+}
+.user-annotations-container {
+  background: var(--main-color);
+  margin: 4em;
+  border: 2px solid var(--dark-accent);
+  height: 100vh;
+}
+.user-label-likes {
+  background: inherit;
+  padding-right: 0.5em;
 }
 .card-link {
   color: var(--light-shade) !important;
@@ -606,4 +618,11 @@
 .login-error {
   color: #de00aa;
   background: inherit;
+}
+.home-greeting {
+  text-align: center;
+  font-style: italic;
+  font-size: 2em;
+  color: var(--dark-accent);
+  padding-bottom: 1em;
 }
