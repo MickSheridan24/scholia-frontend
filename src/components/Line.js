@@ -7,12 +7,13 @@ function Line(props) {
       return str.props.children ? memo + str.props.children : memo;
     }, "");
   }
+  const line = lineString();
   function isAuthor() {
     const authorString = `by ${props.author}`;
-    return lineString().toLowerCase() === authorString.toLowerCase();
+    return line.toLowerCase() === authorString.toLowerCase();
   }
   function isTitle() {
-    return lineString() === lineString().toUpperCase();
+    return line === line.toUpperCase() && line.toUpperCase() === props.title.toUpperCase();
   }
   function isGutenberg() {
     return lineString()
@@ -42,7 +43,11 @@ function Line(props) {
 }
 
 function mapStateToProps(state) {
-  return { author: state.currentBook.author, selected: state.windowStatus.selectedLine };
+  return {
+    author: state.currentBook.author,
+    title: state.currentBook.title,
+    selected: state.windowStatus.selectedLine,
+  };
 }
 
 export default connect(mapStateToProps)(Line);

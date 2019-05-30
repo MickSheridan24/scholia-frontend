@@ -27,6 +27,12 @@ class BookContainer extends Component {
 
   componentDidUpdate = async prevProps => {
     if (prevProps.currentChunk !== this.props.currentChunk) {
+      if (this.props.currentChunk === -1) {
+        this.props.setChunk(0);
+      } else if (this.props.currentChunk === this.props.book.text.length) {
+        this.props.setChunk(this.props.currentChunk - 1);
+        this.scrollToBottom();
+      }
       scroller.scrollTo(`chunk${this.props.currentChunk}`, {
         duration: 200,
         smooth: true,
