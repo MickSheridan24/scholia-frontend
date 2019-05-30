@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { login } from "../redux/actions/userActions";
+import { login, autoLogin } from "../redux/actions/userActions";
 import { connect } from "react-redux";
+import { sign } from "crypto";
 
 class Login extends Component {
   state = {
@@ -38,7 +39,10 @@ class Login extends Component {
     });
     const signUpStatus = await resp.json();
 
-    this.props.login(signUpStatus);
+    if (signUpStatus.success) {
+      localStorage.setItem("token", signUpStatus["jwt"]);
+      await this.props.autoLogin();
+    }
   };
 
   render() {
@@ -95,7 +99,7 @@ class Login extends Component {
   }
 }
 function mapDispatchToProps(dispatch) {
-  return { login: user => dispatch(login(user)) };
+  return { login: user => dispatch(login(user)), autoLogin: () => dispatch(autoLogin()) };
 }
 
 export default connect(

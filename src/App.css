@@ -601,6 +601,7 @@
   color: inherit;
   background: inherit;
   width: 5em;
+  font-family: Cochin, Georgia, Times, "Times New Roman", serif;
 }
 .login-error {
   color: #de00aa;
