@@ -174,6 +174,13 @@ function setStudiesList(b) {
   return { type: "TOGGLE_STUDIES_LIST", bool: b };
 }
 
+//updates annotation in database
+function updateAnnotation(args) {
+  return async dispatch => {
+    debugger;
+  };
+}
+
 export {
   newAnnotationForm,
   fetchAnnotations,
@@ -192,5 +199,6 @@ export {
   setStudiesList,
   deselectAnnotation,
   findBook,
+  updateAnnotation,
   fetchUserAnnotations,
 };
