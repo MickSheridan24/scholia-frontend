@@ -7,6 +7,8 @@ import {
   selectAnnotation,
 } from "../redux/actions/annotationsActions";
 
+// AnnotationLabel displays Annotation info in the UI
+// Parent: AnnotationsContainer
 function AnnotationLabel(props) {
   const handleMouseOver = e => {
     console.log("enter");

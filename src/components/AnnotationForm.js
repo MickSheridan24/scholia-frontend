@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { postAnnotation, cancelAnnotationForm } from "../redux/actions/annotationsActions";
 
+// Annotation form for the creation of new Annotations
+// Parent: AnnotationsContainer
+
 class AnnotationForm extends React.Component {
   state = {
     title: "",
@@ -9,7 +12,6 @@ class AnnotationForm extends React.Component {
     color: "blue",
     study: 0,
   };
-  // console.log("Annotation Form Rendering");
 
   handleSubmit = e => {
     e.preventDefault();

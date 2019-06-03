@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { NavLink as Link } from "react-router-dom";
 
+// LibraryCard for navigating to specific books that have already been checked out
+// Parent: LibraryContainer
+
 class LibraryCard extends Component {
   render() {
     return (

@@ -4,6 +4,9 @@ import AnnotationForm from "../components/AnnotationForm";
 import AnnotationLabel from "../components/AnnotationLabel";
 import StudyLabel from "../components/StudyLabel";
 
+// AnnotationsContainer for holding annotations and study-labels
+// Parent: BookInterface
+
 class AnnotationsContainer extends Component {
   listOtherAnnotations = () => {
     let annotations = this.props.otherAnnotations.reduce((memo, anno) => {

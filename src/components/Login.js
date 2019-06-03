@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { login, autoLogin } from "../redux/actions/userActions";
 import { connect } from "react-redux";
 
+// Login -- Landing page
+// Parent: App
+
 class Login extends Component {
   state = {
     highlight: false,

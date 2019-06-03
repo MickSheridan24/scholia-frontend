@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import { Element, scroller } from "react-scroll";
 import inView from "in-view";
 
+// AnnotationMarker placed into text with CurrentBookActions
+// Parent: Line
 class AnnotationMarker extends React.Component {
   handleMouseOut = e => {
     this.props.highlightAnnotation(0);

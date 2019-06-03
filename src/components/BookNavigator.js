@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setChunk } from "../redux/actions/currentBookActions";
 
+// BookNavigator for moving scrolling through the text
+// Parent: NavigatorContainer
+
 class BookNavigator extends Component {
   handleNavigation = dir => {
     if (dir === "up") {

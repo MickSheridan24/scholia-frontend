@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { NavLink as Link } from "react-router-dom";
 
+// NavBar icon for navigation among routes
+// Parents: SearchForm, UserHome, NavigatorContainer
+
 export default class NavBar extends Component {
   render() {
     return (

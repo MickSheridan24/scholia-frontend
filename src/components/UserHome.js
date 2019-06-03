@@ -5,6 +5,9 @@ import NavBar from "./NavBar";
 import UserAnnotationsContainer from "../containers/UserAnnotationsContainer";
 import { fetchUserAnnotations } from "../redux/actions/annotationsActions";
 
+// UserHome for displaying the current user's info
+// Parent: App
+
 class UserHome extends Component {
   componentDidMount() {
     this.props.fetchUserAnnotations();

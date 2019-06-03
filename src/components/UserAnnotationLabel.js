@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// UserAnnotationLabel for displaying a user's annotation
+// Parent: UserHome
+
 function UserAnnotationLabel(props) {
   const handleDelete = () => {};
   const [highlighted, setHighlighted] = useState(false);

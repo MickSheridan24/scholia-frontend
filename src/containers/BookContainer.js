@@ -4,9 +4,10 @@ import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsA
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import BookChunk from "./BookChunk";
-import LazyLoad from "react-lazyload";
+import { Element, animateScroll as scroll, scroller } from "react-scroll";
 
-import { Element, Events, animateScroll as scroll, scroller } from "react-scroll";
+// BookContainer for holding the text
+// Parent: BookInterface
 
 class BookContainer extends Component {
   componentDidMount() {

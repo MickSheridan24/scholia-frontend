@@ -3,6 +3,9 @@ import { searchBooks } from "../redux/actions/libraryActions";
 import { connect } from "react-redux";
 import NavBar from "./NavBar";
 
+// SearchForm for entering Searches to the backend
+// Parent: BookSearchInterface
+
 class SearchForm extends React.Component {
   state = {
     query: "",

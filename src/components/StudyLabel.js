@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { toggleStudy } from "../redux/actions/studiesActions";
 import { connect } from "react-redux";
 
+// StudyLabel for displaying studies, allowing subscriptions
+// Parent: AnnotationsContainer
+
 class StudyLabel extends Component {
   render() {
     return (

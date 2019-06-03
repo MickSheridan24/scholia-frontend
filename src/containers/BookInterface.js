@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import BookContainer from "./BookContainer";
 import AnnotationsContainer from "./AnnotationsContainer";
 import NavigatorContainer from "./NavigatorContainer";
-import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+
+// BookInterface for holding Book and Annotation Containers
+// Parent: App
 
 class BookInterface extends Component {
   render() {

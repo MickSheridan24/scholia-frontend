@@ -8,6 +8,9 @@ import {
   setStudiesList,
 } from "../redux/actions/annotationsActions";
 
+// AnnotationsNavigator contains buttons for toggling annotations in container
+// Parent: NavigatorContainer
+
 function AnnotationsNavigator(props) {
   const handleToggle = () => {
     props.toggleAll();

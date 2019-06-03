@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
+// Line for the display of specific line
+// Parent: BookChunk
+
 function Line(props) {
   function lineString() {
     return props.line.reduce((memo, str) => {

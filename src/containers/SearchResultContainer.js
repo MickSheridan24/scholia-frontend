@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import SearchResult from "../components/SearchResult";
 import { connect } from "react-redux";
-import NavBar from "../components/NavBar";
+
+// SearchResultContainer for containing... search results
+// Parent: BookSearchInterface
 
 class SearchResultContainer extends Component {
   render() {

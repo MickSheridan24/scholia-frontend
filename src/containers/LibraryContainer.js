@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import LibraryCard from "../components/LibraryCard";
 
+// LibraryContainer for holding Library Cards
+// Parents: UserHome, BookSearchInterface
+
 class LibraryContainer extends Component {
   displayLibrary() {
     return this.props.library.map(book => {

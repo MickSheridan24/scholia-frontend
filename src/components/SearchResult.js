@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { fetchBook, setLoading } from "../redux/actions/libraryActions";
 import { NavLink as Link } from "react-router-dom";
 
+// SearchResult for displaying individual search result items
+// Parent: SearchResultsContainer
+
 function SearchResult(props) {
   return (
     <div className="search-result">

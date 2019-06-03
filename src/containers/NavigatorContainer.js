@@ -3,6 +3,9 @@ import AnnotationsNavigator from "../components/AnnotationsNavigator";
 import BookNavigator from "../components/BookNavigator.js";
 import NavBar from "../components/NavBar";
 
+// NavigatorContainer for holding Text Navigation features
+// Parent: BookSearchInterface
+
 export default class NavigatorContainer extends Component {
   render() {
     return (
@@ -14,6 +17,3 @@ export default class NavigatorContainer extends Component {
     );
   }
 }
-
-//
-//

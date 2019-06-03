@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import UserAnnotationLabel from "../components/UserAnnotationLabel";
 import { connect } from "react-redux";
 
+// UserAnnotationsContainer for for displaying the User's annotations
+// Pareng: UserHome
+
 class UserAnnotationsContainer extends Component {
   displayAnnotations = () => {
     return this.props.annotations.map(a => {

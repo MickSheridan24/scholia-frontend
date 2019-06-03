@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import SearchForm from "../components/SearchForm";
 import SearchResultContainer from "./SearchResultContainer";
 import LibraryContainer from "./LibraryContainer";
-import NavBar from "../components/NavBar";
+
+// BookSearchInterface for holding and organizing the search feature
+// Parent: App
 
 export default class BookSearchInterface extends Component {
   render() {
@@ -12,7 +14,6 @@ export default class BookSearchInterface extends Component {
           <SearchForm />
           <SearchResultContainer />
         </div>
-
         <div className="book-search-right">
           <LibraryContainer />
         </div>

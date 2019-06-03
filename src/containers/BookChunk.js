@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Line from "../components/Line";
 
+// BookChunk for displaying and updating individual parts of a book (currently 2000 lines)
+// Parent: BookContainer
+
 class BookChunk extends Component {
   shouldComponentUpdate(nextProps) {
     return this.props.chunk !== nextProps.chunk;
