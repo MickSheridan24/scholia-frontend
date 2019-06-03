@@ -15,3 +15,7 @@ All texts supplied by _The Gutenberg Project_. This database includes most open 
 3. **View Annotations using the Annotation Navbar**
 
 See your own annotations and filter other annotations by categories. Change whether you'd like to see only the annotations in your current view, or all for the document. Jump to annotations in the text, like them if you thought they were good, or delete your own. 
+
+4. **Add New Annotations by Double-Clicking in the text**
+
+The Annotation will be added at the end of the word you double-clicked.
