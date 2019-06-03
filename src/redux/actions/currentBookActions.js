@@ -5,34 +5,33 @@ import { fetchStudies } from "./studiesActions";
 import { findBook } from "./annotationsActions";
 import { CHUNK_SIZE } from "../actionType";
 
+// annotates the book and sets it to the store
 function setBook(book) {
-  // console.log("SETBOOK ACTION");
   return async dispatch => {
     const bookToBeAnnotated = { ...book };
     dispatch(fetchStudies());
     await dispatch(fetchAnnotations(bookToBeAnnotated));
-
     dispatch(annotateAndSetBook(bookToBeAnnotated));
   };
 }
+
+// TODO: refactor
+// Sort of a middleman function right now
 function annotateAndSetBook(book) {
-  // console.log("ANNOTATE AND SET BOOK ACTION");
   return (dispatch, getState) => {
     const annotations = getState().otherAnnotations;
-    // console.log(annotations);
     annotate(book, annotations, dispatch, getState);
   };
 }
 
-function annotate(book, annotations, dispatch, getState) {
-  // console.log("ANNOTATE ACTION");
+// annotates the book text, prepares it to be appended to the application
+function annotate(book, annotations, dispatch) {
   const parsedText = parseBook(book.text);
   const annoIndex = prepAnnotations(annotations);
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
   if (parsedText.length > CHUNK_SIZE) {
     paragraphs = [jsxParagraphs(parsedText.slice(0, CHUNK_SIZE), 0, 0)];
-    // console.log(paragraphs);
     dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
     continueParsing(parsedText, dispatch);
   } else {
@@ -41,13 +40,13 @@ function annotate(book, annotations, dispatch, getState) {
   }
 }
 
+// repeats annotation steps for each 2000 lines
 function continueParsing(parsedText, dispatch) {
   let counter = CHUNK_SIZE;
   let chunkCounter = 1;
 
   while (counter + CHUNK_SIZE < parsedText.length) {
     const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + CHUNK_SIZE), counter, chunkCounter);
-    // console.log(paragraphs);
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
     counter += CHUNK_SIZE;
     chunkCounter += 1;
@@ -56,6 +55,8 @@ function continueParsing(parsedText, dispatch) {
   // console.log(paragraphs);
   dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
 }
+
+// adds the asterisks in to be interpreted later
 function addAsterisks(parsedText, annoIndex, offset = 0) {
   for (const key in annoIndex) {
     annoIndex[key].forEach(anno => {
@@ -70,13 +71,15 @@ function addAsterisks(parsedText, annoIndex, offset = 0) {
     });
   }
 }
+
+//splits text on linebreaks-- removes other whitespace
 function parseBook(text) {
-  // console.log("PARSE BOOK");
   const lines = text.split(/\r\n[ \t]*/);
   return lines;
 }
+
+// turns a line into a jsx-appendable element, with AnnotationMarkers.
 function jsxify(line, index, counter, chunkCounter) {
-  // console.log("JSXIFY LINE");
   const segments = [];
   let i = 0;
   let currentSegment = "";
@@ -91,7 +94,6 @@ function jsxify(line, index, counter, chunkCounter) {
         key += line[i];
         i++;
       }
-
       segments.push(<AnnotationMarker chunk={chunkCounter} id={key} key={`Annotation-${key}`} />);
       currentSegment = "";
     } else {
@@ -104,11 +106,11 @@ function jsxify(line, index, counter, chunkCounter) {
       <React.Fragment key={`line-${index + counter}-segment-${segments.length}`}>{currentSegment}</React.Fragment>,
     );
   }
-
   segments.push(<meta key={`line-${index + counter}-metaSegment`} data-index={index + counter} name="lineIndex" />);
-
   return segments;
 }
+
+// converts Chunks into arrays of jsx
 function jsxParagraphs(lines, counter, chunkCounter) {
   // console.log("JSXIFY PARAGRAPHS");
   let paragraphs = [];
@@ -129,11 +131,10 @@ function jsxParagraphs(lines, counter, chunkCounter) {
   }
   return paragraphs;
 }
+
+// revises a chunk upon addition or deletion
 function reannotateChunk(annotation) {
   const chunk = Math.floor(annotation.location_p_index / CHUNK_SIZE);
-
-  let line = null;
-
   return (dispatch, getState) => {
     const chunkArray = getState().currentBook.text[chunk];
     const book = findBook(getState);
@@ -152,8 +153,8 @@ function reannotateChunk(annotation) {
   };
 }
 
+// histograms annotations for annotations
 function prepAnnotations(annotations) {
-  // console.log("HIST ANNOTATIONS ACTION");
   const index = annotations.reduce((memo, annotation) => {
     if (!memo[annotation.location_p_index]) {
       memo[annotation.location_p_index] = [annotation];
@@ -165,10 +166,12 @@ function prepAnnotations(annotations) {
   return index;
 }
 
+// adds chunk to store
 function setChunk(i) {
   return { type: "SET_CHUNK", value: i };
 }
 
+// changes selected line
 function setSelectedLine(args) {
   return { type: "SET_SELECTED_LINE", line: args };
 }

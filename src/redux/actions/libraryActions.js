@@ -1,8 +1,7 @@
 import { setBook } from "./currentBookActions";
-import { findBook } from "./annotationsActions";
 
+// Fetches book from database/ gutenberg
 function fetchBook(id) {
-  // console.log("FETCHBOOK ACTION");
   return async (dispatch, getState) => {
     dispatch(setLoading());
     const inLibrary = lookUpBook(getState, id);
@@ -12,25 +11,25 @@ function fetchBook(id) {
     } else {
       const resp = await fetch(`http://localhost:3000/api/v1/books/${id}`);
       const book = await resp.json();
-
       let unparsed = JSON.parse(book.temporary_text).body;
       book.text = cleanBook(unparsed);
-
       dispatch(addBook(book));
-
       dispatch(setBook(book));
     }
   };
 }
+
+//provides all necessary sanitations
 function cleanBook(text) {
   return text.replace(/_/g, "");
 }
 
-//addBook adds the retrievedBook to the library
+// adds book to library
 function addBook(book) {
-  // console.log("ADDBOOK ACTION");
   return { type: "ADD_BOOK", book: book };
 }
+
+// searches gutendex
 function searchBooks(query) {
   return async dispatch => {
     const resp = await fetch(`http://localhost:3000/api/v1/books/search?query=${query}`);
@@ -44,9 +43,12 @@ function searchBooks(query) {
   };
 }
 
+// checks if library already has book
 function lookUpBook(getState, id) {
   return getState().library.find(b => b.gutenberg_id === parseInt(id));
 }
+
+// changes Loading status
 function setLoading() {
   return { type: "SET_LOADING" };
 }

@@ -1,5 +1,5 @@
+// fresh login without token
 function login(user) {
-  // console.log("LOGIN");
   return async dispatch => {
     const resp = await fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
@@ -19,8 +19,8 @@ function login(user) {
   };
 }
 
+// autoLogin for people with tokens or those who have just signed up
 function autoLogin() {
-  // console.log("AUTOLOGIN");
   return async dispatch => {
     let token = localStorage.getItem("token");
     const resp = await fetch("http://localhost:3000/api/v1/users/home", {
@@ -37,8 +37,9 @@ function autoLogin() {
     }
   };
 }
+
+//clears user from store
 function logout() {
-  // console.log("LOGOUT");
   return { type: "SET_USER", user: {} };
 }
 

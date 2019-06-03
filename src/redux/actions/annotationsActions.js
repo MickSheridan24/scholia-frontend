@@ -1,7 +1,7 @@
 import { annotateAndSetBook, reannotateChunk } from "./currentBookActions";
 
+// setAnnotations() resets the current annotations in the store
 function setAnnotations(query = {}) {
-  // console.log("SET ANNOTATIONS");
   return async (dispatch, getState) => {
     const book = findBook(getState);
     await dispatch(fetchAnnotations(book, query));
@@ -9,8 +9,8 @@ function setAnnotations(query = {}) {
   };
 }
 
+// Async request to fetch annotations
 function fetchAnnotations(book) {
-  // console.log("FETCH ANNOTATIONS");
   return async dispatch => {
     const resp = await fetch(`http://localhost:3000/api/v1/annotations?book_id=${book.id}`, {
       method: "GET",
@@ -24,6 +24,7 @@ function fetchAnnotations(book) {
   };
 }
 
+// Async request to fetch a user's annotatins
 function fetchUserAnnotations() {
   return async dispatch => {
     const resp = await fetch(`http://localhost:3000/api/v1/annotations`, {
@@ -35,8 +36,8 @@ function fetchUserAnnotations() {
   };
 }
 
+// Creates a new annotation
 function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
-  // console.log("POST ANNOTATIONS");
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
     const book = getState().currentBook;
@@ -67,37 +68,45 @@ function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
   };
 }
 
+// adds an annotation to the store
 function addAnnotation(annotation) {
-  // console.log("ADD ANNOTATION");
   return { type: "ADD_ANNOTATION", annotation: annotation };
 }
 
+// sets the windowStatus.annotationForm -- Shows and hides the form on double click
 function newAnnotationForm(args) {
   // console.log("NEW FORM");
   return { type: "NEW_ANNOTATION_FORM", args: args };
 }
+
+//sets annotationForm to false without posting
 function cancelAnnotationForm() {
   return { type: "CANCEL_ANNOTATION_FORM" };
 }
 
+// looks up the currentBook in the store's library -- for reannotating
 function findBook(getState) {
-  // console.log("LOOKING UP BOOK");
   const book = getState().currentBook;
   const originalBook = getState().library.find(b => b.id === book.id);
   return originalBook;
 }
 
+// sets the status of both AnnotationLabel and AnnotationMarker to "highlighted"
 function highlightAnnotation(id) {
   return { type: "HIGHLIGHT_ANNOTATION", annotationId: parseInt(id) };
 }
 
+// sets an annotation to selected -- window will scroll
 function selectAnnotation(annotation) {
   return { type: "SELECT_ANNOTATION", annotation: annotation };
 }
+
+// removes selection
 function deselectAnnotation() {
   return { type: "DESELECT_ANNOTATION" };
 }
 
+// deletes a user's annotations
 function deleteAnnotation(id) {
   return async (dispatch, getState) => {
     const resp = await fetch(`http://localhost:3000/api/v1/annotations/${id}`, {
@@ -115,6 +124,8 @@ function deleteAnnotation(id) {
     }
   };
 }
+
+// adds a like to the annotation
 function likeAnnotation(id) {
   console.log("liking", id);
   return async (dispatch, getState) => {
@@ -132,23 +143,33 @@ function likeAnnotation(id) {
     }
   };
 }
+
+// sets highlight to true
 function enterAnnotation(id) {
-  // console.log("ENTER ANNOTATION ACTION");
   return { type: "ENTER_ANNOTATION", annotationId: parseInt(id) };
 }
+
+// sets highlight to false
 function exitAnnotation(id) {
-  // console.log("EXIT ANNOTATION ACTION");
   return { type: "EXIT_ANNOTATION", annotationId: parseInt(id) };
 }
+
+// sets the windowStatus to show a user's annotations
 function setShowUserAnnotations(bool) {
   return dispatch => dispatch({ type: "SET_SHOW_USER_ANNOTATIONS", value: bool });
 }
+
+// sets the windowStatus to show other annotations
 function setShowOtherAnnotations(bool, dispatch) {
   return { type: "SET_SHOW_OTHER_ANNOTATIONS", value: bool };
 }
+
+// whether the container will show just annotations in view, or all annotations in document
 function toggleAll() {
   return { type: "TOGGLE_ALL" };
 }
+
+// sets whether the user sees study subscriptions instead of annotations.
 function setStudiesList(b) {
   return { type: "TOGGLE_STUDIES_LIST", bool: b };
 }
