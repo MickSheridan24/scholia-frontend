@@ -7,13 +7,11 @@ import BookSearchInterface from "./containers/BookSearchInterface";
 import UserHome from "./components/UserHome";
 import { autoLogin } from "./redux/actions/userActions";
 import { connect } from "react-redux";
-import { fetchUserAnnotations } from "./redux/actions/annotationsActions";
 
 class App extends React.Component {
   componentDidMount() {
     if (localStorage.getItem("token")) {
       this.props.login();
-      
     }
   }
   render() {
@@ -34,7 +32,7 @@ function mapStateToProps(state) {
   return { user: state.user };
 }
 function mapDispatchToProps(dispatch) {
-  return { login: () => dispatch(autoLogin()),  };
+  return { login: () => dispatch(autoLogin()) };
 }
 
 export default connect(
