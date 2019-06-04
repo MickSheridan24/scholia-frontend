@@ -153,7 +153,18 @@
 .annotation-label > * {
   background: var(--light-shade) !important;
 }
+ui.segment.annotation-label-edit {
+  max-height: 20em;
+  min-height: 8em;
+  width: 90%;
+  background: var(--light-shade) !important;
+  color: var(--dark-shade);
 
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  border: 7px solid var(--dark-accent);
+}
 .label-main {
   background: inherit;
   flex: 9;
@@ -161,6 +172,9 @@
 .label-right {
   background: inherit;
   flex: 1;
+}
+.ui.edit {
+  display: block;
 }
 .label-title {
   font-family: Cochin, Georgia, Times, "Times New Roman", serif !important;

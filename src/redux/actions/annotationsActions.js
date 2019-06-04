@@ -177,6 +177,15 @@ function setStudiesList(b) {
 //updates annotation in database
 function updateAnnotation(args) {
   return async dispatch => {
+    const resp = await fetch(`http://localhost:3000/api/v1/annotations/${args.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "Application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(args),
+    });
+    const status = await resp.json();
     debugger;
   };
 }
