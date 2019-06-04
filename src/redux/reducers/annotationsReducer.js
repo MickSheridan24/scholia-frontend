@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 function userAnnotationsReducer(state = [], action) {
   switch (action.type) {
     case "SET_USER_ANNOTATIONS":
@@ -24,11 +26,15 @@ function otherAnnotationsReducer(state = [], action) {
       });
     case "ENTER_ANNOTATION":
       return state.map(a => {
-        return a.id === id ? { ...a, visible: true } : { ...a };
+        return a.id === id ? { ...a, visible: true } : a;
       });
     case "EXIT_ANNOTATION":
       return state.map(a => {
-        return a.id === id ? { ...a, visible: false } : { ...a };
+        return a.id === id ? { ...a, visible: false } : a;
+      });
+    case "EDIT_ANNOTATION":
+      return state.map(a => {
+        return a.id === action.annotation.id ? { ...a, ...action.annotation } : a;
       });
     case "SET_OTHER_ANNOTATIONS":
       return action.annotations;

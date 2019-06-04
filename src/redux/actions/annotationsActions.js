@@ -183,10 +183,14 @@ function updateAnnotation(args) {
         "Content-type": "Application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(args),
+      body: JSON.stringify({ annotation: args }),
     });
     const status = await resp.json();
-    debugger;
+    if (status.success) {
+      dispatch({ type: "EDIT_ANNOTATION", annotation: status.annotation });
+    } else {
+      alert("Something went wrong with updating your annotation");
+    }
   };
 }
 
