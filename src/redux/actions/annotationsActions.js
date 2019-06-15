@@ -37,6 +37,7 @@ function fetchUserAnnotations() {
 }
 
 // Creates a new annotation
+
 function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");

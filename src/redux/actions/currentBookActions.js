@@ -78,6 +78,7 @@ function parseBook(text) {
   return lines;
 }
 
+
 // turns a line into a jsx-appendable element, with AnnotationMarkers.
 function jsxify(line, index, counter, chunkCounter) {
   const segments = [];
@@ -112,7 +113,6 @@ function jsxify(line, index, counter, chunkCounter) {
 
 // converts Chunks into arrays of jsx
 function jsxParagraphs(lines, counter, chunkCounter) {
-  // console.log("JSXIFY PARAGRAPHS");
   let paragraphs = [];
   let currentParagraph = [];
   let i = 0;
