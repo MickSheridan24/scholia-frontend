@@ -1,5 +1,5 @@
 import { annotateAndSetBook, reannotateChunk } from "./currentBookActions";
-
+import ENDPOINT from "../endpoint";
 // setAnnotations() resets the current annotations in the store
 function setAnnotations(query = {}) {
   return async (dispatch, getState) => {
@@ -12,24 +12,33 @@ function setAnnotations(query = {}) {
 // Async request to fetch annotations
 function fetchAnnotations(book) {
   return async dispatch => {
-    const resp = await fetch(`http://localhost:3000/api/v1/annotations?book_id=${book.id}`, {
+    const resp = await fetch(`${ENDPOINT}/annotations?book_id=${book.id}`, {
       method: "GET",
-      headers: { "Content-Type": "Application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+      headers: {
+        "Content-Type": "Application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
     });
     const annotations = await resp.json();
     const preparedAnnotations = annotations.map(a => {
       return { ...a, visible: false, highlighted: false, selected: false };
     });
-    dispatch({ type: "SET_OTHER_ANNOTATIONS", annotations: preparedAnnotations });
+    dispatch({
+      type: "SET_OTHER_ANNOTATIONS",
+      annotations: preparedAnnotations
+    });
   };
 }
 
 // Async request to fetch a user's annotatins
 function fetchUserAnnotations() {
   return async dispatch => {
-    const resp = await fetch(`http://localhost:3000/api/v1/annotations`, {
+    const resp = await fetch(`${ENDPOINT}/annotations`, {
       method: "GET",
-      headers: { "Content-Type": "Application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
+      headers: {
+        "Content-Type": "Application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
     });
     const annotations = await resp.json();
     dispatch({ type: "SET_USER_ANNOTATIONS", annotations: annotations });
@@ -41,9 +50,13 @@ function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
   return async (dispatch, getState) => {
     const token = localStorage.getItem("token");
     const book = getState().currentBook;
-    const resp = await fetch("http://localhost:3000/api/v1/annotations", {
+    const resp = await fetch(`${ENDPOINT}/annotations`, {
       method: "POST",
-      headers: { "Content-Type": "Application/json", accepts: "Application/json", Authorization: `Bearer ${token}` },
+      headers: {
+        "Content-Type": "Application/json",
+        accepts: "Application/json",
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify({
         annotation: {
           book_id: book.id,
@@ -52,9 +65,9 @@ function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
           location_p_index: pIndex,
           location_char_index: charIndex,
           title: title,
-          study_id: study_id > 0 ? study_id : null,
-        },
-      }),
+          study_id: study_id > 0 ? study_id : null
+        }
+      })
     });
     const postResp = await resp.json();
     if (postResp.success) {
@@ -109,9 +122,9 @@ function deselectAnnotation() {
 // deletes a user's annotations
 function deleteAnnotation(id) {
   return async (dispatch, getState) => {
-    const resp = await fetch(`http://localhost:3000/api/v1/annotations/${id}`, {
+    const resp = await fetch(`${ENDPOINT}/annotations/${id}`, {
       method: "DELETE",
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     });
     const status = await resp.json();
     if (status.success) {
@@ -129,13 +142,13 @@ function deleteAnnotation(id) {
 function likeAnnotation(id) {
   console.log("liking", id);
   return async (dispatch, getState) => {
-    const resp = await fetch("http://localhost:3000/api/v1/annotations/likes", {
+    const resp = await fetch(`${ENDPOINT}/annotations/likes`, {
       method: "POST",
       headers: {
         "Content-type": "Application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
-      body: JSON.stringify({ annotation: { id: id } }),
+      body: JSON.stringify({ annotation: { id: id } })
     });
     const status = await resp.json();
     if (status.success) {
@@ -156,7 +169,8 @@ function exitAnnotation(id) {
 
 // sets the windowStatus to show a user's annotations
 function setShowUserAnnotations(bool) {
-  return dispatch => dispatch({ type: "SET_SHOW_USER_ANNOTATIONS", value: bool });
+  return dispatch =>
+    dispatch({ type: "SET_SHOW_USER_ANNOTATIONS", value: bool });
 }
 
 // sets the windowStatus to show other annotations
@@ -192,5 +206,5 @@ export {
   setStudiesList,
   deselectAnnotation,
   findBook,
-  fetchUserAnnotations,
+  fetchUserAnnotations
 };

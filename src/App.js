@@ -19,9 +19,12 @@ class App extends React.Component {
     return (
       <div className="main-window">
         <Switch>
-          <Route exact path="/book/:id" component={this.props.user.username ? BookInterface : Login} />
-          <Route exact path="/search" component={this.props.user.username ? BookSearchInterface : Login} />
-          <Route component={this.props.user.username ? UserHome : Login} />
+          {/*<Route exact path="/book/:id" component={this.props.user.username ? BookInterface : Login} />
+    <Route exact path="/search" component={this.props.user.username ? BookSearchInterface : Login} />
+  <Route component={this.props.user.username ? UserHome : Login} />*/}
+          <Route exact path="/book/:id" component={BookInterface} />
+          <Route exact path="/search" component={BookSearchInterface} />
+          <Route component={UserHome} />
         </Switch>
       </div>
     );
@@ -37,5 +40,5 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(App);

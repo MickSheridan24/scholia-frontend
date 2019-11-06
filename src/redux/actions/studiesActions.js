@@ -1,10 +1,11 @@
+import ENDPOINT from "../endpoint";
 // fetches studies from backend
 function fetchStudies() {
   return async dispatch => {
-    const resp = await fetch("http://localhost:3000/api/v1/studies", {
+    const resp = await fetch(`${ENDPOINT}/studies`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
     });
     const studies = await resp.json();
     if (studies.length > 0) {
@@ -23,19 +24,19 @@ function toggleStudy(studyId, subscribe) {
         method: "POST",
         headers: {
           "Content-type": "Application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`
         },
-        body: JSON.stringify({ study_id: studyId }),
+        body: JSON.stringify({ study_id: studyId })
       }
     : {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
       };
   const url = subscribe
-    ? "http://localhost:3000/api/v1/subscriptions"
-    : `http://localhost:3000/api/v1/subscriptions/${studyId}`;
+    ? `${ENDPOINT}/subscriptions`
+    : `${ENDPOINT}/subscriptions/${studyId}`;
   return async dispatch => {
     const resp = await fetch(url, options);
 

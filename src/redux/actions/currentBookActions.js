@@ -4,6 +4,7 @@ import AnnotationMarker from "../../components/AnnotationMarker";
 import { fetchStudies } from "./studiesActions";
 import { findBook } from "./annotationsActions";
 import { CHUNK_SIZE } from "../actionType";
+import ENDPOINT from "../endpoint";
 
 // annotates the book and sets it to the store
 function setBook(book) {
@@ -32,11 +33,27 @@ function annotate(book, annotations, dispatch) {
   let paragraphs = [];
   if (parsedText.length > CHUNK_SIZE) {
     paragraphs = [jsxParagraphs(parsedText.slice(0, CHUNK_SIZE), 0, 0)];
-    dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
+    dispatch({
+      type: "SET_BOOK",
+      book: {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        text: paragraphs
+      }
+    });
     continueParsing(parsedText, dispatch);
   } else {
     paragraphs = [jsxParagraphs(parsedText, 0, 0)];
-    dispatch({ type: "SET_BOOK", book: { id: book.id, title: book.title, author: book.author, text: paragraphs } });
+    dispatch({
+      type: "SET_BOOK",
+      book: {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        text: paragraphs
+      }
+    });
   }
 }
 
@@ -46,12 +63,20 @@ function continueParsing(parsedText, dispatch) {
   let chunkCounter = 1;
 
   while (counter + CHUNK_SIZE < parsedText.length) {
-    const paragraphs = jsxParagraphs(parsedText.slice(counter, counter + CHUNK_SIZE), counter, chunkCounter);
+    const paragraphs = jsxParagraphs(
+      parsedText.slice(counter, counter + CHUNK_SIZE),
+      counter,
+      chunkCounter
+    );
     dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
     counter += CHUNK_SIZE;
     chunkCounter += 1;
   }
-  const paragraphs = jsxParagraphs(parsedText.slice(counter), counter, chunkCounter);
+  const paragraphs = jsxParagraphs(
+    parsedText.slice(counter),
+    counter,
+    chunkCounter
+  );
   // console.log(paragraphs);
   dispatch({ type: "ADD_CHUNK", chunk: paragraphs });
 }
@@ -61,7 +86,10 @@ function addAsterisks(parsedText, annoIndex, offset = 0) {
   for (const key in annoIndex) {
     annoIndex[key].forEach(anno => {
       let ind = anno.location_char_index;
-      while (parsedText[key - offset][ind] !== " " && ind < parsedText[key - offset].length) {
+      while (
+        parsedText[key - offset][ind] !== " " &&
+        ind < parsedText[key - offset].length
+      ) {
         ind++;
       }
       parsedText[key - offset] =
@@ -86,7 +114,11 @@ function jsxify(line, index, counter, chunkCounter) {
   while (i < line.length) {
     if (line[i] === "*" && line[i + 1] === "{") {
       segments.push(
-        <React.Fragment key={`line-${index + counter}-segment-${segments.length}`}>{currentSegment}</React.Fragment>,
+        <React.Fragment
+          key={`line-${index + counter}-segment-${segments.length}`}
+        >
+          {currentSegment}
+        </React.Fragment>
       );
       let key = "";
       i += 2;
@@ -94,7 +126,13 @@ function jsxify(line, index, counter, chunkCounter) {
         key += line[i];
         i++;
       }
-      segments.push(<AnnotationMarker chunk={chunkCounter} id={key} key={`Annotation-${key}`} />);
+      segments.push(
+        <AnnotationMarker
+          chunk={chunkCounter}
+          id={key}
+          key={`Annotation-${key}`}
+        />
+      );
       currentSegment = "";
     } else {
       currentSegment += line[i];
@@ -103,10 +141,20 @@ function jsxify(line, index, counter, chunkCounter) {
   }
   if (currentSegment.length > 0) {
     segments.push(
-      <React.Fragment key={`line-${index + counter}-segment-${segments.length}`}>{currentSegment}</React.Fragment>,
+      <React.Fragment
+        key={`line-${index + counter}-segment-${segments.length}`}
+      >
+        {currentSegment}
+      </React.Fragment>
     );
   }
-  segments.push(<meta key={`line-${index + counter}-metaSegment`} data-index={index + counter} name="lineIndex" />);
+  segments.push(
+    <meta
+      key={`line-${index + counter}-metaSegment`}
+      data-index={index + counter}
+      name="lineIndex"
+    />
+  );
   return segments;
 }
 
@@ -149,7 +197,11 @@ function reannotateChunk(annotation) {
     addAsterisks(range, preparedAnnotations, low);
     const newParagraphs = jsxParagraphs(range, low, chunk);
 
-    dispatch({ type: "REANNOTATE_CHUNK", chunk: newParagraphs, chunkIndex: chunk });
+    dispatch({
+      type: "REANNOTATE_CHUNK",
+      chunk: newParagraphs,
+      chunkIndex: chunk
+    });
   };
 }
 
@@ -176,4 +228,11 @@ function setSelectedLine(args) {
   return { type: "SET_SELECTED_LINE", line: args };
 }
 
-export { setBook, annotate, annotateAndSetBook, setChunk, setSelectedLine, reannotateChunk };
+export {
+  setBook,
+  annotate,
+  annotateAndSetBook,
+  setChunk,
+  setSelectedLine,
+  reannotateChunk
+};

@@ -1,5 +1,5 @@
 import { setBook } from "./currentBookActions";
-
+import ENDPOINT from "../endpoint";
 // Fetches book from database/ gutenberg
 function fetchBook(id) {
   return async (dispatch, getState) => {
@@ -9,10 +9,19 @@ function fetchBook(id) {
     if (inLibrary) {
       dispatch(setBook(inLibrary));
     } else {
-      const resp = await fetch(`http://localhost:3000/api/v1/books/${id}`);
+      const resp = await fetch(`${ENDPOINT}/books/${id}`);
       const book = await resp.json();
-      let unparsed = JSON.parse(book.temporary_text).body;
-      book.text = cleanBook(unparsed);
+
+      //
+
+      Object.keys(book).forEach(key => {
+        let revised = key.toLowerCase();
+        book[revised] = book[key];
+        book[key] = null;
+        //    debugger;
+      });
+
+      book.text = cleanBook(book.body);
       dispatch(addBook(book));
       dispatch(setBook(book));
     }
@@ -32,7 +41,10 @@ function addBook(book) {
 // searches gutendex
 function searchBooks(query) {
   return async dispatch => {
-    const resp = await fetch(`http://localhost:3000/api/v1/books/search?query=${query}`);
+    const req = `${ENDPOINT}/books/search?query=${query}`;
+    console.log(req);
+    const resp = await fetch(`${ENDPOINT}/books/search?query=${query}`);
+
     const searchResults = await resp.json();
 
     if (searchResults.success) {
