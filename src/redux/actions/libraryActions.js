@@ -14,12 +14,12 @@ function fetchBook(id) {
 
       //
 
-      Object.keys(book).forEach(key => {
-        let revised = key.toLowerCase();
-        book[revised] = book[key];
-        book[key] = null;
-        //    debugger;
-      });
+      // Object.keys(book).forEach(key => {
+      //   let revised = key.toLowerCase();
+      //   book[revised] = book[key];
+      //   book[key] = null;
+      //   //    debugger;
+      // });
 
       book.text = cleanBook(book.body);
       dispatch(addBook(book));

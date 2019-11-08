@@ -29,6 +29,7 @@ function annotateAndSetBook(book) {
 function annotate(book, annotations, dispatch) {
   const parsedText = parseBook(book.text);
   const annoIndex = prepAnnotations(annotations);
+  debugger;
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
   if (parsedText.length > CHUNK_SIZE) {
@@ -86,6 +87,7 @@ function addAsterisks(parsedText, annoIndex, offset = 0) {
   for (const key in annoIndex) {
     annoIndex[key].forEach(anno => {
       let ind = anno.location_char_index;
+      debugger;
       while (
         parsedText[key - offset][ind] !== " " &&
         ind < parsedText[key - offset].length
