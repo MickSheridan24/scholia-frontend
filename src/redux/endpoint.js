@@ -1,1 +1,1 @@
-export default "https://localhost:44374/api";
+export default "http://localhost:3000/api/v1";

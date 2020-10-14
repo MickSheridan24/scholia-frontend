@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { login, autoLogin } from "../redux/actions/userActions";
+import { login, autoLogin, createUser } from "../redux/actions/userActions";
 import { connect } from "react-redux";
 
 // Login -- Landing page
@@ -34,17 +34,9 @@ class Login extends Component {
     const user = {
       user: { username: e.currentTarget.elements.username.value, password: e.currentTarget.elements.password.value },
     };
-    const resp = await fetch("http://localhost:3000/api/v1/users", {
-      method: "POST",
-      headers: { "Content-Type": "Application/json" },
-      body: JSON.stringify(user),
-    });
-    const signUpStatus = await resp.json();
 
-    if (signUpStatus.success) {
-      localStorage.setItem("token", signUpStatus["jwt"]);
-      await this.props.autoLogin();
-    }
+    const resp = await this.props.createUser(user);
+    
   };
 
   render() {
@@ -101,7 +93,9 @@ class Login extends Component {
   }
 }
 function mapDispatchToProps(dispatch) {
-  return { login: user => dispatch(login(user)), autoLogin: () => dispatch(autoLogin()) };
+  return { login: user => dispatch(login(user)),
+           autoLogin: () => dispatch(autoLogin()),
+           createUser: (user) => dispatch(createUser(user)) };
 }
 
 export default connect(
