@@ -9,14 +9,11 @@ import ENDPOINT from "../endpoint";
 // annotates the book and sets it to the store
 function setBook(book) {
   return async dispatch => {
-    const bookToBeAnnotated = { ...book };
     dispatch(fetchStudies());
-    await dispatch(fetchAnnotations(bookToBeAnnotated));
     dispatch(annotateAndSetBook(bookToBeAnnotated));
   };
 }
 
-// TODO: refactor
 // Sort of a middleman function right now
 function annotateAndSetBook(book) {
   return (dispatch, getState) => {
@@ -26,38 +23,7 @@ function annotateAndSetBook(book) {
 }
 
 // annotates the book text, prepares it to be appended to the application
-function annotate(book, annotations, dispatch) {
-  const parsedText = parseBook(book.text);
-  const annoIndex = prepAnnotations(annotations);
-  debugger;
-  addAsterisks(parsedText, annoIndex);
-  let paragraphs = [];
-  if (parsedText.length > CHUNK_SIZE) {
-    paragraphs = [jsxParagraphs(parsedText.slice(0, CHUNK_SIZE), 0, 0)];
-    dispatch({
-      type: "SET_BOOK",
-      book: {
-        id: book.id,
-        title: book.title,
-        author: book.author,
-        text: paragraphs
-      }
-    });
-    continueParsing(parsedText, dispatch);
-  } else {
-    paragraphs = [jsxParagraphs(parsedText, 0, 0)];
-    dispatch({
-      type: "SET_BOOK",
-      book: {
-        id: book.id,
-        title: book.title,
-        author: book.author,
-        text: paragraphs
-      }
-    });
-  }
-}
-
+z
 // repeats annotation steps for each 2000 lines
 function continueParsing(parsedText, dispatch) {
   let counter = CHUNK_SIZE;

@@ -12,16 +12,6 @@ function fetchBook(id) {
       const resp = await fetch(`${ENDPOINT}/books/${id}`);
       const book = await resp.json();
 
-      //
-
-      // Object.keys(book).forEach(key => {
-      //   let revised = key.toLowerCase();
-      //   book[revised] = book[key];
-      //   book[key] = null;
-      //   //    debugger;
-      // });
-
-      book.text = cleanBook(book.body);
       dispatch(addBook(book));
       dispatch(setBook(book));
     }
