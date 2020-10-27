@@ -10,8 +10,55 @@ import ENDPOINT from "../endpoint";
 function setBook(book) {
   return async dispatch => {
     dispatch(fetchStudies());
-    dispatch(annotateAndSetBook(bookToBeAnnotated));
+    dispatch(processAndSetBook(bookToBeAnnotated));
   };
+}
+
+function processAndSetBook(book){
+  //paragraphs should be...
+  // 1. Create jsx 
+  // 2. Insert AnnotationMarkers
+  // 3. 
+
+
+  dispatch({
+    type: "SET_BOOK",
+    book: {
+      id: book.id,
+      title: book.title,
+      author: book.author
+    }
+  });
+
+  const sections = book.sections.map(s => ProcessSection(s))
+  
+}
+
+function ProcessSection(section){
+  const content = annotateContent(section.html, section.annotations, section.section_number)
+  var element = createTag(section.section_type, section.section_number, content)
+
+}
+
+function createTag(sectionType, number, content){
+  if (sectionType === "title"){
+    return <h1 section_index={number} >{content}</h1> 
+  }
+  else if (sectionType === "header"){
+    return <h2 section_index={number}>{content}</h2>
+  }
+  else {
+    return <p section_index={number}>{content}</p>
+  }
+}
+
+function annotateTag(content, annotations, key){
+  let content
+  <AnnotationMarker
+          chunk={chunkCounter}
+          id={key}
+          key={`Annotation-${key}`}
+        />
 }
 
 // Sort of a middleman function right now
@@ -23,7 +70,38 @@ function annotateAndSetBook(book) {
 }
 
 // annotates the book text, prepares it to be appended to the application
-z
+function annotate(book, annotations, dispatch) {
+  const parsedText = parseBook(book.text);
+  const annoIndex = prepAnnotations(annotations);
+  debugger;``
+  addAsterisks(parsedText, annoIndex);
+  let paragraphs = [];
+  if (parsedText.length > CHUNK_SIZE) {
+    paragraphs = [jsxParagraphs(parsedText.slice(0, CHUNK_SIZE), 0, 0)];
+    dispatch({
+      type: "SET_BOOK",
+      book: {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        text: paragraphs
+      }
+    });
+    continueParsing(parsedText, dispatch);
+  } else {
+    paragraphs = [jsxParagraphs(parsedText, 0, 0)];
+    dispatch({
+      type: "SET_BOOK",
+      book: {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        text: paragraphs
+      }
+    });
+  }
+}
+
 // repeats annotation steps for each 2000 lines
 function continueParsing(parsedText, dispatch) {
   let counter = CHUNK_SIZE;
