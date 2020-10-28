@@ -1,4 +1,4 @@
-import { annotateAndSetBook, reannotateChunk } from "./currentBookActions";
+import {  reannotateChunk } from "./currentBookActions";
 import ENDPOINT from "../endpoint";
 // setAnnotations() resets the current annotations in the store
 function setAnnotations(query = {}) {
