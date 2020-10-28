@@ -10,35 +10,18 @@ import ENDPOINT from "../endpoint";
 function setBook(book) {
   return async dispatch => {
     dispatch(fetchStudies());
-    dispatch(processAndSetBook(bookToBeAnnotated));
+    dispatch({
+      type: "SET_BOOK",
+      book: {
+        id: book.id,
+        title: book.title,
+        author: book.author,
+        sections: book.sections
+      }
+    });
   };
 }
 
-function processAndSetBook(book){
-  //paragraphs should be...
-  // 1. Create jsx 
-  // 2. Insert AnnotationMarkers
-  // 3. 
-
-
-  dispatch({
-    type: "SET_BOOK",
-    book: {
-      id: book.id,
-      title: book.title,
-      author: book.author
-    }
-  });
-
-  const sections = book.sections.map(s => ProcessSection(s))
-  
-}
-
-function ProcessSection(section){
-  const content = annotateContent(section.html, section.annotations, section.section_number)
-  var element = createTag(section.section_type, section.section_number, content)
-
-}
 
 function createTag(sectionType, number, content){
   if (sectionType === "title"){
@@ -50,15 +33,6 @@ function createTag(sectionType, number, content){
   else {
     return <p section_index={number}>{content}</p>
   }
-}
-
-function annotateTag(content, annotations, key){
-  let content
-  <AnnotationMarker
-          chunk={chunkCounter}
-          id={key}
-          key={`Annotation-${key}`}
-        />
 }
 
 // Sort of a middleman function right now
@@ -73,7 +47,6 @@ function annotateAndSetBook(book) {
 function annotate(book, annotations, dispatch) {
   const parsedText = parseBook(book.text);
   const annoIndex = prepAnnotations(annotations);
-  debugger;``
   addAsterisks(parsedText, annoIndex);
   let paragraphs = [];
   if (parsedText.length > CHUNK_SIZE) {

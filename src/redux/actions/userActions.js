@@ -53,7 +53,7 @@ function logout() {
 
 function createUser(user) {
   return async (dispatch) => {
-    const resp = await fetch("${ENDPOINT}/users", {
+    const resp = await fetch(`${ENDPOINT}/users`, {
       method: "POST",
       headers: { "Content-Type": "Application/json" },
       body: JSON.stringify(user),
@@ -63,7 +63,7 @@ function createUser(user) {
 
     if (signUpStatus.success) {
       localStorage.setItem("token", signUpStatus["jwt"]);
-      await this.props.autoLogin();
+      await autoLogin();
     }
   };
 }

@@ -4,6 +4,7 @@ import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsA
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import BookChunk from "./BookChunk";
+import Section from "../components/Section"
 import { Element, animateScroll as scroll, scroller } from "react-scroll";
 
 // BookContainer for holding the text
@@ -15,16 +16,7 @@ class BookContainer extends Component {
       this.props.fetchBook(this.props.linkId);
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      (nextProps.book.text && nextProps.book.text.length) !== (this.props.book.text && this.props.book.text.length) ||
-      nextProps.loading !== this.props.loading ||
-      nextProps.currentChunk !== this.props.currentChunk
-    ) {
-      return true;
-    }
-    return false;
-  }
+ 
 
   componentDidUpdate = async prevProps => {
     if (prevProps.currentChunk !== this.props.currentChunk) {
@@ -63,11 +55,10 @@ class BookContainer extends Component {
   };
 
   displayBook = () => {
-    // console.log("book Display");
-    return this.props.book.text.map((ch, i) => {
+    return this.props.book.sections.map((s, i) => {
       return (
         <Element key={`chunk${i}`} name={`chunk${i}`}>
-          <BookChunk index={i} />
+          <Section index={i} sectionType = {s.section_type} sectionText = {s.html}/>
         </Element>
       );
     });
@@ -76,7 +67,7 @@ class BookContainer extends Component {
   render() {
     return (
       <div onDoubleClick={this.handleOnDoubleClick} className="book-text" id="container">
-        {this.props.book.text && !this.props.loading ? (
+        { this.props.book && this.props.book.sections && !this.props.loading ? (
           this.displayBook()
         ) : (
           <div className="loading-screen">Retrieving...</div>
