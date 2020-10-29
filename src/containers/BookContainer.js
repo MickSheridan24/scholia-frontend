@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { fetchBook } from "../redux/actions/libraryActions";
-import { setAnnotations, newAnnotationForm } from "../redux/actions/annotationsActions";
+import { newAnnotationForm } from "../redux/actions/annotationsActions";
 import { setChunk } from "../redux/actions/currentBookActions";
 import { connect } from "react-redux";
 import BookChunk from "./BookChunk";
@@ -57,9 +57,7 @@ class BookContainer extends Component {
   displayBook = () => {
     return this.props.book.sections.map((s, i) => {
       return (
-        <Element key={`chunk${i}`} name={`chunk${i}`}>
-          <Section index={i} sectionType = {s.section_type} sectionText = {s.html}/>
-        </Element>
+          <Section index={i} section={s}/>
       );
     });
   };
@@ -88,7 +86,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchBook: id => dispatch(fetchBook(id)),
-    setAnnotations: query => dispatch(setAnnotations(query)),
     newAnnotationForm: args => dispatch(newAnnotationForm(args)),
     setChunk: ind => dispatch(setChunk(ind)),
   };

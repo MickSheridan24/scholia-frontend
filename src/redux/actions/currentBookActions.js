@@ -19,6 +19,11 @@ function setBook(book) {
         sections: book.sections
       }
     });
+
+    dispatch({
+      type: "SET_OTHER_ANNOTATIONS",
+      annotations: book.sections.map(s => s.annotations).flat()
+    })
   };
 }
 

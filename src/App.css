@@ -89,8 +89,14 @@
 .title {
   text-align: center;
   display: block;
+  font-size: 2em;
+}
+.section-header{
+  text-align: center;
+  display: block;
   font-size: 1.5em;
 }
+
 .author {
   text-align: center;
   font-style: italic;

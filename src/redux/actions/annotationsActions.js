@@ -1,13 +1,5 @@
-import {  reannotateChunk } from "./currentBookActions";
+
 import ENDPOINT from "../endpoint";
-// setAnnotations() resets the current annotations in the store
-function setAnnotations(query = {}) {
-  return async (dispatch, getState) => {
-    const book = findBook(getState);
-    await dispatch(fetchAnnotations(book, query));
-    dispatch(annotateAndSetBook(book));
-  };
-}
 
 // Async request to fetch annotations
 function fetchAnnotations(book) {
@@ -73,8 +65,6 @@ function postAnnotation({ pIndex, charIndex, title, body, color, study_id }) {
     if (postResp.success) {
       const annotation = postResp.annotation;
       dispatch(addAnnotation(annotation));
-
-      dispatch(reannotateChunk(annotation));
     } else {
       alert("Something went wrong saving your annotation.");
     }
@@ -131,7 +121,7 @@ function deleteAnnotation(id) {
       const annotation = getState().otherAnnotations.find(a => a.id === id);
       await dispatch({ type: "DELETE_ANNOTATION", annotationId: parseInt(id) });
       const originalBook = findBook(getState);
-      dispatch(reannotateChunk(annotation));
+
     } else {
       alert("Something went wrong with your request! Try again later.");
     }
@@ -191,7 +181,6 @@ function setStudiesList(b) {
 export {
   newAnnotationForm,
   fetchAnnotations,
-  setAnnotations,
   postAnnotation,
   highlightAnnotation,
   exitAnnotation,
