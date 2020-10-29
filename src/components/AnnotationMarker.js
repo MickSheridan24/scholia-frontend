@@ -71,7 +71,7 @@ class AnnotationMarker extends React.Component {
   }
   render() {
     // console.log("Asterix Rendered", this.props.annotation.highlighted);
-    return this.props.annotation ? (
+    return (
       <Element
         style={{ display: "inline" }}
         name={`asterix-${this.props.annotation.id}`}
@@ -90,10 +90,10 @@ class AnnotationMarker extends React.Component {
             this.props.annotation ? { color: this.props.annotation.color } : {}
           }
         >
-          {this.isntHidden() ? "*" : ""}{" "}
+          *
         </span>
       </Element>
-    ) : null;
+    );
   }
 }
 
@@ -108,9 +108,6 @@ function mapDispatchToProps(dispatch) {
 }
 function mapStateToProps(state, ownProps) {
   return {
-    annotation: state.otherAnnotations.find(
-      a => a.id === parseInt(ownProps.id)
-    ),
     userShow: state.windowStatus.userShow,
     otherShow: state.windowStatus.otherShow,
     user: state.user

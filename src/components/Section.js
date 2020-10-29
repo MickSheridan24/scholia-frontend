@@ -6,42 +6,42 @@ import AnnotationMarker from "./AnnotationMarker";
 
 
 function getMarker(annotation) {
-    return "<AnnotationMarker id={`marker-${annotation.id}`} data-id={annotation.id} />"
+    return <AnnotationMarker annotation = {annotation} id={`marker-${annotation.id}`} data-id={annotation.id} />
 }
 
 function AnnotatedSection(props) {
     const { annotations, text } = props;
-    debugger;
     const sorted = annotations.sort((a, b) => a.location_char_index - b.location_char_index)
 
-    let displaytext = ""
+    return (<Fragment>
+        {
+            sorted.map((a, i) => {
+                return (<Fragment>
+                    <Fragment>{text.slice(i === 0 ? 0 : sorted[i - 1].location_char_index , a.location_char_index)}
+                    </Fragment>
+                    {getMarker(a)}
+                </Fragment>)
+            })
+          
+        }
+        {  text.slice(sorted[sorted.length -1].location_char_index)}
 
-    for (let x = 0; x < text.length; x++) {
-        debugger
-        displaytext += text[x]
-        const annos = sorted.filter(anno => anno.location_char_index === x)
-        annos.forEach(a => {
-            debugger
-            displaytext += getMarker(a)
-        })
-    }
-    debugger;
-    return <JsxParser jsx={displaytext} components={{ AnnotationMarker }} />
+    </Fragment>)
 }
 
-function SectionTag(props) {
- 
+function GetSection(props){
+    return props.annotations.length ? AnnotatedSection(props) : props.text; 
 }
 
 function Section(props) {
 
     const type = props.section.section_type
     if (type === "title") {
-        return <h1 className="title"><AnnotatedSection annotations={props.section.annotations} text={props.section.html} /></h1>
+        return <h1 className="title"><GetSection annotations={props.section.annotations} text={props.section.html} /></h1>
     } else if (type === "header") {
-        return <h2 className="section-header"><AnnotatedSection annotations={props.section.annotations} text={props.section.html} /></h2>
+        return <h2 className="section-header"><GetSection annotations={props.section.annotations} text={props.section.html} /></h2>
     } else {
-        return <p className="paragraph"><AnnotatedSection annotations={props.section.annotations} text={props.section.html} /></p>
+        return <p className="paragraph"><GetSection annotations={props.section.annotations} text={props.section.html} /></p>
     }
 }
 
